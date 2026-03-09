@@ -1,0 +1,9 @@
+{
+  "name": "winelabel-eu/core",
+  "description": "EU Digital Wine Label plugin for WordPress + WooCommerce",
+  "require": {
+    "htmlburger/carbon-fields": "^3.6",
+    "chillerlan/php-qrcode": "^5.0",
+    "dompdf/dompdf": "^2.0"
+  }
+}

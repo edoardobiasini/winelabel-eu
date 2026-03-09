@@ -1,0 +1,528 @@
+# Copyright (C) 2026 Edoardo Biasini
+# This file is distributed under the same license as the WineLabel EU plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WineLabel EU 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/winelabel-eu\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-03-09T23:09:05+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: winelabel-eu\n"
+
+#. Plugin Name of the plugin
+#: winelabel-eu.php
+#: includes/settings.php:18
+#: includes/settings.php:19
+#: includes/settings.php:110
+msgid "WineLabel EU"
+msgstr ""
+
+#. Description of the plugin
+#: winelabel-eu.php
+msgid "EU Digital Wine Label (Reg. EU 2021/2117 — Art. 119 Reg. 1308/2013). Adds nutritional, ingredient, and recycling fields to WooCommerce products with a bare, regulation-compliant public template. Supports multiple vintages per product."
+msgstr ""
+
+#. Author of the plugin
+#: winelabel-eu.php
+msgid "Edoardo Biasini"
+msgstr ""
+
+#: includes/fields.php:16
+msgid "Etichetta Digitale"
+msgstr ""
+
+#: includes/fields.php:19
+msgid "Enable digital label"
+msgstr ""
+
+#: includes/fields.php:21
+msgid "Activate to make the digital label page visible for this product."
+msgstr ""
+
+#: includes/fields.php:25
+msgid "Vintage Data"
+msgstr ""
+
+#: includes/fields.php:29
+msgid "General"
+msgstr ""
+
+#: includes/fields.php:30
+msgid "Year (YY)"
+msgstr ""
+
+#: includes/fields.php:33
+msgid "Last 2 digits of the vintage year, e.g. 24, 25"
+msgstr ""
+
+#: includes/fields.php:37
+msgid "Ingredients"
+msgstr ""
+
+#: includes/fields.php:38
+msgid "Raw material (IT)"
+msgstr ""
+
+#: includes/fields.php:42
+msgid "Raw material (EN)"
+msgstr ""
+
+#: includes/fields.php:43
+msgid "e.g. grapes"
+msgstr ""
+
+#: includes/fields.php:46
+msgid "Acidity regulators (IT)"
+msgstr ""
+
+#: includes/fields.php:47
+#: includes/fields.php:51
+msgid "e.g. L-tartaric acid (E334), L-malic acid (E296)"
+msgstr ""
+
+#: includes/fields.php:50
+msgid "Acidity regulators (EN)"
+msgstr ""
+
+#: includes/fields.php:54
+msgid "Stabilizers (IT)"
+msgstr ""
+
+#: includes/fields.php:55
+#: includes/fields.php:59
+msgid "e.g. citric acid (E330)"
+msgstr ""
+
+#: includes/fields.php:58
+msgid "Stabilizers (EN)"
+msgstr ""
+
+#: includes/fields.php:62
+msgid "Antioxidants (IT)"
+msgstr ""
+
+#: includes/fields.php:63
+#: includes/fields.php:67
+msgid "e.g. sulfur dioxide (E220)"
+msgstr ""
+
+#: includes/fields.php:66
+msgid "Antioxidants (EN)"
+msgstr ""
+
+#: includes/fields.php:70
+msgid "Other ingredients (IT)"
+msgstr ""
+
+#: includes/fields.php:73
+msgid "Other ingredients (EN)"
+msgstr ""
+
+#: includes/fields.php:76
+msgid "Contains sulfites"
+msgstr ""
+
+#: includes/fields.php:82
+msgid "Nutritional Values"
+msgstr ""
+
+#: includes/fields.php:83
+msgid "Energy (kJ)"
+msgstr ""
+
+#: includes/fields.php:87
+msgid "Energy (kcal)"
+msgstr ""
+
+#: includes/fields.php:91
+msgid "Fat (g)"
+msgstr ""
+
+#: includes/fields.php:95
+msgid "of which Saturated Fat (g)"
+msgstr ""
+
+#: includes/fields.php:99
+msgid "Carbohydrates (g)"
+msgstr ""
+
+#: includes/fields.php:102
+msgid "of which Sugars (g)"
+msgstr ""
+
+#: includes/fields.php:105
+msgid "Protein (g)"
+msgstr ""
+
+#: includes/fields.php:109
+msgid "Salt (g)"
+msgstr ""
+
+#: includes/fields.php:113
+msgid "Wine-specific values"
+msgstr ""
+
+#: includes/fields.php:115
+msgid "Total acidity (g/l)"
+msgstr ""
+
+#: includes/fields.php:118
+msgid "Alcohol content (%)"
+msgstr ""
+
+#: includes/fields.php:121
+msgid "Total Sulfur Dioxide (mg/l)"
+msgstr ""
+
+#: includes/fields.php:126
+msgid "Waste Sorting"
+msgstr ""
+
+#: includes/fields.php:127
+msgid "Packaging components"
+msgstr ""
+
+#: includes/fields.php:128
+msgid "Add each packaging component with its code and material."
+msgstr ""
+
+#: includes/fields.php:130
+msgid "Component (IT)"
+msgstr ""
+
+#: includes/fields.php:131
+#: includes/fields.php:135
+msgid "e.g. Bottle, Cork, Capsule, Label"
+msgstr ""
+
+#: includes/fields.php:134
+msgid "Component (EN)"
+msgstr ""
+
+#: includes/fields.php:138
+msgid "Code"
+msgstr ""
+
+#: includes/fields.php:139
+msgid "e.g. GL 71, FOR 51, ALU 41, PAP 22"
+msgstr ""
+
+#: includes/fields.php:142
+msgid "Material (IT)"
+msgstr ""
+
+#: includes/fields.php:143
+#: includes/fields.php:147
+msgid "e.g. Glass, Cork, Aluminium, Paper"
+msgstr ""
+
+#: includes/fields.php:146
+msgid "Material (EN)"
+msgstr ""
+
+#: includes/fields.php:150
+msgid "Collection (IT)"
+msgstr ""
+
+#: includes/fields.php:151
+#: includes/fields.php:155
+msgid "e.g. Glass recycling, General waste"
+msgstr ""
+
+#: includes/fields.php:154
+msgid "Collection (EN)"
+msgstr ""
+
+#: includes/license.php:81
+msgid "Pro"
+msgstr ""
+
+#: includes/license.php:81
+msgid "Free"
+msgstr ""
+
+#. translators: %1$d: current count, %2$d: limit
+#: includes/limits.php:98
+#, php-format
+msgid "You have reached the limit of %1$d/%2$d published vintages on the Free plan. Upgrade to Pro for unlimited vintages."
+msgstr ""
+
+#: includes/limits.php:103
+#: includes/limits.php:120
+msgid "Upgrade to Pro"
+msgstr ""
+
+#. translators: %1$d: current count, %2$d: limit
+#: includes/limits.php:115
+#, php-format
+msgid "You have %1$d/%2$d published vintages on the Free plan. Upgrade to Pro for unlimited vintages."
+msgstr ""
+
+#: includes/settings.php:83
+msgid "License activated successfully."
+msgstr ""
+
+#: includes/settings.php:85
+msgid "Invalid license key."
+msgstr ""
+
+#: includes/settings.php:90
+msgid "License deactivated."
+msgstr ""
+
+#: includes/settings.php:104
+msgid "License"
+msgstr ""
+
+#: includes/settings.php:105
+msgid "Settings"
+msgstr ""
+
+#: includes/settings.php:106
+msgid "Usage"
+msgstr ""
+
+#: includes/settings.php:150
+msgid "License Status"
+msgstr ""
+
+#: includes/settings.php:152
+msgid "Plan:"
+msgstr ""
+
+#: includes/settings.php:162
+msgid "Your Pro license is active."
+msgstr ""
+
+#: includes/settings.php:165
+msgid "Deactivate License"
+msgstr ""
+
+#: includes/settings.php:171
+msgid "License Key"
+msgstr ""
+
+#: includes/settings.php:181
+msgid "Activate License"
+msgstr ""
+
+#: includes/settings.php:200
+msgid "Base URL for QR Codes"
+msgstr ""
+
+#: includes/settings.php:209
+msgid "Override the base URL used in QR codes. Leave blank to use your site URL."
+msgstr ""
+
+#: includes/settings.php:213
+msgid "Pro feature. Upgrade to customize the base URL for QR codes."
+msgstr ""
+
+#: includes/settings.php:220
+msgid "Default Language"
+msgstr ""
+
+#: includes/settings.php:232
+msgid "Footer Credit"
+msgstr ""
+
+#: includes/settings.php:239
+#: includes/settings.php:244
+msgid "Show \"Powered by WineLabel EU\" in label footer"
+msgstr ""
+
+#: includes/settings.php:246
+msgid "Pro feature. Upgrade to remove the footer credit."
+msgstr ""
+
+#: includes/settings.php:253
+msgid "Data Removal"
+msgstr ""
+
+#: includes/settings.php:259
+msgid "Delete all WineLabel EU data when the plugin is uninstalled"
+msgstr ""
+
+#: includes/settings.php:261
+msgid "This will remove all vintage posts, product meta, and plugin options."
+msgstr ""
+
+#: includes/settings.php:282
+#, php-format
+msgid "%d published vintages (unlimited)"
+msgstr ""
+
+#: includes/settings.php:285
+#, php-format
+msgid "%1$d / %2$d published vintages"
+msgstr ""
+
+#: includes/settings.php:296
+msgid "Vintage Usage"
+msgstr ""
+
+#: includes/settings.php:324
+msgid "No wines with digital labels enabled."
+msgstr ""
+
+#: includes/settings.php:331
+#: winelabel-eu.php:99
+#: winelabel-eu.php:401
+msgid "Wine"
+msgstr ""
+
+#: includes/settings.php:332
+#: winelabel-eu.php:75
+#: winelabel-eu.php:171
+#: winelabel-eu.php:245
+msgid "Vintages"
+msgstr ""
+
+#: includes/settings.php:333
+msgid "Published"
+msgstr ""
+
+#: winelabel-eu.php:76
+msgid "Vintage"
+msgstr ""
+
+#: winelabel-eu.php:77
+msgid "Add Vintage"
+msgstr ""
+
+#: winelabel-eu.php:78
+msgid "Add New Vintage"
+msgstr ""
+
+#: winelabel-eu.php:79
+msgid "Edit Vintage"
+msgstr ""
+
+#: winelabel-eu.php:80
+msgid "New Vintage"
+msgstr ""
+
+#: winelabel-eu.php:81
+msgid "View Vintage"
+msgstr ""
+
+#: winelabel-eu.php:82
+msgid "Search Vintages"
+msgstr ""
+
+#: winelabel-eu.php:83
+msgid "No vintages found."
+msgstr ""
+
+#: winelabel-eu.php:84
+msgid "No vintages found in Trash."
+msgstr ""
+
+#: winelabel-eu.php:98
+msgid "Wines"
+msgstr ""
+
+#: winelabel-eu.php:100
+msgid "Add Wine"
+msgstr ""
+
+#: winelabel-eu.php:101
+msgid "Add New Wine"
+msgstr ""
+
+#: winelabel-eu.php:102
+msgid "Edit Wine"
+msgstr ""
+
+#: winelabel-eu.php:103
+msgid "New Wine"
+msgstr ""
+
+#: winelabel-eu.php:104
+msgid "View Wine"
+msgstr ""
+
+#: winelabel-eu.php:105
+msgid "Search Wines"
+msgstr ""
+
+#: winelabel-eu.php:106
+msgid "No wines found."
+msgstr ""
+
+#: winelabel-eu.php:107
+msgid "No wines found in Trash."
+msgstr ""
+
+#: winelabel-eu.php:251
+msgid "Year"
+msgstr ""
+
+#: winelabel-eu.php:252
+msgid "Title"
+msgstr ""
+
+#: winelabel-eu.php:253
+msgid "Status"
+msgstr ""
+
+#: winelabel-eu.php:254
+msgid "Actions"
+msgstr ""
+
+#: winelabel-eu.php:268
+msgid "Edit"
+msgstr ""
+
+#: winelabel-eu.php:277
+msgid "Duplicate"
+msgstr ""
+
+#: winelabel-eu.php:286
+msgid "Delete this vintage?"
+msgstr ""
+
+#: winelabel-eu.php:286
+msgid "Delete"
+msgstr ""
+
+#: winelabel-eu.php:293
+msgid "No vintages created. Click the button to add one."
+msgstr ""
+
+#: winelabel-eu.php:298
+msgid "Vintage limit reached. Upgrade to Pro for unlimited vintages."
+msgstr ""
+
+#: winelabel-eu.php:299
+#: winelabel-eu.php:303
+msgid "+ Add Vintage"
+msgstr ""
+
+#: winelabel-eu.php:317
+#: winelabel-eu.php:368
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: winelabel-eu.php:321
+msgid "This feature requires WineLabel EU Pro."
+msgstr ""
+
+#: winelabel-eu.php:327
+#: winelabel-eu.php:374
+msgid "Unauthorized action."
+msgstr ""
+
+#: winelabel-eu.php:332
+#: winelabel-eu.php:379
+msgid "Vintage not found."
+msgstr ""
+
+#: winelabel-eu.php:401
+msgid "Product"
+msgstr ""
