@@ -1,12 +1,15 @@
 <?php
 /**
  * Plugin Name: WineLabel EU
- * Description: EU Digital Wine Label (Reg. EU 2021/2117 — Art. 119 Reg. 1308/2013). Adds nutritional, ingredient, and recycling fields to WooCommerce products with a bare, regulation-compliant public template. Supports multiple vintages per product.
+ * Plugin URI: https://winelabel.net
+ * Description: EU Digital Wine Label — regulation-compliant digital labels (Reg. EU 2021/2117) with ingredients, nutritional values, and waste sorting. Works with or without WooCommerce.
  * Version: 1.0.0
  * Author: Edoardo Biasini
+ * Author URI: https://winelabel.net
  * Text Domain: winelabel-eu
  * Requires at least: 6.0
  * Requires PHP: 8.1
+ * License: Proprietary
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -41,6 +44,18 @@ require_once WLEU_PATH . 'includes/template.php';
 require_once WLEU_PATH . 'includes/qr-pdf.php';
 
 require_once WLEU_PATH . 'includes/fields.php';
+
+// ── Auto-Updates (GitHub) ────────────────────────────────────
+
+if ( class_exists( 'YahnisElsts\\PluginUpdateChecker\\v5\\PucFactory' ) ) {
+	$wleu_updater = YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+		'https://github.com/edoardobiasini/winelabel-eu/',
+		__FILE__,
+		'winelabel-eu'
+	);
+	// Use releases for stable versions.
+	$wleu_updater->getVcsApi()->enableReleaseAssets();
+}
 
 // ── WooCommerce Soft Dependency ──────────────────────────────
 
@@ -106,13 +121,14 @@ add_action( 'init', function () {
 				'not_found'          => __( 'No wines found.', 'winelabel-eu' ),
 				'not_found_in_trash' => __( 'No wines found in Trash.', 'winelabel-eu' ),
 			],
-			'public'       => true,
-			'show_ui'      => true,
-			'show_in_menu' => 'winelabel-eu',
-			'supports'     => [ 'title' ],
-			'has_archive'  => false,
-			'rewrite'      => [ 'slug' => 'wine', 'with_front' => false ],
-			'menu_icon'    => 'dashicons-clipboard',
+			'public'              => false,
+			'publicly_queryable'  => false,
+			'show_ui'             => true,
+			'show_in_menu'        => 'winelabel-eu',
+			'supports'            => [ 'title' ],
+			'has_archive'         => false,
+			'rewrite'             => false,
+			'menu_icon'           => 'dashicons-clipboard',
 		] );
 	}
 } );
@@ -228,6 +244,25 @@ function wleu_vintages_metabox( $post ) {
 
 	$add_url  = admin_url( 'post-new.php?post_type=elabel_vintage&parent_product=' . $post->ID );
 	$at_limit = ! wleu_can_publish_vintage();
+
+	// Show the e-label URL if the label is enabled and there are published vintages.
+	$elabel_enabled  = carbon_get_post_meta( $post->ID, 'elabel_enabled' );
+	$has_published   = false;
+	foreach ( $vintages as $v ) {
+		if ( $v->post_status === 'publish' ) {
+			$has_published = true;
+			break;
+		}
+	}
+	if ( $elabel_enabled && $has_published ) {
+		$label_url = home_url( '/' . $post->post_name . '-winelabel/' );
+		printf(
+			'<p style="margin-bottom: 12px;"><strong>%s:</strong> <a href="%s" target="_blank">%s</a></p>',
+			esc_html__( 'Label URL', 'winelabel-eu' ),
+			esc_url( $label_url ),
+			esc_html( $label_url )
+		);
+	}
 	?>
 	<style>
 		.elabel-vintages-inline {
@@ -414,6 +449,15 @@ add_action( 'edit_form_top', function ( $post ) {
 	);
 } );
 
+/**
+ * Get the index page slug.
+ *
+ * @return string
+ */
+function wleu_index_slug() {
+	return get_option( 'wleu_index_slug', 'winelabel' );
+}
+
 // ── Elabel Request Detection ─────────────────────────────────
 
 /**
@@ -426,8 +470,9 @@ function wleu_is_elabel_request() {
 	$uri = trim( $uri, '/' );
 	// Strip query string.
 	$uri = strtok( $uri, '?' );
-	return (bool) preg_match( '/^(.+)-elabel(?:-\d{2})?\/?$/', $uri )
-		|| (bool) preg_match( '/^elabel\/?$/', $uri );
+	$index_slug = wleu_index_slug();
+	return (bool) preg_match( '/^(.+)-winelabel(?:-\d{2})?\/?$/', $uri )
+		|| $uri === $index_slug;
 }
 
 /**
@@ -456,23 +501,24 @@ add_action( 'plugins_loaded', function () {
  * Register rewrite rules.
  */
 add_action( 'init', function () {
-	// Vintage-specific label: {product-slug}-elabel-{YY}/
+	// Vintage-specific label: {product-slug}-winelabel-{YY}/
 	add_rewrite_rule(
-		'^([^/]+)-elabel-(\d{2})/?$',
+		'^([^/]+)-winelabel-(\d{2})/?$',
 		'index.php?elabel_product=$matches[1]&elabel_year=$matches[2]',
 		'top'
 	);
 
-	// Bare label (no year): {product-slug}-elabel/ -> redirect to latest vintage
+	// Bare label (no year): {product-slug}-winelabel/ -> redirect to latest vintage
 	add_rewrite_rule(
-		'^([^/]+)-elabel/?$',
+		'^([^/]+)-winelabel/?$',
 		'index.php?elabel_product=$matches[1]',
 		'top'
 	);
 
-	// Index page: /elabel/ (Pro only, but rule always registered for clean 404)
+	// Index page: /e-labels/ (slug configurable in settings).
+	$index_slug = wleu_index_slug();
 	add_rewrite_rule(
-		'^elabel/?$',
+		'^' . preg_quote( $index_slug, '/' ) . '/?$',
 		'index.php?elabel_index=1',
 		'top'
 	);
@@ -529,7 +575,7 @@ add_action( 'template_redirect', function () {
 			if ( $latest_year ) {
 				$lang_param = ( $lang !== 'en' ) ? '?lang=' . $lang : '';
 				wp_redirect(
-					home_url( '/' . $product_slug . '-elabel-' . $latest_year . '/' . $lang_param ),
+					home_url( '/' . $product_slug . '-winelabel-' . $latest_year . '/' . $lang_param ),
 					301
 				);
 				exit;
@@ -541,11 +587,6 @@ add_action( 'template_redirect', function () {
 	}
 
 	if ( $is_index ) {
-		if ( ! wleu_is_pro() ) {
-			status_header( 403 );
-			echo 'The label index page requires WineLabel EU Pro.';
-			exit;
-		}
 		header_remove( 'Set-Cookie' );
 		wleu_render_elabel_index( $lang );
 		exit;
@@ -649,17 +690,18 @@ register_activation_hook( __FILE__, function () {
 	] );
 
 	add_rewrite_rule(
-		'^([^/]+)-elabel-(\d{2})/?$',
+		'^([^/]+)-winelabel-(\d{2})/?$',
 		'index.php?elabel_product=$matches[1]&elabel_year=$matches[2]',
 		'top'
 	);
 	add_rewrite_rule(
-		'^([^/]+)-elabel/?$',
+		'^([^/]+)-winelabel/?$',
 		'index.php?elabel_product=$matches[1]',
 		'top'
 	);
+	$index_slug = get_option( 'wleu_index_slug', 'winelabel' );
 	add_rewrite_rule(
-		'^elabel/?$',
+		'^' . preg_quote( $index_slug, '/' ) . '/?$',
 		'index.php?elabel_index=1',
 		'top'
 	);

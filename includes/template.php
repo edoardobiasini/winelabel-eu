@@ -56,6 +56,8 @@ function wleu_t( $key, $lang = 'it' ) {
 		'annata_non_trovata'         => 'Vintage not found.',
 		'reg_footer'         => 'Reg. (EU) 2021/2117 &mdash; Art. 119 Reg. (EU) 1308/2013',
 		'powered_by'         => 'Powered by WineLabel EU',
+		'qr_upgrade'         => 'Upgrade to Pro for vector QR codes',
+		'upgrade_cta'        => 'Unlock QR codes, bilingual labels &amp; more &mdash; <a href="https://winelabel.net/pro">WineLabel EU Pro</a>',
 	];
 
 	static $it = [
@@ -94,15 +96,27 @@ function wleu_t( $key, $lang = 'it' ) {
 		'annata_non_trovata'         => 'Annata non trovata.',
 		'reg_footer'         => 'Reg. (UE) 2021/2117 &mdash; Art. 119 Reg. (UE) 1308/2013',
 		'powered_by'         => 'Powered by WineLabel EU',
+		'qr_upgrade'         => 'Passa a Pro per i QR code vettoriali',
+		'upgrade_cta'        => 'QR code, etichette bilingue e altro &mdash; <a href="https://winelabel.net/pro">WineLabel EU Pro</a>',
 	];
 
-	$strings = ( $lang === 'en' ) ? $en : $it;
+	if ( $lang === 'en' ) {
+		$strings = $en;
+	} elseif ( $lang === 'it' ) {
+		// IT ships built-in as default second language.
+		$custom  = get_option( 'wleu_custom_strings', [] );
+		$strings = is_array( $custom ) && ! empty( $custom ) ? array_merge( $it, $custom ) : $it;
+	} else {
+		// Any other language: custom strings with EN fallback.
+		$custom  = get_option( 'wleu_custom_strings', [] );
+		$strings = is_array( $custom ) ? array_merge( $en, $custom ) : $en;
+	}
 
 	/**
 	 * Filter the translation strings for extensibility.
 	 *
 	 * @param array  $strings All translation strings for the given language.
-	 * @param string $lang    Language code ('it' or 'en').
+	 * @param string $lang    Language code.
 	 */
 	$strings = apply_filters( 'wleu_translation_strings', $strings, $lang );
 
@@ -205,10 +219,7 @@ function wleu_render_elabel_single( $product_slug, $year, $lang = 'it' ) {
 	<p class="elabel-wine-name"><?php echo esc_html( $wine_name ); ?></p>
 
 	<div class="elabel-card">
-		<div class="elabel-section-header">
-			<h2><?php echo wleu_t( 'ingredienti', $lang ); ?></h2>
-			<?php echo wleu_flag_svg(); ?>
-		</div>
+		<h2><?php echo wleu_t( 'ingredienti', $lang ); ?></h2>
 		<div class="elabel-ingredients">
 			<?php if ( $materia_prima ) : ?>
 				<p><strong><?php echo wleu_t( 'materia_prima', $lang ); ?></strong> <?php echo esc_html( $materia_prima ); ?></p>
@@ -369,7 +380,7 @@ function wleu_render_elabel_index( $lang = 'it' ) {
 
 			$entries[] = [
 				'name' => $wine_name . ' ' . $year,
-				'url'  => home_url( '/' . $product->post_name . '-elabel-' . $year . '/' ),
+				'url'  => home_url( '/' . $product->post_name . '-winelabel-' . $year . '/' ),
 				'year' => $year,
 			];
 		}
@@ -399,12 +410,20 @@ function wleu_render_elabel_index( $lang = 'it' ) {
 					?>
 					<li>
 						<a href="<?php echo esc_url( $entry['url'] . $lang_param ); ?>"><?php echo esc_html( $entry['name'] ); ?></a>
-						<a href="<?php echo esc_url( $qr_url ); ?>" class="elabel-qr-btn" download><?php echo wleu_t( 'scarica_qr', $lang ); ?></a>
+						<?php if ( wleu_is_pro() ) : ?>
+							<a href="<?php echo esc_url( $qr_url ); ?>" class="elabel-qr-btn" download><?php echo wleu_t( 'scarica_qr', $lang ); ?></a>
+						<?php else : ?>
+							<span class="elabel-qr-btn elabel-qr-disabled" title="<?php echo esc_attr( wleu_t( 'qr_upgrade', $lang ) ); ?>"><?php echo wleu_t( 'scarica_qr', $lang ); ?></span>
+						<?php endif; ?>
 					</li>
 				<?php endforeach; ?>
 			</ul>
 		<?php endif; ?>
 	</div>
+
+	<?php if ( ! wleu_is_pro() ) : ?>
+		<p class="elabel-upgrade"><?php echo wleu_t( 'upgrade_cta', $lang ); ?></p>
+	<?php endif; ?>
 
 	<?php
 	wleu_html_footer( $lang );
@@ -696,6 +715,30 @@ function wleu_html_header( $title, $lang = 'en' ) {
 
 		.elabel-qr-btn:hover {
 			background: #333;
+		}
+
+		.elabel-qr-disabled {
+			opacity: 0.35;
+			cursor: not-allowed;
+			pointer-events: none;
+		}
+
+		/* Upgrade CTA */
+		.elabel-upgrade {
+			text-align: center;
+			font-size: 0.8rem;
+			color: #888;
+			margin-top: 16px;
+		}
+
+		.elabel-upgrade a {
+			color: #2563eb;
+			text-decoration: none;
+			font-weight: 500;
+		}
+
+		.elabel-upgrade a:hover {
+			text-decoration: underline;
 		}
 
 		/* Footer */

@@ -51,6 +51,9 @@ $options = [
 	'wleu_show_footer_credit',
 	'wleu_second_language_enabled',
 	'wleu_second_language_code',
+	'wleu_index_slug',
+	'wleu_custom_strings',
+	'wleu_license_instance',
 	'wleu_delete_data_on_uninstall',
 ];
 

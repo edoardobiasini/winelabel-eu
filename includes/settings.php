@@ -73,11 +73,67 @@ add_action( 'admin_init', function () {
 		'default'           => 'yes',
 	] );
 
+	register_setting( 'wleu_settings', 'wleu_index_slug', [
+		'type'              => 'string',
+		'sanitize_callback' => function ( $val ) {
+			$val = sanitize_title( $val );
+			$val = ! empty( $val ) ? $val : 'winelabel';
+
+			// Always flush rewrite rules when settings are saved.
+			add_action( 'shutdown', 'flush_rewrite_rules' );
+
+			return $val;
+		},
+		'default'           => 'winelabel',
+	] );
+
 	register_setting( 'wleu_settings', 'wleu_delete_data_on_uninstall', [
 		'type'              => 'string',
 		'sanitize_callback' => 'sanitize_text_field',
 		'default'           => '',
 	] );
+} );
+
+/**
+ * Handle translations save/reset actions.
+ */
+add_action( 'admin_init', function () {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	// Save custom strings.
+	if ( isset( $_POST['wleu_save_translations'] ) ) {
+		check_admin_referer( 'wleu_translations_nonce', 'wleu_translations_nonce_field' );
+
+		$strings = [];
+		if ( ! empty( $_POST['wleu_strings'] ) && is_array( $_POST['wleu_strings'] ) ) {
+			foreach ( $_POST['wleu_strings'] as $key => $value ) {
+				$key = sanitize_key( $key );
+				$value = wp_kses( $value, [ 'strong' => [], 'em' => [], 'a' => [ 'href' => [] ] ] );
+				if ( $value !== '' ) {
+					$strings[ $key ] = $value;
+				}
+			}
+		}
+		update_option( 'wleu_custom_strings', $strings );
+		add_settings_error( 'wleu_translations', 'saved', __( 'Translations saved.', 'winelabel-eu' ), 'success' );
+
+		set_transient( 'settings_errors', get_settings_errors(), 30 );
+		wp_redirect( admin_url( 'admin.php?page=winelabel-eu&tab=translations&settings-updated=true' ) );
+		exit;
+	}
+
+	// Reset to defaults.
+	if ( isset( $_POST['wleu_reset_translations'] ) ) {
+		check_admin_referer( 'wleu_translations_nonce', 'wleu_translations_nonce_field' );
+		delete_option( 'wleu_custom_strings' );
+		add_settings_error( 'wleu_translations', 'reset', __( 'Translations reset to defaults.', 'winelabel-eu' ), 'success' );
+
+		set_transient( 'settings_errors', get_settings_errors(), 30 );
+		wp_redirect( admin_url( 'admin.php?page=winelabel-eu&tab=translations&settings-updated=true' ) );
+		exit;
+	}
 } );
 
 /**
@@ -119,9 +175,10 @@ add_action( 'admin_init', function () {
 function wleu_render_settings_page() {
 	$active_tab = sanitize_text_field( $_GET['tab'] ?? 'license' );
 	$tabs = [
-		'license'  => __( 'License', 'winelabel-eu' ),
-		'settings' => __( 'Settings', 'winelabel-eu' ),
-		'usage'    => __( 'Usage', 'winelabel-eu' ),
+		'license'      => __( 'License', 'winelabel-eu' ),
+		'settings'     => __( 'Settings', 'winelabel-eu' ),
+		'translations' => __( 'Translations', 'winelabel-eu' ),
+		'usage'        => __( 'Usage', 'winelabel-eu' ),
 	];
 	?>
 	<div class="wrap">
@@ -144,6 +201,9 @@ function wleu_render_settings_page() {
 					break;
 				case 'settings':
 					wleu_render_settings_tab();
+					break;
+				case 'translations':
+					wleu_render_translations_tab();
 					break;
 				case 'usage':
 					wleu_render_usage_tab();
@@ -229,6 +289,27 @@ function wleu_render_settings_tab() {
 					<?php else : ?>
 						<input type="url" class="regular-text" disabled placeholder="<?php echo esc_attr( home_url() ); ?>">
 						<p class="description"><?php esc_html_e( 'Pro feature. Upgrade to customize the base URL for QR codes.', 'winelabel-eu' ); ?></p>
+					<?php endif; ?>
+				</td>
+			</tr>
+
+			<tr>
+				<th scope="row">
+					<label for="wleu_index_slug"><?php esc_html_e( 'Index Page URL', 'winelabel-eu' ); ?></label>
+				</th>
+				<td>
+					<?php if ( $is_pro ) : ?>
+						<code><?php echo esc_html( home_url( '/' ) ); ?></code>
+						<input type="text" id="wleu_index_slug" name="wleu_index_slug"
+							   value="<?php echo esc_attr( get_option( 'wleu_index_slug', 'winelabel' ) ); ?>"
+							   style="width: 120px;" placeholder="winelabel">
+						<code>/</code>
+						<p class="description">
+							<?php esc_html_e( 'URL slug for the label index page.', 'winelabel-eu' ); ?>
+						</p>
+					<?php else : ?>
+						<code><?php echo esc_html( home_url( '/winelabel/' ) ); ?></code>
+						<p class="description"><?php esc_html_e( 'Upgrade to Pro to customize the index page URL.', 'winelabel-eu' ); ?></p>
 					<?php endif; ?>
 				</td>
 			</tr>
@@ -364,7 +445,7 @@ function wleu_render_usage_tab() {
 	<table class="widefat fixed striped" style="max-width: 700px; margin-top: 20px;">
 		<thead>
 			<tr>
-				<th><?php esc_html_e( 'Wine', 'winelabel-eu' ); ?></th>
+				<th style="width:40%"><?php esc_html_e( 'Wine', 'winelabel-eu' ); ?></th>
 				<th><?php esc_html_e( 'Vintages', 'winelabel-eu' ); ?></th>
 				<th><?php esc_html_e( 'Published', 'winelabel-eu' ); ?></th>
 			</tr>
@@ -393,5 +474,161 @@ function wleu_render_usage_tab() {
 			<?php endforeach; ?>
 		</tbody>
 	</table>
+	<?php
+}
+
+/**
+ * Render the Translations tab.
+ */
+function wleu_render_translations_tab() {
+	$is_pro   = wleu_is_pro();
+	$alt_code = strtoupper( get_option( 'wleu_second_language_code', 'it' ) );
+	$custom   = get_option( 'wleu_custom_strings', [] );
+	if ( ! is_array( $custom ) ) {
+		$custom = [];
+	}
+
+	if ( ! $is_pro ) {
+		echo '<p>' . esc_html__( 'Upgrade to Pro to customize label translations.', 'winelabel-eu' ) . '</p>';
+		return;
+	}
+
+	if ( get_option( 'wleu_second_language_enabled', '' ) !== 'yes' ) {
+		echo '<p>' . esc_html__( 'Enable a second language in the Settings tab first.', 'winelabel-eu' ) . '</p>';
+		return;
+	}
+
+	// EN defaults (used as reference and fallback).
+	$en_defaults = [
+		'ingredienti'               => 'Ingredients',
+		'materia_prima'             => 'Raw material:',
+		'correttori_acidita'        => 'Acidity regulators:',
+		'stabilizzanti'             => 'Stabilizers:',
+		'antiossidanti'             => 'Antioxidants:',
+		'contiene_solfiti'          => 'Contains sulfites',
+		'info_nutrizionali'         => 'Nutritional Information',
+		'valori_per_100ml'          => 'nutritional values per <strong>100 ml</strong> of product',
+		'calorie'                   => 'Calories',
+		'grassi'                    => 'Fat',
+		'grassi_saturi'             => 'of which Saturated Fat',
+		'carboidrati'               => 'Carbohydrates',
+		'zuccheri'                  => 'of which Sugars',
+		'proteine'                  => 'Protein',
+		'sale'                      => 'Salt',
+		'acidita_totale'            => 'Total acidity',
+		'grado_alcolico'            => 'Alcohol content',
+		'solforosa_totale'          => 'Total Sulfur Dioxide',
+		'raccolta_diff'             => 'Waste Sorting',
+		'componente'                => 'Component',
+		'codice'                    => 'Code',
+		'materiale'                 => 'Material',
+		'raccolta'                  => 'Collection',
+		'verifica_comune'           => 'Check your local municipality regulations.',
+		'indice_vini'               => 'Wine Index',
+		'etichetta_digitale'        => 'Digital Label',
+		'reg_disclaimer'            => 'Mandatory information pursuant to Reg. (EU) 2021/2117 — Art. 119 Reg. (EU) 1308/2013',
+		'reg_footer'                => 'Reg. (EU) 2021/2117 — Art. 119 Reg. (EU) 1308/2013',
+	];
+
+	// IT defaults for pre-filling when language is IT.
+	$it_defaults = [
+		'ingredienti'               => 'Ingredienti',
+		'materia_prima'             => 'Materia prima:',
+		'correttori_acidita'        => 'Correttori di acidità:',
+		'stabilizzanti'             => 'Stabilizzanti:',
+		'antiossidanti'             => 'Antiossidanti:',
+		'contiene_solfiti'          => 'Contiene solfiti',
+		'info_nutrizionali'         => 'Informazioni Nutrizionali',
+		'valori_per_100ml'          => 'valori nutrizionali per <strong>100 ml</strong> di prodotto',
+		'calorie'                   => 'Calorie',
+		'grassi'                    => 'Grassi',
+		'grassi_saturi'             => 'di cui Acidi Grassi Saturi',
+		'carboidrati'               => 'Carboidrati',
+		'zuccheri'                  => 'di cui Zuccheri',
+		'proteine'                  => 'Proteine',
+		'sale'                      => 'Sale',
+		'acidita_totale'            => 'Acidità totale',
+		'grado_alcolico'            => 'Grado alcolico',
+		'solforosa_totale'          => 'Anidride Solforosa Totale',
+		'raccolta_diff'             => 'Raccolta Differenziata',
+		'componente'                => 'Componente',
+		'codice'                    => 'Codice',
+		'materiale'                 => 'Materiale',
+		'raccolta'                  => 'Raccolta',
+		'verifica_comune'           => 'Verifica il regolamento del tuo Comune.',
+		'indice_vini'               => 'Indice vini',
+		'etichetta_digitale'        => 'Etichetta Digitale',
+		'reg_disclaimer'            => 'Informazioni obbligatorie ai sensi del Reg. (UE) 2021/2117 — Art. 119 Reg. (UE) 1308/2013',
+		'reg_footer'                => 'Reg. (UE) 2021/2117 — Art. 119 Reg. (UE) 1308/2013',
+	];
+
+	// Placeholders: use IT defaults if language is IT, otherwise EN.
+	$placeholders = strtolower( $alt_code ) === 'it' ? $it_defaults : $en_defaults;
+
+	// Group keys by section for cleaner UI.
+	$sections = [
+		__( 'Ingredients', 'winelabel-eu' ) => [
+			'ingredienti', 'materia_prima', 'correttori_acidita',
+			'stabilizzanti', 'antiossidanti', 'contiene_solfiti',
+		],
+		__( 'Nutritional Values', 'winelabel-eu' ) => [
+			'info_nutrizionali', 'valori_per_100ml', 'calorie',
+			'grassi', 'grassi_saturi', 'carboidrati', 'zuccheri',
+			'proteine', 'sale', 'acidita_totale', 'grado_alcolico',
+			'solforosa_totale',
+		],
+		__( 'Waste Sorting', 'winelabel-eu' ) => [
+			'raccolta_diff', 'componente', 'codice', 'materiale',
+			'raccolta', 'verifica_comune',
+		],
+		__( 'Page Layout', 'winelabel-eu' ) => [
+			'etichetta_digitale', 'indice_vini', 'reg_disclaimer', 'reg_footer',
+		],
+	];
+
+	settings_errors( 'wleu_translations' );
+	?>
+	<div style="max-width: 700px;">
+		<p>
+			<?php printf(
+				esc_html__( 'Customize the %s label strings. Leave blank to use the default.', 'winelabel-eu' ),
+				'<strong>' . esc_html( $alt_code ) . '</strong>'
+			); ?>
+		</p>
+
+		<form method="post" action="">
+			<?php wp_nonce_field( 'wleu_translations_nonce', 'wleu_translations_nonce_field' ); ?>
+
+			<?php foreach ( $sections as $section_label => $keys ) : ?>
+				<h3 style="margin-top: 24px; margin-bottom: 8px;"><?php echo esc_html( $section_label ); ?></h3>
+				<table class="form-table">
+					<?php foreach ( $keys as $key ) : ?>
+						<tr>
+							<th scope="row" style="width: 40%;">
+								<label for="wleu_str_<?php echo esc_attr( $key ); ?>">
+									<?php echo esc_html( $en_defaults[ $key ] ?? $key ); ?>
+								</label>
+							</th>
+							<td>
+								<input type="text" id="wleu_str_<?php echo esc_attr( $key ); ?>"
+									   name="wleu_strings[<?php echo esc_attr( $key ); ?>]"
+									   value="<?php echo esc_attr( $custom[ $key ] ?? '' ); ?>"
+									   class="regular-text"
+									   placeholder="<?php echo esc_attr( wp_strip_all_tags( $placeholders[ $key ] ?? '' ) ); ?>">
+							</td>
+						</tr>
+					<?php endforeach; ?>
+				</table>
+			<?php endforeach; ?>
+
+			<p class="submit" style="display: flex; gap: 8px; align-items: center;">
+				<input type="submit" name="wleu_save_translations" class="button button-primary"
+					   value="<?php esc_attr_e( 'Save Translations', 'winelabel-eu' ); ?>">
+				<input type="submit" name="wleu_reset_translations" class="button button-secondary"
+					   value="<?php esc_attr_e( 'Reset to Defaults', 'winelabel-eu' ); ?>"
+					   onclick="return confirm('<?php echo esc_js( __( 'Reset all translations to defaults?', 'winelabel-eu' ) ); ?>');">
+			</p>
+		</form>
+	</div>
 	<?php
 }

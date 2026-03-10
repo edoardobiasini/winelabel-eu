@@ -21,7 +21,7 @@ EU Digital Wine Label plugin for WordPress. Generates regulation-compliant digit
 | URL routing | Yes | Yes |
 | Bilingual labels | EN only | EN + second language |
 | QR code PDF download | No | Yes |
-| Index page (`/elabel/`) | No | Yes |
+| Index page (`/winelabel/`) | Yes (branded) | Yes (customizable) |
 | Duplicate vintage action | No | Yes |
 | Custom base URL for QR codes | No | Yes |
 | White-label (remove footer credit) | No | Yes |
@@ -43,10 +43,10 @@ EU Digital Wine Label plugin for WordPress. Generates regulation-compliant digit
 
 | URL | Description |
 |---|---|
-| `/{slug}-elabel-{YY}/` | Vintage-specific label |
-| `/{slug}-elabel/` | 301 redirect to latest vintage |
-| `/elabel/` | Index page (Pro) |
-| `/{slug}-elabel-{YY}/?qr=pdf` | QR code PDF download (Pro) |
+| `/{slug}-winelabel-{YY}/` | Vintage-specific label |
+| `/{slug}-winelabel/` | 301 redirect to latest vintage |
+| `/winelabel/` | Index page (slug customizable in Pro) |
+| `/{slug}-winelabel-{YY}/?qr=pdf` | QR code PDF download (Pro) |
 | `?lang=xx` | Second language toggle (Pro) |
 
 ## Development
