@@ -1,0 +1,7 @@
+{
+  "name": "winelabel-eu/lite",
+  "description": "EU Digital Wine Label plugin for WordPress (lite version for WordPress.org)",
+  "require": {
+    "htmlburger/carbon-fields": "^3.6"
+  }
+}

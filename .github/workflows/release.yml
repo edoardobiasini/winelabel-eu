@@ -52,6 +52,8 @@ jobs:
             --exclude='tests/' \
             --exclude='landing/' \
             --exclude='GO-TO-MARKET.md' \
+            --exclude='build-lite.sh' \
+            --exclude='composer-lite.json' \
             "$GITHUB_WORKSPACE/" "$DEST/"
 
           # Install production Composer dependencies.

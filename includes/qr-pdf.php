@@ -8,6 +8,15 @@
  * Pro feature only.
  */
 
+// QR PDF requires dompdf + php-qrcode (not available in lite/WordPress.org version).
+if ( ! class_exists( 'Dompdf\\Dompdf' ) ) {
+	function wleu_render_elabel_qr_pdf( $product_slug, $year = '' ) {
+		status_header( 501 );
+		echo 'QR PDF generation is not available in the lite version. Download the full plugin from winelabel.net.';
+	}
+	return;
+}
+
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use chillerlan\QRCode\Output\QRMarkupSVG;

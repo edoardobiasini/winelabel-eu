@@ -21,10 +21,22 @@ define( 'WLEU_URL', plugin_dir_url( __FILE__ ) );
 define( 'WLEU_VERSION', '1.0.1' );
 
 /**
- * Load Composer autoloader (Carbon Fields, QR code, DomPDF).
+ * Load Composer autoloader.
+ *
+ * Full version: Carbon Fields + QR code + DomPDF + update checker.
+ * Lite version (WordPress.org): Carbon Fields only.
  */
 if ( file_exists( WLEU_PATH . 'vendor/autoload.php' ) ) {
 	require_once WLEU_PATH . 'vendor/autoload.php';
+}
+
+/**
+ * Check if the full version (with all Composer deps) is available.
+ *
+ * @return bool
+ */
+function wleu_is_full_version() {
+	return class_exists( 'Dompdf\\Dompdf' );
 }
 
 /**
