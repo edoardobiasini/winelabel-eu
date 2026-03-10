@@ -5,7 +5,7 @@
  * Description: EU Digital Wine Label — regulation-compliant digital labels (Reg. EU 2021/2117) with ingredients, nutritional values, and waste sorting. Works with or without WooCommerce.
  * Version: 1.0.1
  * Author: Edoardo Biasini
- * Author URI: https://winelabel.net
+ * Author URI: https://edoardobiasini.com
  * Text Domain: winelabel-eu
  * Requires at least: 6.0
  * Requires PHP: 7.4
