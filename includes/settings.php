@@ -39,12 +39,14 @@ add_action( 'admin_menu', function () {
  * Register settings.
  */
 add_action( 'admin_init', function () {
-	// License settings.
-	register_setting( 'wleu_license', 'wleu_license_key', [
-		'type'              => 'string',
-		'sanitize_callback' => 'sanitize_text_field',
-		'default'           => '',
-	] );
+	// License settings (full version only).
+	if ( wleu_is_full_version() ) {
+		register_setting( 'wleu_license', 'wleu_license_key', [
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+			'default'           => '',
+		] );
+	}
 
 	// General settings.
 	register_setting( 'wleu_settings', 'wleu_base_url', [
@@ -151,9 +153,12 @@ add_action( 'admin_init', function () {
 } );
 
 /**
- * Handle license activation/deactivation actions.
+ * Handle license activation/deactivation actions (full version only).
  */
 add_action( 'admin_init', function () {
+	if ( ! wleu_is_full_version() ) {
+		return;
+	}
 	if ( ! isset( $_POST['wleu_license_action'] ) || ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
@@ -187,13 +192,17 @@ add_action( 'admin_init', function () {
  * Render the settings page.
  */
 function wleu_render_settings_page() {
-	$active_tab = sanitize_text_field( $_GET['tab'] ?? 'license' );
-	$tabs = [
-		'license'      => __( 'License', 'winelabel-eu' ),
-		'settings'     => __( 'Settings', 'winelabel-eu' ),
-		'translations' => __( 'Translations', 'winelabel-eu' ),
-		'usage'        => __( 'Usage', 'winelabel-eu' ),
-	];
+	$is_full = wleu_is_full_version();
+	$default_tab = $is_full ? 'license' : 'settings';
+	$active_tab  = sanitize_text_field( $_GET['tab'] ?? $default_tab );
+
+	$tabs = [];
+	if ( $is_full ) {
+		$tabs['license'] = __( 'License', 'winelabel-eu' );
+	}
+	$tabs['settings']     = __( 'Settings', 'winelabel-eu' );
+	$tabs['translations'] = __( 'Translations', 'winelabel-eu' );
+	$tabs['usage']        = __( 'Usage', 'winelabel-eu' );
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'WineLabel EU', 'winelabel-eu' ); ?></h1>
@@ -211,7 +220,9 @@ function wleu_render_settings_page() {
 			<?php
 			switch ( $active_tab ) {
 				case 'license':
-					wleu_render_license_tab();
+					if ( wleu_is_full_version() ) {
+						wleu_render_license_tab();
+					}
 					break;
 				case 'settings':
 					wleu_render_settings_tab();

@@ -179,9 +179,12 @@ function wleu_instance_name() {
 }
 
 /**
- * Show admin notice when license is invalid/expired.
+ * Show admin notice when license is invalid/expired (full version only).
  */
 add_action( 'admin_notices', function () {
+	if ( ! wleu_is_full_version() ) {
+		return;
+	}
 	$key = get_option( 'wleu_license_key', '' );
 	if ( empty( $key ) ) {
 		return;
