@@ -8,7 +8,7 @@
  * Author URI: https://winelabel.net
  * Text Domain: winelabel-eu
  * Requires at least: 6.0
- * Requires PHP: 8.1
+ * Requires PHP: 7.4
  * License: Proprietary
  */
 

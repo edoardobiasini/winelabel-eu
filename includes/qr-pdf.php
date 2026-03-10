@@ -8,15 +8,6 @@
  * Pro feature only.
  */
 
-// QR PDF requires dompdf + php-qrcode (not available in lite/WordPress.org version).
-if ( ! class_exists( 'Dompdf\\Dompdf' ) ) {
-	function wleu_render_elabel_qr_pdf( $product_slug, $year = '' ) {
-		status_header( 501 );
-		echo 'QR PDF generation is not available in the lite version. Download the full plugin from winelabel.net.';
-	}
-	return;
-}
-
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use chillerlan\QRCode\Output\QRMarkupSVG;
@@ -30,6 +21,12 @@ use Dompdf\Options as DompdfOptions;
  * @param string $year         Two-digit vintage year (e.g. '24').
  */
 function wleu_render_elabel_qr_pdf( $product_slug, $year = '' ) {
+	// QR PDF requires dompdf + php-qrcode (not available in lite/WordPress.org version).
+	if ( ! class_exists( 'Dompdf\\Dompdf' ) ) {
+		status_header( 501 );
+		echo 'QR PDF generation is not available in the lite version. Download the full plugin from winelabel.net.';
+		return;
+	}
 
 	$products = get_posts( [
 		'post_type'      => wleu_product_post_type(),
