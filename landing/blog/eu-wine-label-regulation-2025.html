@@ -87,47 +87,90 @@
 
   /* ── Nav ──────────────────────────────── */
 
-  .site-nav {
-    background: var(--wine-deep);
-    padding: 16px 24px;
+  .top-nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(45, 10, 21, 0.92);
+    border-bottom: 1px solid rgba(184, 149, 106, 0.12);
+    padding: 0 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 56px;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
   }
 
-  .site-nav-brand {
+  .top-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .top-nav-name {
     font-family: var(--serif);
     font-size: 0.95rem;
     font-weight: 500;
     color: var(--cream);
-    text-decoration: none;
     letter-spacing: 0.06em;
   }
 
-  .site-nav-eu {
+  .top-nav-name span {
     font-weight: 400;
     color: var(--gold);
     margin-left: 2px;
   }
 
-  .site-nav-links {
+  .top-nav-links {
     display: flex;
-    gap: 24px;
-    list-style: none;
+    gap: 6px;
+    align-items: center;
   }
 
-  .site-nav-links a {
-    font-family: var(--sans);
-    font-size: 0.8rem;
-    font-weight: 400;
+  .top-nav-links a {
     color: var(--cream-dark);
     text-decoration: none;
-    letter-spacing: 0.04em;
-    transition: color 0.2s;
+    transition: all 0.2s;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-size: 0.78rem;
+    font-weight: 400;
   }
 
-  .site-nav-links a:hover {
-    color: var(--gold);
+  .top-nav-links a:hover {
+    color: var(--cream);
+    background: rgba(245, 240, 232, 0.06);
+  }
+
+  .top-nav-links .nav-sep {
+    width: 1px;
+    height: 20px;
+    background: rgba(184, 149, 106, 0.15);
+    margin: 0 6px;
+  }
+
+  .top-nav-links .nav-cta {
+    color: var(--wine-deep);
+    background: var(--gold);
+    padding: 6px 16px;
+    border-radius: 3px;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    margin-left: 4px;
+  }
+
+  .top-nav-links .nav-cta:hover {
+    background: var(--gold-light);
+    color: var(--wine-deep);
   }
 
   /* ── Article Hero ────────────────────── */
@@ -474,21 +517,26 @@
     .article-hero { padding: 56px 20px 64px; }
     .article-content { padding: 48px 20px 60px; }
     .article-cta { padding: 48px 20px; }
-    .site-nav-links { gap: 16px; }
-    .site-nav-links a { font-size: 0.72rem; }
+    .top-nav { padding: 0 16px; height: 52px; }
+    .top-nav-links a:not(.nav-cta) { padding: 6px 8px; font-size: 0.72rem; }
+    .top-nav-links .nav-sep { display: none; }
+    .top-nav-name { font-size: 0.85rem; }
   }
 </style>
 </head>
 <body>
 
 <!-- ── Navigation ──────────────────────── -->
-<nav class="site-nav">
-  <a href="../index.html" class="site-nav-brand">WineLabel <span class="site-nav-eu">EU</span></a>
-  <ul class="site-nav-links">
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="../docs.html">Docs</a></li>
-    <li><a href="eu-wine-label-regulation-2025.html">Blog</a></li>
-  </ul>
+<nav class="top-nav">
+  <a href="../index.html" class="top-nav-brand">
+    <span class="top-nav-name">WineLabel <span>EU</span></span>
+  </a>
+  <div class="top-nav-links">
+    <a href="../docs.html">Docs</a>
+    <a href="eu-wine-label-regulation-2025.html">EU Regulation</a>
+    <span class="nav-sep"></span>
+    <a href="../index.html#pricing" class="nav-cta">Download</a>
+  </div>
 </nav>
 
 <!-- ── Article Hero ────────────────────── -->
