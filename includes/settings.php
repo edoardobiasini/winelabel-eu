@@ -87,6 +87,19 @@ add_action( 'admin_init', function () {
 		'default'           => 'winelabel',
 	] );
 
+	register_setting( 'wleu_settings', 'wleu_use_woocommerce', [
+		'type'              => 'string',
+		'sanitize_callback' => function ( $val ) {
+			$val = sanitize_text_field( $val );
+			// Flush rewrite rules when WC integration changes (CPT registration differs).
+			if ( $val !== get_option( 'wleu_use_woocommerce', 'yes' ) ) {
+				add_action( 'shutdown', 'flush_rewrite_rules' );
+			}
+			return $val;
+		},
+		'default'           => 'yes',
+	] );
+
 	register_setting( 'wleu_settings', 'wleu_delete_data_on_uninstall', [
 		'type'              => 'string',
 		'sanitize_callback' => 'sanitize_text_field',
@@ -273,6 +286,31 @@ function wleu_render_settings_tab() {
 		<?php settings_fields( 'wleu_settings' ); ?>
 
 		<table class="form-table">
+			<tr>
+				<th scope="row">
+					<?php esc_html_e( 'WooCommerce Integration', 'winelabel-eu' ); ?>
+				</th>
+				<td>
+					<?php if ( wleu_is_woocommerce_active() ) : ?>
+						<label>
+							<input type="hidden" name="wleu_use_woocommerce" value="no">
+							<input type="checkbox" name="wleu_use_woocommerce" value="yes"
+								   <?php checked( get_option( 'wleu_use_woocommerce', 'yes' ), 'yes' ); ?>>
+							<?php esc_html_e( 'Attach digital labels to WooCommerce products', 'winelabel-eu' ); ?>
+						</label>
+						<p class="description">
+							<?php esc_html_e( 'When enabled, the label fields appear on your WooCommerce product editor. When disabled, a separate "Wines" menu is used instead.', 'winelabel-eu' ); ?>
+						</p>
+					<?php else : ?>
+						<p class="description" style="margin: 0;">
+							<?php esc_html_e( 'WooCommerce is not active. WineLabel EU is using its built-in Wines manager.', 'winelabel-eu' ); ?>
+							<br>
+							<?php esc_html_e( 'Install and activate WooCommerce to attach digital labels directly to your products.', 'winelabel-eu' ); ?>
+						</p>
+					<?php endif; ?>
+				</td>
+			</tr>
+
 			<tr>
 				<th scope="row">
 					<label for="wleu_base_url"><?php esc_html_e( 'Base URL for QR Codes', 'winelabel-eu' ); ?></label>

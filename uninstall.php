@@ -54,6 +54,7 @@ $options = [
 	'wleu_index_slug',
 	'wleu_custom_strings',
 	'wleu_license_instance',
+	'wleu_use_woocommerce',
 	'wleu_delete_data_on_uninstall',
 ];
 

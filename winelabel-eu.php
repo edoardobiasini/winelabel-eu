@@ -69,14 +69,26 @@ function wleu_is_woocommerce_active() {
 }
 
 /**
+ * Check if the plugin should use WooCommerce products.
+ *
+ * Returns true only when WooCommerce is active AND the user has opted in
+ * (or hasn't explicitly opted out — defaults to 'yes' for backward compat).
+ *
+ * @return bool
+ */
+function wleu_uses_woocommerce() {
+	return wleu_is_woocommerce_active() && get_option( 'wleu_use_woocommerce', 'yes' ) === 'yes';
+}
+
+/**
  * Get the post type used for wines/products.
  *
- * Returns 'product' when WooCommerce is active, 'wleu_wine' otherwise.
+ * Returns 'product' when WooCommerce integration is enabled, 'wleu_wine' otherwise.
  *
  * @return string
  */
 function wleu_product_post_type() {
-	return wleu_is_woocommerce_active() ? 'product' : 'wleu_wine';
+	return wleu_uses_woocommerce() ? 'product' : 'wleu_wine';
 }
 
 // ── Custom Post Type: elabel_vintage ─────────────────────────
@@ -106,8 +118,8 @@ add_action( 'init', function () {
 		'rewrite'      => false,
 	] );
 
-	// Standalone wine CPT — only when WooCommerce is not active.
-	if ( ! wleu_is_woocommerce_active() ) {
+	// Standalone wine CPT — when not using WooCommerce integration.
+	if ( ! wleu_uses_woocommerce() ) {
 		register_post_type( 'wleu_wine', [
 			'labels' => [
 				'name'               => __( 'Wines', 'winelabel-eu' ),
@@ -443,7 +455,7 @@ add_action( 'edit_form_top', function ( $post ) {
 	$product_title = get_the_title( $post->post_parent );
 	printf(
 		'<div class="notice notice-info" style="padding:10px;margin:10px 0;"><strong>%s:</strong> <a href="%s">%s</a></div>',
-		esc_html( wleu_is_woocommerce_active() ? __( 'Product', 'winelabel-eu' ) : __( 'Wine', 'winelabel-eu' ) ),
+		esc_html( wleu_uses_woocommerce() ? __( 'Product', 'winelabel-eu' ) : __( 'Wine', 'winelabel-eu' ) ),
 		esc_url( $product_url ),
 		esc_html( $product_title )
 	);

@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EU Digital Wine Label Regulation 2021/2117 &mdash; What Wineries Need to Know | WineLabel EU</title>
+<meta name="description" content="Complete guide to EU digital wine label regulation 2021/2117. Learn what information is required, compliance deadlines, how QR codes work, and how to set up compliant digital wine labels with WordPress.">
+<link rel="canonical" href="https://winelabel.net/blog/eu-wine-label-regulation-2025">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="EU Digital Wine Label Regulation 2021/2117 &mdash; What Wineries Need to Know">
+<meta property="og:description" content="Complete guide to EU regulation compliance for digital wine labels. Ingredients, nutrition facts, allergens, waste sorting &mdash; everything you need on your digital label.">
+<meta property="og:url" content="https://winelabel.net/blog/eu-wine-label-regulation-2025">
+<meta property="og:site_name" content="WineLabel EU">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-06-01T00:00:00+00:00">
+<meta property="article:modified_time" content="2025-06-01T00:00:00+00:00">
+<meta property="article:section" content="Wine Regulation">
+<meta property="article:tag" content="EU wine label regulation">
+<meta property="article:tag" content="digital wine label QR code">
+<meta property="article:tag" content="wine label compliance">
+
+<!-- Schema.org Article structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "EU Digital Wine Label Regulation 2021/2117 — What Wineries Need to Know",
+  "description": "Complete guide to EU regulation compliance for digital wine labels. Ingredients, nutrition facts, allergens, waste sorting — everything you need on your digital label.",
+  "url": "https://winelabel.net/blog/eu-wine-label-regulation-2025",
+  "datePublished": "2025-06-01T00:00:00+00:00",
+  "dateModified": "2025-06-01T00:00:00+00:00",
+  "author": {
+    "@type": "Organization",
+    "name": "WineLabel EU",
+    "url": "https://winelabel.net"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WineLabel EU",
+    "url": "https://winelabel.net"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://winelabel.net/blog/eu-wine-label-regulation-2025"
+  },
+  "keywords": ["EU digital wine label regulation 2021/2117", "digital wine label QR code", "wine label EU regulation compliance", "etichetta digitale vino wordpress"],
+  "inLanguage": "en",
+  "articleSection": "Wine Regulation"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wine: #4A1526;
+    --wine-deep: #2D0A15;
+    --wine-light: #6B2140;
+    --cream: #F5F0E8;
+    --cream-mid: #E8E0D2;
+    --cream-dark: #D4C9B8;
+    --gold: #B8956A;
+    --gold-light: #D4B896;
+    --gold-dim: rgba(184, 149, 106, 0.3);
+    --text: #2A1F1A;
+    --text-light: #7A6E64;
+    --white: #FDFBF7;
+    --serif: 'Lora', 'Georgia', serif;
+    --sans: 'DM Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── Nav ──────────────────────────────── */
+
+  .site-nav {
+    background: var(--wine-deep);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-nav-brand {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--cream);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+  }
+
+  .site-nav-eu {
+    font-weight: 400;
+    color: var(--gold);
+    margin-left: 2px;
+  }
+
+  .site-nav-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .site-nav-links a {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--cream-dark);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .site-nav-links a:hover {
+    color: var(--gold);
+  }
+
+  /* ── Article Hero ────────────────────── */
+
+  .article-hero {
+    background: var(--wine-deep);
+    color: var(--cream);
+    text-align: center;
+    padding: 72px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .article-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(107, 33, 64, 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(74, 21, 38, 0.6) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .article-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--white));
+    pointer-events: none;
+  }
+
+  .article-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .article-meta {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .article-hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+
+  .article-hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .article-hero-desc {
+    font-size: 1.02rem;
+    font-weight: 300;
+    color: var(--cream-dark);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── Article Body ────────────────────── */
+
+  .article-body {
+    background: var(--white);
+    border-bottom: 1px solid var(--cream-mid);
+  }
+
+  .article-content {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+  }
+
+  .article-content h2 {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 48px 0 16px;
+    line-height: 1.3;
+  }
+
+  .article-content h2:first-child {
+    margin-top: 0;
+  }
+
+  .article-content h3 {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 32px 0 12px;
+    line-height: 1.35;
+  }
+
+  .article-content p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #3A302A;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .article-content strong {
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .article-content ul,
+  .article-content ol {
+    margin: 0 0 20px 24px;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #3A302A;
+    font-weight: 300;
+  }
+
+  .article-content li {
+    margin-bottom: 8px;
+  }
+
+  .article-content a {
+    color: var(--wine);
+    text-decoration: underline;
+    text-decoration-color: var(--gold-dim);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s;
+  }
+
+  .article-content a:hover {
+    text-decoration-color: var(--gold);
+  }
+
+  .article-content blockquote {
+    border-left: 3px solid var(--gold);
+    margin: 32px 0;
+    padding: 16px 24px;
+    background: var(--cream);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .article-content blockquote p {
+    font-style: italic;
+    font-family: var(--serif);
+    color: var(--text);
+    margin-bottom: 0;
+    font-weight: 400;
+    font-size: 0.98rem;
+  }
+
+  .info-box {
+    background: var(--cream);
+    border: 1px solid var(--cream-mid);
+    border-radius: 4px;
+    padding: 24px 28px;
+    margin: 32px 0;
+  }
+
+  .info-box h4 {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .info-box ul {
+    margin: 0 0 0 20px;
+  }
+
+  .info-box li {
+    margin-bottom: 6px;
+  }
+
+  /* ── Italian Summary ─────────────────── */
+
+  .italian-summary {
+    background: var(--cream);
+    border: 1px solid var(--cream-mid);
+    border-radius: 4px;
+    padding: 32px 28px;
+    margin: 48px 0 0;
+  }
+
+  .italian-summary h3 {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--wine);
+    margin: 0 0 8px;
+  }
+
+  .italian-summary .lang-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  .italian-summary p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #3A302A;
+    margin-bottom: 14px;
+    font-weight: 300;
+  }
+
+  .italian-summary p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── CTA banner ──────────────────────── */
+
+  .article-cta {
+    background: var(--wine-deep);
+    color: var(--cream);
+    text-align: center;
+    padding: 64px 24px;
+  }
+
+  .article-cta-inner {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .article-cta h2 {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: var(--cream);
+  }
+
+  .article-cta p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--cream-dark);
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+
+  .article-cta .btn {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 36px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--wine-deep);
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid var(--cream-dark);
+  }
+
+  .btn-outline:hover {
+    background: rgba(245, 240, 232, 0.08);
+    border-color: var(--cream);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── Footer ──────────────────────────── */
+
+  footer {
+    background: var(--wine-deep);
+    color: var(--cream-dark);
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
+
+  footer .footer-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  footer a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  footer a:hover { text-decoration: underline; }
+
+  /* ── Animations ──────────────────────── */
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ──────────────────────── */
+
+  @media (max-width: 480px) {
+    .article-hero { padding: 56px 20px 64px; }
+    .article-content { padding: 48px 20px 60px; }
+    .article-cta { padding: 48px 20px; }
+    .site-nav-links { gap: 16px; }
+    .site-nav-links a { font-size: 0.72rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ──────────────────────── -->
+<nav class="site-nav">
+  <a href="../index.html" class="site-nav-brand">WineLabel <span class="site-nav-eu">EU</span></a>
+  <ul class="site-nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../docs.html">Docs</a></li>
+    <li><a href="eu-wine-label-regulation-2025.html">Blog</a></li>
+  </ul>
+</nav>
+
+<!-- ── Article Hero ────────────────────── -->
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="article-meta">Wine Regulation &middot; June 2025</div>
+    <h1>EU Digital Wine Label Regulation 2021/2117: <em>What Wineries Need to Know</em></h1>
+    <p class="article-hero-desc">A practical guide to the EU's mandatory digital labelling requirements for wine &mdash; what's required, when it applies, and how to comply.</p>
+  </div>
+</header>
+
+<!-- ── Article Body ────────────────────── -->
+<main class="article-body">
+  <article class="article-content">
+
+    <h2>What Is Regulation (EU) 2021/2117?</h2>
+
+    <p>Regulation (EU) 2021/2117 is an amendment to the Common Agricultural Policy (CAP) that, among other reforms, introduced <strong>mandatory labelling requirements for wine products</strong> across all EU member states. The regulation was adopted on 2 December 2021 and amends Regulation (EU) 1308/2013 (the "CMO Regulation"), specifically Article 119 concerning the labelling of grapevine products.</p>
+
+    <p>Before this regulation, wine was one of the last major food categories exempt from listing ingredients and nutritional information. Consumers buying a bottle of Chianti or Riesling had no easy way to know what was actually in the bottle beyond grapes and alcohol. That changed with 2021/2117.</p>
+
+    <p>The regulation requires that all wines produced and labelled <strong>after 8 December 2023</strong> must provide consumers with a complete list of ingredients, a full nutritional declaration, and &mdash; critically &mdash; allows this information to be provided via <strong>electronic means</strong>, including QR codes printed on the physical label.</p>
+
+    <blockquote><p>The regulation doesn't just encourage digital labelling &mdash; it recognises the QR code as a legitimate way to deliver mandatory consumer information for wine, provided the digital label meets certain requirements.</p></blockquote>
+
+    <p>This is a significant shift. It means that every winery selling wine in the EU &mdash; whether based in Italy, France, Spain, or importing from the New World &mdash; must now ensure that this information is accessible to consumers. And for most producers, a digital wine label accessed via QR code is the most practical way to comply.</p>
+
+    <h2>What Information Must Be on Digital Wine Labels?</h2>
+
+    <p>The regulation is specific about what information the digital label must contain. There are four main areas:</p>
+
+    <h3>1. Ingredients List</h3>
+
+    <p>The label must list all ingredients used in the production of the wine, in descending order of weight. For most wines, this includes:</p>
+
+    <ul>
+      <li><strong>Grapes</strong> (the primary raw material)</li>
+      <li><strong>Additives</strong> such as sulfur dioxide (E220), ascorbic acid (E300), potassium sorbate (E202)</li>
+      <li><strong>Processing aids</strong> that remain in the final product</li>
+      <li><strong>Sugars</strong> added during processes like dosage (for sparkling wines) or chaptalisation</li>
+      <li><strong>Acidifying or de-acidifying agents</strong> such as tartaric acid</li>
+    </ul>
+
+    <p>The ingredients list must follow the format established by Regulation (EU) 1169/2011 (the Food Information to Consumers regulation), using the same naming conventions and E-number references used for other food products.</p>
+
+    <h3>2. Nutritional Declaration</h3>
+
+    <p>The digital label must include a full nutritional declaration per 100 ml, covering:</p>
+
+    <div class="info-box">
+      <h4>Required nutritional values</h4>
+      <ul>
+        <li><strong>Energy value</strong> in both kJ and kcal</li>
+        <li><strong>Fat</strong> (and of which saturates)</li>
+        <li><strong>Carbohydrates</strong> (and of which sugars)</li>
+        <li><strong>Protein</strong></li>
+        <li><strong>Salt</strong></li>
+      </ul>
+    </div>
+
+    <p>Additionally, the <strong>alcohol content by volume</strong> must be clearly displayed. While most of these values will be zero or near-zero for dry wines, the regulation requires them to be stated regardless.</p>
+
+    <h3>3. Allergens</h3>
+
+    <p>Allergens must be clearly highlighted on the digital label. For wine, the main allergens are:</p>
+
+    <ul>
+      <li><strong>Sulfites</strong> (present in virtually all wines)</li>
+      <li><strong>Milk derivatives</strong> (if used as fining agents, e.g. casein)</li>
+      <li><strong>Egg derivatives</strong> (if used as fining agents, e.g. albumin, lysozyme)</li>
+    </ul>
+
+    <p>These must be emphasised in the ingredients list (typically in bold) and, in many implementations, repeated in a dedicated allergen statement &mdash; a practice required by food safety norms and expected by inspectors.</p>
+
+    <h3>4. Waste Sorting &amp; Packaging Information</h3>
+
+    <p>While not part of the original wine labelling regulation, <strong>waste sorting information</strong> is increasingly required by national legislation in several EU countries, most notably Italy (D.Lgs. 116/2020). Producers must indicate the material composition of each packaging component (bottle, cap, label, box) and provide sorting instructions.</p>
+
+    <p>Many digital wine label solutions &mdash; including WineLabel EU &mdash; incorporate this section directly into the digital label, making it convenient for producers to satisfy both the EU-wide and national requirements in one place.</p>
+
+    <h2>The Compliance Deadline: What Happens If You Don't Comply</h2>
+
+    <p>The key date is <strong>8 December 2023</strong>. All wines produced and labelled on or after this date must comply. Wines that were already labelled before this date may continue to be sold with their existing labels until stocks are exhausted.</p>
+
+    <p>Enforcement varies by member state, but the consequences of non-compliance can be significant:</p>
+
+    <ul>
+      <li><strong>Fines</strong> &mdash; National authorities can impose administrative penalties. In Italy, for example, ICQRF (the authority for quality control) actively inspects wine labels and can issue fines for missing or incorrect information.</li>
+      <li><strong>Market access restrictions</strong> &mdash; Wine that does not meet labelling requirements may be blocked from sale within the EU. This is particularly relevant for importers and distributors.</li>
+      <li><strong>Retailer requirements</strong> &mdash; Large retailers and supermarket chains increasingly require suppliers to demonstrate compliance before listing their products.</li>
+      <li><strong>Reputational risk</strong> &mdash; In an industry built on trust and tradition, being publicly cited for a labelling violation is a risk no serious producer wants to take.</li>
+    </ul>
+
+    <p>If you are a winery still producing wine without compliant digital labels, <strong>the time to act is now</strong>. Inspections are ramping up across the EU, and the grace period for adjustment has effectively passed.</p>
+
+    <h2>How QR Codes Work for Wine Labels</h2>
+
+    <p>The regulation explicitly allows producers to provide ingredient and nutritional information through <strong>electronic means</strong>. In practice, this means a QR code printed on the physical label that links to a web page containing the required information.</p>
+
+    <p>Here is how it works in practice:</p>
+
+    <ol>
+      <li>The winery creates a <strong>digital label page</strong> for each wine (or each vintage of each wine) containing all mandatory information.</li>
+      <li>That page is hosted at a <strong>stable, publicly accessible URL</strong> &mdash; for example, <code>yourwinery.com/barolo-2022-elabel/</code>.</li>
+      <li>A <strong>QR code</strong> encoding that URL is generated and printed on the physical wine label or back label.</li>
+      <li>The consumer scans the QR code with their smartphone camera, which opens the digital label in their browser.</li>
+    </ol>
+
+    <p>There are important requirements for the digital label page itself:</p>
+
+    <ul>
+      <li>It must <strong>not collect user data</strong>. No cookies, no tracking pixels, no analytics scripts. The regulation is clear that accessing mandatory product information must not be conditional on any form of data collection.</li>
+      <li>It must be <strong>accessible</strong> &mdash; the page should load quickly, work on all devices, and not require app installation or account creation.</li>
+      <li>It must contain <strong>only regulatory information</strong>. Marketing content, promotional offers, or links to other products should not appear on the mandatory label page (though producers may host such content elsewhere on their site).</li>
+    </ul>
+
+    <p>This is why a purpose-built solution matters. Using a generic web page or PDF to host your digital label creates compliance risks around data collection, accessibility, and content requirements.</p>
+
+    <h2>A Practical Approach: Setting Up Compliant Labels with WordPress</h2>
+
+    <p>For wineries already running their website on WordPress &mdash; and a large proportion of wineries do &mdash; a dedicated plugin is the most efficient path to compliance. Rather than building custom pages, managing QR code generation, and worrying about whether your theme injects cookies or tracking scripts, a purpose-built plugin handles all of this automatically.</p>
+
+    <p><a href="https://winelabel.net">WineLabel EU</a> is a WordPress plugin designed specifically for this purpose. It generates <strong>bare HTML digital label pages</strong> that are completely independent of your WordPress theme. No cookies. No JavaScript. No tracking. Just the regulatory information, cleanly formatted and instantly accessible.</p>
+
+    <p>Here is what the workflow looks like:</p>
+
+    <ol>
+      <li><strong>Install the plugin</strong> on your WordPress site. It works with WooCommerce products or as a standalone wine management tool &mdash; your choice.</li>
+      <li><strong>Enter your wine data</strong> &mdash; ingredients, nutritional values, allergens, and packaging details. Fields are structured to follow the regulation exactly, so you don't have to guess what goes where.</li>
+      <li><strong>Publish the vintage</strong>. The plugin generates the digital label page and a unique URL. Each wine can have multiple vintages, each with its own data and URL.</li>
+      <li><strong>Print the QR code</strong>. The Pro version generates high-resolution vector QR code PDFs ready for your label printer. The free version gives you the URL to generate QR codes with any tool you prefer.</li>
+    </ol>
+
+    <p>The plugin supports <strong>bilingual labels</strong> (English plus a configurable second language), which is important for producers selling across multiple markets. All label pages are served as standalone HTML &mdash; they don't load your theme, your fonts, your analytics, or any third-party resources.</p>
+
+    <p>There is a <strong>free version</strong> that covers up to 5 published vintages with full regulatory compliance, and a <strong>Pro version</strong> for larger producers who need unlimited vintages, bilingual support, vector QR PDFs, and white-labelling options.</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>Does this apply to wines sold outside the EU?</h3>
+    <p>The regulation applies to wines <strong>marketed within the EU</strong>. If you export exclusively outside the EU, you follow the destination country's rules. However, if any of your wine is sold in EU markets, those bottles must comply.</p>
+
+    <h3>Can I use a single digital label for all vintages?</h3>
+    <p>Technically, if the ingredients and nutritional values are identical across vintages, a single page could serve. In practice, most producers create <strong>per-vintage labels</strong> because ingredient lists and values can change from year to year (e.g., different fining agents, different residual sugar levels).</p>
+
+    <h3>What about sparkling wine and fortified wine?</h3>
+    <p>The regulation covers all grapevine products, including sparkling wine, prosecco, champagne, fortified wine, and aromatised wine products. The same requirements apply.</p>
+
+    <h3>Is the QR code mandatory, or can I print all information on the label?</h3>
+    <p>You may print all required information directly on the physical label if you prefer. The QR code / digital label is an <strong>alternative</strong> to printing everything on the bottle &mdash; and for most producers, it is the more practical choice given the volume of information required.</p>
+
+    <!-- Italian Summary -->
+    <div class="italian-summary">
+      <h3>Riepilogo in Italiano</h3>
+      <span class="lang-tag">Italiano</span>
+
+      <p>Il Regolamento (UE) 2021/2117 ha introdotto l'obbligo, per tutti i vini prodotti ed etichettati <strong>dopo l'8 dicembre 2023</strong>, di fornire ai consumatori la lista completa degli ingredienti, la dichiarazione nutrizionale e le informazioni sugli allergeni. Queste informazioni possono essere fornite tramite <strong>etichetta digitale</strong> accessibile con un codice QR stampato sulla bottiglia.</p>
+
+      <p>L'etichetta digitale deve contenere: ingredienti in ordine decrescente di peso, valori nutrizionali per 100 ml (energia, grassi, carboidrati, proteine, sale), allergeni evidenziati (solfiti, derivati del latte, derivati dell'uovo) e, per l'Italia, anche le informazioni sullo smaltimento degli imballaggi (D.Lgs. 116/2020).</p>
+
+      <p>La pagina digitale <strong>non deve raccogliere dati personali</strong>: niente cookie, niente script di tracciamento, niente analytics. Deve essere accessibile da qualsiasi dispositivo senza richiedere installazioni o registrazioni.</p>
+
+      <p><a href="https://winelabel.net">WineLabel EU</a> &egrave; un plugin WordPress progettato specificamente per generare etichette digitali conformi al regolamento. Produce pagine HTML autonome, senza dipendenze dal tema, con supporto bilingue e generazione di QR code in formato vettoriale. Disponibile in versione gratuita (fino a 5 annate) e Pro (annate illimitate, PDF QR vettoriali, white-label).</p>
+    </div>
+
+  </article>
+</main>
+
+<!-- ── CTA Banner ──────────────────────── -->
+<section class="article-cta">
+  <div class="article-cta-inner">
+    <h2>Ready to make your labels compliant?</h2>
+    <p>WineLabel EU is free for up to 5 vintages. Install it on your WordPress site and generate your first digital label in minutes.</p>
+    <div class="cta-buttons">
+      <a href="https://winelabel.net#pricing" class="btn btn-primary">Download Free</a>
+      <a href="https://winelabel.net/docs" class="btn btn-outline">Read the Docs</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────── -->
+<footer>
+  <div class="footer-name">WineLabel EU</div>
+  <p>&copy; 2025 WineLabel EU. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

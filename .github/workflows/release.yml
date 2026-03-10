@@ -1,0 +1,73 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer
+
+      - name: Extract version from tag
+        id: version
+        run: echo "tag=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build distributable ZIP
+        run: |
+          PLUGIN_SLUG="winelabel-eu"
+          VERSION="${{ steps.version.outputs.tag }}"
+          ZIP_NAME="${PLUGIN_SLUG}-${VERSION}.zip"
+          BUILD_DIR=$(mktemp -d)
+          DEST="$BUILD_DIR/$PLUGIN_SLUG"
+
+          # Copy plugin files, excluding dev/build artifacts.
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.gitignore' \
+            --exclude='.github' \
+            --exclude='build.sh' \
+            --exclude='README.md' \
+            --exclude='.DS_Store' \
+            --exclude='Thumbs.db' \
+            --exclude='.idea/' \
+            --exclude='.vscode/' \
+            --exclude='*.swp' \
+            --exclude='*.swo' \
+            --exclude='node_modules/' \
+            --exclude='tests/' \
+            --exclude='landing/' \
+            --exclude='GO-TO-MARKET.md' \
+            "$GITHUB_WORKSPACE/" "$DEST/"
+
+          # Install production Composer dependencies.
+          cd "$DEST"
+          composer install --no-dev --optimize-autoloader --no-interaction --quiet 2>/dev/null || true
+          rm -f composer.json composer.lock
+
+          # Create ZIP.
+          cd "$BUILD_DIR"
+          zip -rq "$GITHUB_WORKSPACE/$ZIP_NAME" "$PLUGIN_SLUG"
+
+          echo "zip_name=$ZIP_NAME" >> "$GITHUB_ENV"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "WineLabel EU v${{ steps.version.outputs.tag }}"
+          generate_release_notes: true
+          files: ${{ env.zip_name }}

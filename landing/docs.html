@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentation — WineLabel EU</title>
+<meta name="description" content="Getting started with WineLabel EU — installation, configuration, and usage guide for the EU-compliant digital wine label WordPress plugin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wine: #4A1526;
+    --wine-deep: #2D0A15;
+    --wine-light: #6B2140;
+    --cream: #F5F0E8;
+    --cream-mid: #E8E0D2;
+    --cream-dark: #D4C9B8;
+    --gold: #B8956A;
+    --gold-light: #D4B896;
+    --gold-dim: rgba(184, 149, 106, 0.3);
+    --text: #2A1F1A;
+    --text-light: #7A6E64;
+    --white: #FDFBF7;
+    --serif: 'Lora', 'Georgia', serif;
+    --sans: 'DM Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── Top nav ──────────────────────────── */
+
+  .top-nav {
+    background: var(--wine-deep);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(184, 149, 106, 0.15);
+  }
+
+  .top-nav-brand {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--cream);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+  }
+
+  .top-nav-brand .top-nav-eu {
+    font-weight: 400;
+    color: var(--gold);
+    margin-left: 2px;
+  }
+
+  .top-nav-brand span:last-child {
+    color: var(--cream-dark);
+    font-weight: 300;
+    margin-left: 6px;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
+  .top-nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .top-nav-links a {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--cream-dark);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .top-nav-links a:hover { color: var(--cream); }
+
+  /* ── Layout ───────────────────────────── */
+
+  .docs-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    max-width: 1060px;
+    margin: 0 auto;
+    gap: 0;
+    min-height: calc(100vh - 56px);
+  }
+
+  /* ── Sidebar ──────────────────────────── */
+
+  .sidebar {
+    padding: 40px 24px 40px 0;
+    position: sticky;
+    top: 56px;
+    height: fit-content;
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+    border-right: 1px solid var(--cream-mid);
+  }
+
+  .sidebar-label {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .sidebar nav a {
+    display: block;
+    font-size: 0.84rem;
+    font-weight: 400;
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 6px 0;
+    line-height: 1.5;
+    transition: color 0.2s;
+    border-left: 2px solid transparent;
+    padding-left: 14px;
+    margin-left: -1px;
+  }
+
+  .sidebar nav a:hover {
+    color: var(--text);
+    border-left-color: var(--cream-dark);
+  }
+
+  .sidebar nav a.active {
+    color: var(--wine);
+    font-weight: 500;
+    border-left-color: var(--gold);
+  }
+
+  /* ── Main content ─────────────────────── */
+
+  .docs-content {
+    padding: 48px 0 80px 48px;
+    max-width: 720px;
+  }
+
+  .docs-content h1 {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 500;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .docs-content .subtitle {
+    font-size: 1.02rem;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-bottom: 48px;
+    line-height: 1.7;
+  }
+
+  .docs-content h2 {
+    font-family: var(--serif);
+    font-size: 1.55rem;
+    font-weight: 600;
+    margin-top: 56px;
+    margin-bottom: 16px;
+    padding-top: 24px;
+    border-top: 1px solid var(--cream-mid);
+    scroll-margin-top: 72px;
+    color: var(--text);
+  }
+
+  .docs-content h2:first-of-type {
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .docs-content h3 {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 32px;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .docs-content p {
+    margin-bottom: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 0.94rem;
+  }
+
+  .docs-content ul, .docs-content ol {
+    margin-bottom: 16px;
+    padding-left: 24px;
+  }
+
+  .docs-content li {
+    margin-bottom: 8px;
+    font-size: 0.94rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .docs-content strong {
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .docs-content code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.84rem;
+    background: var(--white);
+    border: 1px solid var(--cream-mid);
+    padding: 2px 7px;
+    border-radius: 3px;
+    color: var(--wine);
+  }
+
+  .docs-content pre {
+    background: var(--wine-deep);
+    color: var(--cream);
+    padding: 20px 24px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin-bottom: 20px;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  .docs-content pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  /* ── Steps list ───────────────────────── */
+
+  .step-list {
+    counter-reset: docstep;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .step-list li {
+    counter-increment: docstep;
+    padding-left: 36px;
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .step-list li::before {
+    content: counter(docstep);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    color: var(--wine);
+    font-family: var(--serif);
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  /* ── Callout / note box ───────────────── */
+
+  .callout {
+    background: var(--white);
+    border: 1px solid var(--cream-mid);
+    border-left: 3px solid var(--gold);
+    padding: 16px 20px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 20px;
+    font-size: 0.88rem;
+  }
+
+  .callout p { margin-bottom: 0; }
+
+  .callout-label {
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  /* ── Comparison mini-table ────────────── */
+
+  .docs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    background: var(--white);
+    border: 1px solid var(--cream-mid);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .docs-table thead th {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 2px solid var(--cream-mid);
+    background: var(--white);
+  }
+
+  .docs-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--cream-mid);
+    font-weight: 300;
+    vertical-align: top;
+  }
+
+  .docs-table tr:last-child td { border-bottom: none; }
+
+  .docs-table tbody tr:hover { background: rgba(184, 149, 106, 0.04); }
+
+  .check { color: var(--gold); }
+  .dash { color: var(--cream-dark); }
+
+  /* ── FAQ ───────────────────────────────── */
+
+  .faq-item {
+    margin-bottom: 24px;
+  }
+
+  .faq-item h3 {
+    margin-top: 0;
+    font-size: 1.05rem;
+  }
+
+  .faq-item p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── Footer ───────────────────────────── */
+
+  footer {
+    background: var(--wine-deep);
+    color: var(--cream-dark);
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
+
+  footer .footer-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  footer a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  footer a:hover { text-decoration: underline; }
+
+  /* ── Responsive ───────────────────────── */
+
+  @media (max-width: 768px) {
+    .docs-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      position: static;
+      max-height: none;
+      border-right: none;
+      border-bottom: 1px solid var(--cream-mid);
+      padding: 24px 24px 20px;
+    }
+
+    .sidebar nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+    }
+
+    .sidebar nav a {
+      border-left: none;
+      padding-left: 0;
+      font-size: 0.8rem;
+    }
+
+    .docs-content {
+      padding: 32px 24px 60px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .top-nav-links { gap: 14px; }
+    .top-nav-links a { font-size: 0.72rem; }
+    .docs-content h1 { font-size: 1.8rem; }
+    .docs-content h2 { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Top nav ──────────────────────────── -->
+<nav class="top-nav">
+  <a href="index.html" class="top-nav-brand">WineLabel <span class="top-nav-eu">EU</span> <span>Docs</span></a>
+  <div class="top-nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#pricing">Pricing</a>
+    <a href="#">Download</a>
+  </div>
+</nav>
+
+<!-- ── Layout ───────────────────────────── -->
+<div class="docs-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <span class="sidebar-label">On this page</span>
+    <nav>
+      <a href="#installation">Installation</a>
+      <a href="#quick-start">Quick Start</a>
+      <a href="#understanding-labels">Understanding Labels</a>
+      <a href="#url-structure">URL Structure</a>
+      <a href="#free-vs-pro">Free vs Pro</a>
+      <a href="#pro-features">Pro Features</a>
+      <a href="#settings">Settings</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </aside>
+
+  <!-- Content -->
+  <main class="docs-content">
+    <h1>Getting Started</h1>
+    <p class="subtitle">Everything you need to set up EU-compliant digital wine labels on your WordPress site.</p>
+
+    <!-- ── Installation ────────────────────── -->
+    <h2 id="installation">Installation</h2>
+    <p>WineLabel EU is installed like any standard WordPress plugin.</p>
+    <ol class="step-list">
+      <li>Download the <code>winelabel-eu.zip</code> file from your purchase confirmation or the free download page.</li>
+      <li>In your WordPress admin, go to <strong>Plugins &rarr; Add New &rarr; Upload Plugin</strong>.</li>
+      <li>Choose the ZIP file and click <strong>Install Now</strong>.</li>
+      <li>After installation completes, click <strong>Activate Plugin</strong>.</li>
+    </ol>
+    <div class="callout">
+      <span class="callout-label">Note</span>
+      <p>No additional configuration is required to start using the free version. The plugin works out of the box.</p>
+    </div>
+
+    <!-- ── Quick Start ─────────────────────── -->
+    <h2 id="quick-start">Quick Start</h2>
+    <p>Once the plugin is active, follow these steps to create your first digital wine label.</p>
+
+    <h3>1. Create a wine product</h3>
+    <p>If WooCommerce is installed, navigate to <strong>Products &rarr; Add New</strong> and create a product for your wine. If you are not using WooCommerce, the plugin registers its own <strong>WineLabel EU &rarr; Wines</strong> post type &mdash; use that instead.</p>
+    <p>On the product edit screen, check the <strong>Enable Digital Label</strong> checkbox and fill in the wine name (this appears at the top of the label).</p>
+
+    <h3>2. Add a vintage</h3>
+    <p>Below the wine product, you will see a <strong>Vintages</strong> panel. Click <strong>Add Vintage</strong> to create a vintage entry (e.g., 2024). Each vintage is its own post linked to the parent wine.</p>
+    <p>Fill in the vintage-specific data: ingredients, nutritional values, and waste sorting instructions. The fields follow the exact structure required by EU regulation.</p>
+
+    <h3>3. Publish and share</h3>
+    <p>Publish the vintage. The plugin automatically generates a standalone HTML label page at a clean URL. Copy the URL or use the QR code feature (Pro) to print it on your bottle labels.</p>
+
+    <!-- ── Understanding Labels ────────────── -->
+    <h2 id="understanding-labels">Understanding Labels</h2>
+    <p>Each digital label contains the information required by Reg. (EU) 2021/2117 amending Art. 119 of Reg. (EU) 1308/2013. Here is what goes into a label:</p>
+
+    <h3>Ingredients</h3>
+    <p>The raw materials and additives used in winemaking. Fields include the base ingredient (grapes), any additives or processing aids, and allergen declarations. Allergens such as sulfites are highlighted automatically on the label output.</p>
+
+    <h3>Nutritional values</h3>
+    <p>Energy (kJ and kcal), fat, saturated fat, carbohydrates, sugars, protein, and salt. Values are entered per 100 ml. The plugin also displays the alcohol percentage.</p>
+
+    <h3>Waste sorting / recycling</h3>
+    <p>Packaging material details for proper disposal. The <strong>Raccolta</strong> repeater field lets you list each packaging component (e.g., glass bottle, cork, capsule) with its material code and disposal instructions.</p>
+
+    <div class="callout">
+      <span class="callout-label">Tip</span>
+      <p>The label output is bare HTML with no cookies, scripts, or WordPress theme dependency. This means it loads instantly and is fully compliant with privacy regulations.</p>
+    </div>
+
+    <!-- ── URL Structure ───────────────────── -->
+    <h2 id="url-structure">URL Structure</h2>
+    <p>WineLabel EU generates clean, predictable URLs for every label.</p>
+
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>URL pattern</th>
+          <th>What it does</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>/{slug}-winelabel-{YY}/</code></td>
+          <td>The label for a specific vintage. <code>{slug}</code> is the wine product slug and <code>{YY}</code> is the two-digit vintage year.</td>
+        </tr>
+        <tr>
+          <td><code>/{slug}-winelabel/</code></td>
+          <td>Redirects (301) to the most recent published vintage for that wine.</td>
+        </tr>
+        <tr>
+          <td><code>/winelabel/</code></td>
+          <td>Index page listing all published wine labels.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <span class="callout-label">Pro</span>
+      <p>With Pro, you can change the base URL segment from <code>winelabel</code> to a custom string via <strong>WineLabel EU &rarr; Settings &rarr; Base URL</strong>. Useful for matching your brand or language (e.g., <code>/etichetta/</code>).</p>
+    </div>
+
+    <!-- ── Free vs Pro ─────────────────────── -->
+    <h2 id="free-vs-pro">Free vs Pro</h2>
+    <p>The free version is fully functional for small producers. Here is what is included in each plan:</p>
+
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Free</th>
+          <th>Pro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Published vintages</td>
+          <td>5 max</td>
+          <td>Unlimited</td>
+        </tr>
+        <tr>
+          <td>Ingredients, nutrition, recycling</td>
+          <td><span class="check">&check;</span></td>
+          <td><span class="check">&check;</span></td>
+        </tr>
+        <tr>
+          <td>Bare HTML output</td>
+          <td><span class="check">&check;</span></td>
+          <td><span class="check">&check;</span></td>
+        </tr>
+        <tr>
+          <td>Label index page</td>
+          <td><span class="check">&check;</span></td>
+          <td><span class="check">&check;</span></td>
+        </tr>
+        <tr>
+          <td>Bilingual labels</td>
+          <td>EN only</td>
+          <td>EN + configurable</td>
+        </tr>
+        <tr>
+          <td>QR code PDF</td>
+          <td><span class="dash">&mdash;</span></td>
+          <td><span class="check">&check;</span></td>
+        </tr>
+        <tr>
+          <td>Duplicate vintage</td>
+          <td><span class="dash">&mdash;</span></td>
+          <td><span class="check">&check;</span></td>
+        </tr>
+        <tr>
+          <td>Custom base URL</td>
+          <td><span class="dash">&mdash;</span></td>
+          <td><span class="check">&check;</span></td>
+        </tr>
+        <tr>
+          <td>White-label</td>
+          <td><span class="dash">&mdash;</span></td>
+          <td><span class="check">&check;</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ── Pro Features ────────────────────── -->
+    <h2 id="pro-features">Pro Features</h2>
+
+    <h3>Bilingual labels</h3>
+    <p>Pro supports a second language alongside English. All text fields (ingredients, nutritional info, recycling instructions) have both an English and a second-language version. The label renders both languages side by side, letting you comply in multiple markets from a single label.</p>
+    <p>The second language is configured in <strong>WineLabel EU &rarr; Settings</strong> via a language code (e.g., <code>it</code> for Italian, <code>de</code> for German).</p>
+
+    <h3>QR code PDF</h3>
+    <p>Generate a print-ready PDF containing a vector SVG QR code pointing to the label URL. The QR code is resolution-independent and can be placed directly into your bottle label design files. Download it from the vintage edit screen in the admin.</p>
+
+    <h3>Duplicate vintage</h3>
+    <p>Clone an existing vintage with all its data to quickly create a new year. All ingredient, nutritional, and recycling fields are copied to the new vintage post. Available as a row action in the vintages list.</p>
+
+    <h3>Custom base URL</h3>
+    <p>Replace the default <code>/winelabel/</code> URL segment with a string of your choice. This changes all label URLs and the index page URL. Useful for non-English sites (e.g., <code>/etichetta/</code>, <code>/etikett/</code>).</p>
+
+    <h3>White-label</h3>
+    <p>Remove the "Powered by WineLabel EU" footer credit from the label output. The label appears completely unbranded, showing only your wine data.</p>
+
+    <!-- ── Settings ────────────────────────── -->
+    <h2 id="settings">Settings</h2>
+    <p>All plugin settings are found under <strong>WineLabel EU</strong> in the WordPress admin menu. The settings page has three tabs:</p>
+
+    <h3>License</h3>
+    <p>Enter your Pro license key here to activate Pro features. The license status is cached for 7 days. If you see a validation error, check that your key is correct and that your site can reach the license server.</p>
+
+    <h3>Settings</h3>
+    <ul>
+      <li><strong>Second language code</strong> &mdash; The ISO language code for your second label language (Pro only). English is always the primary language.</li>
+      <li><strong>Base URL override</strong> &mdash; Change the <code>/winelabel/</code> segment in all label URLs (Pro only). After changing this, visit <strong>Settings &rarr; Permalinks</strong> in WordPress and click Save to flush rewrite rules.</li>
+    </ul>
+
+    <h3>Usage</h3>
+    <p>Shows your current vintage count against the free-tier limit (5 published vintages). Pro users see "Unlimited" here.</p>
+
+    <!-- ── FAQ ──────────────────────────────── -->
+    <h2 id="faq">FAQ</h2>
+
+    <div class="faq-item">
+      <h3>Is WooCommerce required?</h3>
+      <p>No. If WooCommerce is active, the plugin attaches label fields to WooCommerce products. If WooCommerce is not installed, the plugin registers its own <code>wleu_wine</code> custom post type. You get the same label functionality either way.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What PHP version do I need?</h3>
+      <p>PHP 7.4 or higher. PHP 8.0+ is recommended for best performance.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How do I update the plugin?</h3>
+      <p>Free version: download the latest ZIP and re-upload via <strong>Plugins &rarr; Add New &rarr; Upload Plugin</strong>, then click "Replace current with uploaded". Pro version: with a valid license key, updates appear automatically in your WordPress dashboard alongside other plugin updates.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Can I use the plugin on multiple sites?</h3>
+      <p>The free version can be installed on unlimited sites. Pro licenses are per-site. You need one license key per WordPress installation.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What happens if my Pro license expires?</h3>
+      <p>Your existing labels continue to work. Pro features (bilingual output, QR PDF, duplicate, custom URL, white-label) are disabled until you renew. You keep the free-tier functionality with a 5-vintage limit.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Do the labels use cookies or tracking scripts?</h3>
+      <p>No. Label pages are bare HTML with zero JavaScript, zero cookies, and zero external requests. They are fully GDPR-compliant by design.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Can I customize the label design?</h3>
+      <p>The label output uses semantic HTML with clearly named CSS classes. You can override styles by adding custom CSS in your theme or via a CSS plugin. The HTML structure is intentionally simple to make this straightforward.</p>
+    </div>
+
+  </main>
+</div>
+
+<!-- ── Footer ───────────────────────────── -->
+<footer>
+  <div class="footer-name">WineLabel EU</div>
+  <p>&copy; 2025 WineLabel EU. All rights reserved. &mdash; <a href="index.html">Back to home</a></p>
+</footer>
+
+<!-- ── Sidebar active state ─────────────── -->
+<script>
+  (function () {
+    var links = document.querySelectorAll('.sidebar nav a');
+    var sections = [];
+    links.forEach(function (a) {
+      var id = a.getAttribute('href').replace('#', '');
+      var el = document.getElementById(id);
+      if (el) sections.push({ id: id, el: el, link: a });
+    });
+    function update() {
+      var scrollY = window.scrollY + 72;
+      var current = sections[0];
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].el.offsetTop <= scrollY) current = sections[i];
+      }
+      links.forEach(function (a) { a.classList.remove('active'); });
+      if (current) current.link.classList.add('active');
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+
+</body>
+</html>

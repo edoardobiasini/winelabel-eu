@@ -38,6 +38,9 @@ rsync -a \
 	--exclude='*.swo' \
 	--exclude='node_modules/' \
 	--exclude='tests/' \
+	--exclude='landing/' \
+	--exclude='.github/' \
+	--exclude='GO-TO-MARKET.md' \
 	"$PLUGIN_DIR/" "$DEST/"
 
 # Install production Composer dependencies (no dev).

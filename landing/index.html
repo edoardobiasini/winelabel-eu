@@ -5,9 +5,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WineLabel EU — Digital Wine Labels, EU Compliant</title>
 <meta name="description" content="WordPress plugin for EU-regulation-compliant digital wine labels. Ingredients, nutrition, waste sorting. Reg. EU 2021/2117.">
+<link rel="canonical" href="https://winelabel.net/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://winelabel.net/">
+<meta property="og:title" content="WineLabel EU — Digital Wine Labels, EU Compliant">
+<meta property="og:description" content="WordPress plugin for EU-regulation-compliant digital wine labels. Ingredients, nutrition, waste sorting — fully compliant with Reg. EU 2021/2117.">
+<meta property="og:image" content="https://winelabel.net/og-image.png">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WineLabel EU — Digital Wine Labels, EU Compliant">
+<meta name="twitter:description" content="WordPress plugin for EU-regulation-compliant digital wine labels. Ingredients, nutrition, waste sorting.">
+<meta name="twitter:image" content="https://winelabel.net/og-image.png">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "WineLabel EU",
+  "description": "WordPress plugin for EU-regulation-compliant digital wine labels. Ingredients, nutritional values, waste sorting information.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "WordPress 6.0+",
+  "offers": [
+    {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "name": "Free"
+    },
+    {
+      "@type": "Offer",
+      "price": "49",
+      "priceCurrency": "EUR",
+      "name": "Pro",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "billingDuration": "P1Y"
+      }
+    }
+  ],
+  "url": "https://winelabel.net",
+  "author": {
+    "@type": "Person",
+    "name": "Edoardo Biasini"
+  }
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --wine: #4A1526;
@@ -22,7 +73,7 @@
     --text: #2A1F1A;
     --text-light: #7A6E64;
     --white: #FDFBF7;
-    --serif: 'Cormorant Garamond', 'Georgia', serif;
+    --serif: 'Lora', 'Georgia', serif;
     --sans: 'DM Sans', 'Helvetica Neue', sans-serif;
   }
 
@@ -220,16 +271,17 @@
   .section-title {
     font-family: var(--serif);
     font-size: clamp(2rem, 4vw, 2.8rem);
-    font-weight: 400;
+    font-weight: 500;
     text-align: center;
     line-height: 1.25;
     margin-bottom: 20px;
+    color: var(--text);
   }
 
   .section-desc {
     text-align: center;
-    color: var(--text-light);
-    font-weight: 300;
+    color: #5A4E44;
+    font-weight: 400;
     max-width: 560px;
     margin: 0 auto 48px;
     font-size: 1.02rem;
@@ -270,15 +322,16 @@
   .feature-card h3 {
     font-family: var(--serif);
     font-size: 1.3rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 10px;
+    color: var(--text);
   }
 
   .feature-card p {
     font-size: 0.9rem;
-    color: var(--text-light);
+    color: #5A4E44;
     line-height: 1.6;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   /* ── Comparison table ───────────────────── */
@@ -386,7 +439,7 @@
   .step h3 {
     font-family: var(--serif);
     font-size: 1.3rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 10px;
     color: var(--cream);
   }
@@ -453,7 +506,7 @@
   .pricing-name {
     font-family: var(--serif);
     font-size: 1.5rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 8px;
   }
 
@@ -684,6 +737,172 @@
 
   footer a:hover { text-decoration: underline; }
 
+  /* ── Top Nav ──────────────────────────────── */
+
+  .top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(45, 10, 21, 0.92);
+    border-bottom: 1px solid rgba(184, 149, 106, 0.12);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  }
+
+  .top-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .top-nav-name {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--cream);
+    letter-spacing: 0.06em;
+  }
+
+  .top-nav-name span {
+    font-weight: 400;
+    color: var(--gold);
+    margin-left: 2px;
+  }
+
+  .top-nav-links {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .top-nav-links a {
+    color: var(--cream-dark);
+    text-decoration: none;
+    transition: all 0.2s;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-size: 0.78rem;
+    font-weight: 400;
+  }
+
+  .top-nav-links a:hover {
+    color: var(--cream);
+    background: rgba(245, 240, 232, 0.06);
+  }
+
+  .top-nav-links .nav-sep {
+    width: 1px;
+    height: 20px;
+    background: rgba(184, 149, 106, 0.15);
+    margin: 0 6px;
+  }
+
+  .top-nav-links .nav-cta {
+    color: var(--wine-deep);
+    background: var(--gold);
+    padding: 6px 16px;
+    border-radius: 3px;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    margin-left: 4px;
+  }
+
+  .top-nav-links .nav-cta:hover {
+    background: var(--gold-light);
+    color: var(--wine-deep);
+  }
+
+  .hero { padding-top: 156px; }
+
+  @media (max-width: 480px) {
+    .top-nav { padding: 0 16px; height: 52px; }
+    .hero { padding-top: 124px; }
+    .top-nav-links a:not(.nav-cta) { padding: 6px 8px; font-size: 0.72rem; }
+    .top-nav-links .nav-hide-mobile { display: none; }
+    .top-nav-links .nav-sep { display: none; }
+    .top-nav-name span { display: none; }
+  }
+
+  /* ── Resources section ────────────────────── */
+
+  .resources {
+    background: var(--white);
+    border-top: 1px solid var(--cream-mid);
+  }
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 600px) {
+    .resources-grid { grid-template-columns: 1fr; }
+  }
+
+  .resource-card {
+    background: var(--cream);
+    border: 1px solid var(--cream-mid);
+    border-radius: 4px;
+    padding: 32px 28px;
+    transition: border-color 0.3s;
+    text-decoration: none;
+    display: block;
+    color: var(--text);
+  }
+
+  .resource-card:hover {
+    border-color: var(--gold);
+  }
+
+  .resource-card-icon {
+    width: 36px;
+    height: 36px;
+    color: var(--wine-light);
+    opacity: 0.6;
+    margin-bottom: 16px;
+  }
+
+  .resource-card h3 {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .resource-card p {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 14px;
+  }
+
+  .resource-card .resource-link {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+
+  .resource-card:hover .resource-link { color: var(--wine); }
+
   /* ── Animations ─────────────────────────── */
 
   @keyframes fadeUp {
@@ -700,7 +919,6 @@
   /* ── Responsive ─────────────────────────── */
 
   @media (max-width: 480px) {
-    .hero { padding: 72px 20px 64px; }
     section { padding: 60px 20px; }
     .compare-table { font-size: 0.82rem; }
     .compare-table td,
@@ -709,6 +927,19 @@
 </style>
 </head>
 <body>
+
+<!-- ── Top Nav ─────────────────────────────── -->
+<nav class="top-nav">
+  <a href="index.html" class="top-nav-brand">
+    <span class="top-nav-name">WineLabel <span>EU</span></span>
+  </a>
+  <div class="top-nav-links">
+    <a href="docs.html">Docs</a>
+    <a href="blog/eu-wine-label-regulation-2025.html" class="nav-hide-mobile">EU Regulation</a>
+    <span class="nav-sep"></span>
+    <a href="#pricing" class="nav-cta">Download</a>
+  </div>
+</nav>
 
 <!-- ── Hero ──────────────────────────────── -->
 <header class="hero">
@@ -896,7 +1127,7 @@
           <li><span class="tick">&check;</span> Label index page</li>
           <li><span class="tick-no">&mdash;</span> English only</li>
         </ul>
-        <a href="#" class="btn btn-cream">Download Free</a>
+        <a href="https://github.com/edoardobiasini/winelabel-eu/releases/latest" class="btn btn-cream">Download Free</a>
       </div>
 
       <div class="pricing-card featured">
@@ -911,10 +1142,34 @@
           <li><span class="tick">&check;</span> Duplicate vintage</li>
           <li><span class="tick">&check;</span> White-label &amp; custom URLs</li>
         </ul>
-        <a href="#" class="btn btn-wine">Get Pro</a>
+        <a href="https://winelabel.lemonsqueezy.com/checkout/buy/5151cc32-6446-4f72-9948-d52c3bf38762" class="btn btn-wine">Get Pro</a>
         <p class="pricing-or">or</p>
-        <p class="pricing-lifetime">&euro;129 one-time &mdash; lifetime license</p>
+        <p class="pricing-lifetime"><a href="https://winelabel.lemonsqueezy.com/checkout/buy/d0637d98-6539-4138-8d64-d7d1746738e0" style="color: var(--gold); text-decoration: none;">&euro;129 one-time &mdash; lifetime license</a></p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Resources ────────────────────────── -->
+<section class="resources">
+  <div class="container">
+    <span class="section-label">Resources</span>
+    <h2 class="section-title">Learn more</h2>
+
+    <div class="resources-grid">
+      <a href="blog/eu-wine-label-regulation-2025.html" class="resource-card">
+        <svg class="resource-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <h3>EU Regulation Guide</h3>
+        <p>What Reg. (EU) 2021/2117 requires, compliance deadlines, and how QR codes work for wine labels.</p>
+        <span class="resource-link">Read the guide &rarr;</span>
+      </a>
+
+      <a href="docs.html" class="resource-card">
+        <svg class="resource-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        <h3>Documentation</h3>
+        <p>Installation, quick start, URL structure, settings, and everything you need to get up and running.</p>
+        <span class="resource-link">Read the docs &rarr;</span>
+      </a>
     </div>
   </div>
 </section>
@@ -922,6 +1177,11 @@
 <!-- ── Footer ───────────────────────────── -->
 <footer>
   <div class="footer-name">WineLabel EU</div>
+  <p style="margin-bottom: 12px;">
+    <a href="docs.html">Documentation</a> &nbsp;&middot;&nbsp;
+    <a href="blog/eu-wine-label-regulation-2025.html">EU Regulation Guide</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/edoardobiasini/winelabel-eu">GitHub</a>
+  </p>
   <p>&copy; 2025 WineLabel EU. All rights reserved.</p>
 </footer>
 

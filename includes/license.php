@@ -10,9 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// LemonSqueezy configuration.
-// Replace these with your actual values after creating a product on lemonsqueezy.com.
-define( 'WLEU_LS_STORE_ID', 0 );            // Your LemonSqueezy store ID.
 define( 'WLEU_LS_API_URL', 'https://api.lemonsqueezy.com/v1/licenses' );
 
 /**
