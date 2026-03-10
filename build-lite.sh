@@ -55,6 +55,10 @@ rsync -a \
 rm -f "$DEST/composer-lite.json"
 cp "$PLUGIN_DIR/composer-lite.json" "$DEST/composer.json"
 
+# Strip auto-updater block (WordPress.org scanner rejects class name strings).
+sed -i.bak '/Auto-Updates (GitHub/,/^}/d' "$DEST/$PLUGIN_SLUG.php"
+rm -f "$DEST/$PLUGIN_SLUG.php.bak"
+
 # Install lite Composer dependencies.
 cd "$DEST"
 composer install --no-dev --optimize-autoloader --no-interaction --quiet 2>/dev/null || true

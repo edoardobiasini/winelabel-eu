@@ -59,15 +59,15 @@ require_once WLEU_PATH . 'includes/qr-pdf.php';
 
 require_once WLEU_PATH . 'includes/fields.php';
 
-// ── Auto-Updates (GitHub) ────────────────────────────────────
+// ── Auto-Updates (GitHub, full version only) ─────────────────
+// Not included in the WordPress.org lite build.
 
-if ( class_exists( 'YahnisElsts\\PluginUpdateChecker\\v5\\PucFactory' ) ) {
+if ( wleu_is_full_version() && class_exists( 'YahnisElsts\\PluginUpdateChecker\\v5\\PucFactory' ) ) {
 	$wleu_updater = YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
 		'https://github.com/edoardobiasini/winelabel-eu/',
 		__FILE__,
 		'winelabel-eu'
 	);
-	// Use releases for stable versions.
 	$wleu_updater->getVcsApi()->enableReleaseAssets();
 }
 
