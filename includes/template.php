@@ -10,6 +10,10 @@
  * Supports multiple vintages per product via the elabel_vintage CPT.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Return a translated UI string.
  *
@@ -143,7 +147,7 @@ function wleu_render_elabel_single( $product_slug, $year, $lang = 'it' ) {
 		status_header( 404 );
 		$t_title = wleu_t( 'non_trovato', $lang );
 		$t_body  = wleu_t( 'etichetta_non_trovata', $lang );
-		echo '<!DOCTYPE html><html lang="' . esc_attr( $lang ) . '"><head><meta charset="UTF-8"><title>' . $t_title . '</title></head><body><p>' . $t_body . '</p></body></html>';
+		echo '<!DOCTYPE html><html lang="' . esc_attr( $lang ) . '"><head><meta charset="UTF-8"><title>' . esc_html( $t_title ) . '</title></head><body><p>' . esc_html( $t_body ) . '</p></body></html>';
 		return;
 	}
 
@@ -154,7 +158,7 @@ function wleu_render_elabel_single( $product_slug, $year, $lang = 'it' ) {
 		status_header( 404 );
 		$t_title = wleu_t( 'non_trovato', $lang );
 		$t_body  = wleu_t( 'etichetta_non_disponibile', $lang );
-		echo '<!DOCTYPE html><html lang="' . esc_attr( $lang ) . '"><head><meta charset="UTF-8"><title>' . $t_title . '</title></head><body><p>' . $t_body . '</p></body></html>';
+		echo '<!DOCTYPE html><html lang="' . esc_attr( $lang ) . '"><head><meta charset="UTF-8"><title>' . esc_html( $t_title ) . '</title></head><body><p>' . esc_html( $t_body ) . '</p></body></html>';
 		return;
 	}
 
@@ -165,7 +169,7 @@ function wleu_render_elabel_single( $product_slug, $year, $lang = 'it' ) {
 		status_header( 404 );
 		$t_title = wleu_t( 'non_trovato', $lang );
 		$t_body  = wleu_t( 'annata_non_trovata', $lang );
-		echo '<!DOCTYPE html><html lang="' . esc_attr( $lang ) . '"><head><meta charset="UTF-8"><title>' . $t_title . '</title></head><body><p>' . $t_body . '</p></body></html>';
+		echo '<!DOCTYPE html><html lang="' . esc_attr( $lang ) . '"><head><meta charset="UTF-8"><title>' . esc_html( $t_title ) . '</title></head><body><p>' . esc_html( $t_body ) . '</p></body></html>';
 		return;
 	}
 
@@ -219,78 +223,78 @@ function wleu_render_elabel_single( $product_slug, $year, $lang = 'it' ) {
 	<p class="elabel-wine-name"><?php echo esc_html( $wine_name ); ?></p>
 
 	<div class="elabel-card">
-		<h2><?php echo wleu_t( 'ingredienti', $lang ); ?></h2>
+		<h2><?php echo esc_html( wleu_t( 'ingredienti', $lang ) ); ?></h2>
 		<div class="elabel-ingredients">
 			<?php if ( $materia_prima ) : ?>
-				<p><strong><?php echo wleu_t( 'materia_prima', $lang ); ?></strong> <?php echo esc_html( $materia_prima ); ?></p>
+				<p><strong><?php echo wp_kses_post( wleu_t( 'materia_prima', $lang ) ); ?></strong> <?php echo esc_html( $materia_prima ); ?></p>
 			<?php endif; ?>
 			<?php if ( $correttori_acidita ) : ?>
-				<p><strong><?php echo wleu_t( 'correttori_acidita', $lang ); ?></strong><br><?php echo esc_html( $correttori_acidita ); ?></p>
+				<p><strong><?php echo wp_kses_post( wleu_t( 'correttori_acidita', $lang ) ); ?></strong><br><?php echo esc_html( $correttori_acidita ); ?></p>
 			<?php endif; ?>
 			<?php if ( $stabilizzanti ) : ?>
-				<p><strong><?php echo wleu_t( 'stabilizzanti', $lang ); ?></strong> <?php echo esc_html( $stabilizzanti ); ?></p>
+				<p><strong><?php echo esc_html( wleu_t( 'stabilizzanti', $lang ) ); ?></strong> <?php echo esc_html( $stabilizzanti ); ?></p>
 			<?php endif; ?>
 			<?php if ( $antiossidanti ) : ?>
-				<p><strong><?php echo wleu_t( 'antiossidanti', $lang ); ?></strong> <?php echo esc_html( $antiossidanti ); ?></p>
+				<p><strong><?php echo esc_html( wleu_t( 'antiossidanti', $lang ) ); ?></strong> <?php echo esc_html( $antiossidanti ); ?></p>
 			<?php endif; ?>
 			<?php if ( $altri_ingredienti ) : ?>
 				<p><?php echo esc_html( $altri_ingredienti ); ?></p>
 			<?php endif; ?>
 			<?php if ( $contiene_solfiti ) : ?>
-				<p class="elabel-allergen"><strong><?php echo wleu_t( 'contiene_solfiti', $lang ); ?></strong></p>
+				<p class="elabel-allergen"><strong><?php echo esc_html( wleu_t( 'contiene_solfiti', $lang ) ); ?></strong></p>
 			<?php endif; ?>
 		</div>
 	</div>
 
 	<div class="elabel-card">
-		<h2><?php echo wleu_t( 'info_nutrizionali', $lang ); ?></h2>
-		<p class="elabel-per"><?php echo wleu_t( 'valori_per_100ml', $lang ); ?></p>
+		<h2><?php echo esc_html( wleu_t( 'info_nutrizionali', $lang ) ); ?></h2>
+		<p class="elabel-per"><?php echo wp_kses_post( wleu_t( 'valori_per_100ml', $lang ) ); ?></p>
 
 		<table class="elabel-table">
 			<tbody>
 				<tr>
-					<td><?php echo wleu_t( 'calorie', $lang ); ?></td>
+					<td><?php echo esc_html( wleu_t( 'calorie', $lang ) ); ?></td>
 					<td class="elabel-val"><strong><?php echo esc_html( $energia_kj ); ?></strong> kj &ndash; <strong><?php echo esc_html( $energia_kcal ); ?></strong> kcal</td>
 				</tr>
 				<tr>
-					<td><?php echo wleu_t( 'grassi', $lang ); ?></td>
+					<td><?php echo esc_html( wleu_t( 'grassi', $lang ) ); ?></td>
 					<td class="elabel-val"><?php echo esc_html( $grassi ); ?> g</td>
 				</tr>
 				<tr class="elabel-sub">
-					<td><?php echo wleu_t( 'grassi_saturi', $lang ); ?></td>
+					<td><?php echo esc_html( wleu_t( 'grassi_saturi', $lang ) ); ?></td>
 					<td class="elabel-val"><?php echo esc_html( $grassi_saturi ); ?> g</td>
 				</tr>
 				<tr>
-					<td><?php echo wleu_t( 'carboidrati', $lang ); ?></td>
+					<td><?php echo esc_html( wleu_t( 'carboidrati', $lang ) ); ?></td>
 					<td class="elabel-val"><?php echo esc_html( $carboidrati ); ?> g</td>
 				</tr>
 				<tr class="elabel-sub">
-					<td><?php echo wleu_t( 'zuccheri', $lang ); ?></td>
+					<td><?php echo esc_html( wleu_t( 'zuccheri', $lang ) ); ?></td>
 					<td class="elabel-val"><?php echo esc_html( $zuccheri ); ?> g</td>
 				</tr>
 				<tr>
-					<td><?php echo wleu_t( 'proteine', $lang ); ?></td>
+					<td><?php echo esc_html( wleu_t( 'proteine', $lang ) ); ?></td>
 					<td class="elabel-val"><?php echo esc_html( $proteine ); ?> g</td>
 				</tr>
 				<tr>
-					<td><?php echo wleu_t( 'sale', $lang ); ?></td>
+					<td><?php echo esc_html( wleu_t( 'sale', $lang ) ); ?></td>
 					<td class="elabel-val"><?php echo esc_html( $sale ); ?> g</td>
 				</tr>
 				<?php if ( $acidita_totale ) : ?>
 				<tr class="elabel-extra">
-					<td><?php echo wleu_t( 'acidita_totale', $lang ); ?></td>
+					<td><?php echo wp_kses_post( wleu_t( 'acidita_totale', $lang ) ); ?></td>
 					<td class="elabel-val"><?php echo esc_html( $acidita_totale ); ?> g/l</td>
 				</tr>
 				<?php endif; ?>
 				<?php if ( $grado_alcolico ) : ?>
 				<tr class="elabel-extra">
-					<td><?php echo wleu_t( 'grado_alcolico', $lang ); ?></td>
+					<td><?php echo esc_html( wleu_t( 'grado_alcolico', $lang ) ); ?></td>
 					<td class="elabel-val"><?php echo esc_html( $grado_alcolico ); ?> %</td>
 				</tr>
 				<?php endif; ?>
 				<?php if ( $solforosa_totale ) : ?>
 				<tr class="elabel-extra">
-					<td><?php echo wleu_t( 'solforosa_totale', $lang ); ?></td>
+					<td><?php echo esc_html( wleu_t( 'solforosa_totale', $lang ) ); ?></td>
 					<td class="elabel-val"><?php echo esc_html( $solforosa_totale ); ?> mg/l</td>
 				</tr>
 				<?php endif; ?>
@@ -300,14 +304,14 @@ function wleu_render_elabel_single( $product_slug, $year, $lang = 'it' ) {
 
 	<?php if ( ! empty( $raccolta ) ) : ?>
 	<div class="elabel-card">
-		<h2><?php echo wleu_t( 'raccolta_diff', $lang ); ?></h2>
+		<h2><?php echo esc_html( wleu_t( 'raccolta_diff', $lang ) ); ?></h2>
 		<table class="elabel-table elabel-table-raccolta">
 			<thead>
 				<tr>
-					<th><?php echo wleu_t( 'componente', $lang ); ?></th>
-					<th><?php echo wleu_t( 'codice', $lang ); ?></th>
-					<th><?php echo wleu_t( 'materiale', $lang ); ?></th>
-					<th><?php echo wleu_t( 'raccolta', $lang ); ?></th>
+					<th><?php echo esc_html( wleu_t( 'componente', $lang ) ); ?></th>
+					<th><?php echo esc_html( wleu_t( 'codice', $lang ) ); ?></th>
+					<th><?php echo esc_html( wleu_t( 'materiale', $lang ) ); ?></th>
+					<th><?php echo esc_html( wleu_t( 'raccolta', $lang ) ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -331,7 +335,7 @@ function wleu_render_elabel_single( $product_slug, $year, $lang = 'it' ) {
 				<?php endforeach; ?>
 			</tbody>
 		</table>
-		<p class="elabel-note"><?php echo wleu_t( 'verifica_comune', $lang ); ?></p>
+		<p class="elabel-note"><?php echo esc_html( wleu_t( 'verifica_comune', $lang ) ); ?></p>
 	</div>
 	<?php endif; ?>
 
@@ -396,11 +400,11 @@ function wleu_render_elabel_index( $lang = 'it' ) {
 	?>
 
 	<div class="elabel-card">
-		<h2><?php echo wleu_t( 'indice_vini', $lang ); ?></h2>
-		<p><?php echo wleu_t( 'reg_disclaimer', $lang ); ?></p>
+		<h2><?php echo esc_html( wleu_t( 'indice_vini', $lang ) ); ?></h2>
+		<p><?php echo wp_kses_post( wleu_t( 'reg_disclaimer', $lang ) ); ?></p>
 
 		<?php if ( empty( $entries ) ) : ?>
-			<p><?php echo wleu_t( 'nessun_vino', $lang ); ?></p>
+			<p><?php echo esc_html( wleu_t( 'nessun_vino', $lang ) ); ?></p>
 		<?php else : ?>
 			<ul class="elabel-index">
 				<?php foreach ( $entries as $entry ) : ?>
@@ -411,9 +415,9 @@ function wleu_render_elabel_index( $lang = 'it' ) {
 					<li>
 						<a href="<?php echo esc_url( $entry['url'] . $lang_param ); ?>"><?php echo esc_html( $entry['name'] ); ?></a>
 						<?php if ( wleu_is_pro() ) : ?>
-							<a href="<?php echo esc_url( $qr_url ); ?>" class="elabel-qr-btn" download><?php echo wleu_t( 'scarica_qr', $lang ); ?></a>
+							<a href="<?php echo esc_url( $qr_url ); ?>" class="elabel-qr-btn" download><?php echo esc_html( wleu_t( 'scarica_qr', $lang ) ); ?></a>
 						<?php else : ?>
-							<span class="elabel-qr-btn elabel-qr-disabled" title="<?php echo esc_attr( wleu_t( 'qr_upgrade', $lang ) ); ?>"><?php echo wleu_t( 'scarica_qr', $lang ); ?></span>
+							<span class="elabel-qr-btn elabel-qr-disabled" title="<?php echo esc_attr( wleu_t( 'qr_upgrade', $lang ) ); ?>"><?php echo esc_html( wleu_t( 'scarica_qr', $lang ) ); ?></span>
 						<?php endif; ?>
 					</li>
 				<?php endforeach; ?>
@@ -422,7 +426,7 @@ function wleu_render_elabel_index( $lang = 'it' ) {
 	</div>
 
 	<?php if ( ! wleu_is_pro() ) : ?>
-		<p class="elabel-upgrade"><?php echo wleu_t( 'upgrade_cta', $lang ); ?></p>
+		<p class="elabel-upgrade"><?php echo wp_kses_post( wleu_t( 'upgrade_cta', $lang ) ); ?></p>
 	<?php endif; ?>
 
 	<?php
@@ -448,12 +452,12 @@ function wleu_html_header( $title, $lang = 'en' ) {
 	$show_lang_toggle = wleu_is_pro() && get_option( 'wleu_second_language_enabled', '' ) === 'yes';
 	?>
 <!DOCTYPE html>
-<html lang="<?php echo $lang_attr; ?>">
+<html lang="<?php echo esc_attr( $lang_attr ); ?>">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="robots" content="noindex, nofollow">
-	<title><?php echo $title; ?> &mdash; <?php echo $t_label; ?></title>
+	<title><?php echo esc_html( $title ); ?> &mdash; <?php echo esc_html( $t_label ); ?></title>
 	<style>
 		*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -774,7 +778,7 @@ function wleu_html_header( $title, $lang = 'en' ) {
 		<a href="<?php echo esc_url( $alt_url ); ?>"<?php echo $lang !== 'en' ? ' class="active"' : ''; ?>><?php echo esc_html( strtoupper( $alt_lang ) ); ?></a>
 	</div>
 	<?php endif; ?>
-	<h1 class="elabel-page-title"><?php echo $title; ?></h1>
+	<h1 class="elabel-page-title"><?php echo esc_html( $title ); ?></h1>
 	<?php
 }
 
@@ -792,9 +796,9 @@ function wleu_html_footer( $lang = 'it' ) {
 	}
 	?>
 	<div class="elabel-footer">
-		<?php echo wleu_t( 'reg_footer', $lang ); ?>
+		<?php echo wp_kses_post( wleu_t( 'reg_footer', $lang ) ); ?>
 		<?php if ( $show_credit ) : ?>
-			<div class="elabel-powered"><?php echo wleu_t( 'powered_by', $lang ); ?></div>
+			<div class="elabel-powered"><?php echo esc_html( wleu_t( 'powered_by', $lang ) ); ?></div>
 		<?php endif; ?>
 	</div>
 </div>

@@ -10,6 +10,10 @@
  * Pro:  All fields active with (EN)/(IT) suffixes.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use Carbon_Fields\Container;
 use Carbon_Fields\Field;
 

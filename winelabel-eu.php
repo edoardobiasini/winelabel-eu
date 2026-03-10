@@ -385,22 +385,24 @@ function wleu_vintages_metabox( $post ) {
  */
 add_action( 'admin_action_wleu_duplicate_vintage', function () {
 	if ( ! current_user_can( 'edit_posts' ) ) {
-		wp_die( __( 'You do not have permission to perform this action.', 'winelabel-eu' ) );
+		wp_die( esc_html__( 'You do not have permission to perform this action.', 'winelabel-eu' ) );
 	}
 
 	if ( ! wleu_is_pro() ) {
-		wp_die( __( 'This feature requires WineLabel EU Pro.', 'winelabel-eu' ) );
+		wp_die( esc_html__( 'This feature requires WineLabel EU Pro.', 'winelabel-eu' ) );
 	}
 
-	$post_id = absint( $_GET['post'] ?? 0 );
+	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- absint() handles sanitization.
+	$post_id = absint( wp_unslash( $_GET['post'] ?? 0 ) );
 
-	if ( ! $post_id || ! wp_verify_nonce( sanitize_text_field( $_GET['_wpnonce'] ?? '' ), 'wleu_duplicate_vintage_' . $post_id ) ) {
-		wp_die( __( 'Unauthorized action.', 'winelabel-eu' ) );
+	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitize_text_field handles sanitization.
+	if ( ! $post_id || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ?? '' ) ), 'wleu_duplicate_vintage_' . $post_id ) ) {
+		wp_die( esc_html__( 'Unauthorized action.', 'winelabel-eu' ) );
 	}
 
 	$source = get_post( $post_id );
 	if ( ! $source || $source->post_type !== 'elabel_vintage' ) {
-		wp_die( __( 'Vintage not found.', 'winelabel-eu' ) );
+		wp_die( esc_html__( 'Vintage not found.', 'winelabel-eu' ) );
 	}
 
 	$new_id = wp_insert_post( [
@@ -411,7 +413,7 @@ add_action( 'admin_action_wleu_duplicate_vintage', function () {
 	] );
 
 	if ( is_wp_error( $new_id ) ) {
-		wp_die( $new_id->get_error_message() );
+		wp_die( esc_html( $new_id->get_error_message() ) );
 	}
 
 	// Copy all meta from source to new post.
@@ -425,7 +427,7 @@ add_action( 'admin_action_wleu_duplicate_vintage', function () {
 		}
 	}
 
-	wp_redirect( get_edit_post_link( $new_id, 'raw' ) );
+	wp_safe_redirect( get_edit_post_link( $new_id, 'raw' ) );
 	exit;
 } );
 
@@ -436,24 +438,26 @@ add_action( 'admin_action_wleu_duplicate_vintage', function () {
  */
 add_action( 'admin_action_wleu_delete_vintage', function () {
 	if ( ! current_user_can( 'edit_posts' ) ) {
-		wp_die( __( 'You do not have permission to perform this action.', 'winelabel-eu' ) );
+		wp_die( esc_html__( 'You do not have permission to perform this action.', 'winelabel-eu' ) );
 	}
 
-	$post_id = absint( $_GET['post'] ?? 0 );
+	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- absint() handles sanitization.
+	$post_id = absint( wp_unslash( $_GET['post'] ?? 0 ) );
 
-	if ( ! $post_id || ! wp_verify_nonce( sanitize_text_field( $_GET['_wpnonce'] ?? '' ), 'wleu_delete_vintage_' . $post_id ) ) {
-		wp_die( __( 'Unauthorized action.', 'winelabel-eu' ) );
+	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitize_text_field handles sanitization.
+	if ( ! $post_id || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ?? '' ) ), 'wleu_delete_vintage_' . $post_id ) ) {
+		wp_die( esc_html__( 'Unauthorized action.', 'winelabel-eu' ) );
 	}
 
 	$post = get_post( $post_id );
 	if ( ! $post || $post->post_type !== 'elabel_vintage' ) {
-		wp_die( __( 'Vintage not found.', 'winelabel-eu' ) );
+		wp_die( esc_html__( 'Vintage not found.', 'winelabel-eu' ) );
 	}
 
 	$product_id = $post->post_parent;
 	wp_delete_post( $post_id, true );
 
-	wp_redirect( get_edit_post_link( $product_id, 'raw' ) );
+	wp_safe_redirect( get_edit_post_link( $product_id, 'raw' ) );
 	exit;
 } );
 
@@ -574,7 +578,7 @@ add_action( 'template_redirect', function () {
 	$lang = 'en';
 	if ( wleu_is_pro() && isset( $_GET['lang'] ) ) {
 		$alt_lang = get_option( 'wleu_second_language_code', 'it' );
-		$requested = sanitize_text_field( $_GET['lang'] );
+		$requested = sanitize_text_field( wp_unslash( $_GET['lang'] ) );
 		if ( $requested === $alt_lang ) {
 			$lang = $alt_lang;
 		}
@@ -585,7 +589,7 @@ add_action( 'template_redirect', function () {
 		$product_slug = sanitize_title( $product_slug );
 
 		// QR code PDF download (Pro only).
-		if ( isset( $_GET['qr'] ) && sanitize_text_field( $_GET['qr'] ) === 'pdf' ) {
+		if ( isset( $_GET['qr'] ) && sanitize_text_field( wp_unslash( $_GET['qr'] ) ) === 'pdf' ) {
 			if ( ! wleu_is_pro() ) {
 				status_header( 403 );
 				echo 'QR PDF download requires WineLabel EU Pro.';
@@ -600,7 +604,7 @@ add_action( 'template_redirect', function () {
 			$latest_year = wleu_get_latest_year( $product_slug );
 			if ( $latest_year ) {
 				$lang_param = ( $lang !== 'en' ) ? '?lang=' . $lang : '';
-				wp_redirect(
+				wp_safe_redirect(
 					home_url( '/' . $product_slug . '-winelabel-' . $latest_year . '/' . $lang_param ),
 					301
 				);

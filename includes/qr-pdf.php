@@ -8,6 +8,10 @@
  * Pro feature only.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 use chillerlan\QRCode\Output\QRMarkupSVG;
@@ -88,74 +92,33 @@ function wleu_render_elabel_qr_pdf( $product_slug, $year = '' ) {
 	$wine_name_esc = htmlspecialchars( $wine_name, ENT_QUOTES, 'UTF-8' );
 	$label_url_esc = htmlspecialchars( $label_url, ENT_QUOTES, 'UTF-8' );
 
-	$html = <<<HTML
-<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<style>
-	@page {
-		size: A5 portrait;
-		margin: 20mm;
-	}
-	body {
-		font-family: Helvetica, Arial, sans-serif;
-		color: #1a1a1a;
-		text-align: center;
-		margin: 0;
-		padding: 0;
-	}
-	.title {
-		font-size: 18pt;
-		font-weight: bold;
-		margin-bottom: 6mm;
-		margin-top: 10mm;
-	}
-	.qr-wrap {
-		margin: 8mm auto;
-		width: 55mm;
-		height: 55mm;
-	}
-	.qr-wrap svg {
-		width: 55mm;
-		height: 55mm;
-	}
-	.url {
-		font-size: 8pt;
-		color: #555;
-		word-break: break-all;
-		margin-top: 4mm;
-		margin-bottom: 10mm;
-	}
-	.divider {
-		border: none;
-		border-top: 1px solid #ccc;
-		margin: 6mm 20mm;
-	}
-	.regulation {
-		font-size: 7pt;
-		color: #aaa;
-		margin-top: 8mm;
-	}
-</style>
-</head>
-<body>
-	<div class="title">{$wine_name_esc}</div>
-
-	<div class="qr-wrap">
-		<img src="{$qr_data_uri}" style="width:55mm;height:55mm;">
-	</div>
-
-	<div class="url">{$label_url_esc}</div>
-
-	<hr class="divider">
-
-	<div class="regulation">
-		Reg. (EU) 2021/2117 &mdash; Art. 119 Reg. (EU) 1308/2013
-	</div>
-</body>
-</html>
-HTML;
+	$html = '<!DOCTYPE html>'
+		. '<html lang="it">'
+		. '<head>'
+		. '<meta charset="UTF-8">'
+		. '<style>'
+		. '@page { size: A5 portrait; margin: 20mm; }'
+		. 'body { font-family: Helvetica, Arial, sans-serif; color: #1a1a1a; text-align: center; margin: 0; padding: 0; }'
+		. '.title { font-size: 18pt; font-weight: bold; margin-bottom: 6mm; margin-top: 10mm; }'
+		. '.qr-wrap { margin: 8mm auto; width: 55mm; height: 55mm; }'
+		. '.qr-wrap svg { width: 55mm; height: 55mm; }'
+		. '.url { font-size: 8pt; color: #555; word-break: break-all; margin-top: 4mm; margin-bottom: 10mm; }'
+		. '.divider { border: none; border-top: 1px solid #ccc; margin: 6mm 20mm; }'
+		. '.regulation { font-size: 7pt; color: #aaa; margin-top: 8mm; }'
+		. '</style>'
+		. '</head>'
+		. '<body>'
+		. '<div class="title">' . $wine_name_esc . '</div>'
+		. '<div class="qr-wrap">'
+		. '<img src="' . $qr_data_uri . '" style="width:55mm;height:55mm;">'
+		. '</div>'
+		. '<div class="url">' . $label_url_esc . '</div>'
+		. '<hr class="divider">'
+		. '<div class="regulation">'
+		. 'Reg. (EU) 2021/2117 &mdash; Art. 119 Reg. (EU) 1308/2013'
+		. '</div>'
+		. '</body>'
+		. '</html>';
 
 	// ── Convert to PDF ──────────────────────────────────────
 	$upload_dir = wp_upload_dir();
@@ -182,5 +145,6 @@ HTML;
 	header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
 	header( 'Cache-Control: no-store' );
 
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Binary PDF output.
 	echo $dompdf->output();
 }

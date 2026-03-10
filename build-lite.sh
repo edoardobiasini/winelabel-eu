@@ -58,7 +58,7 @@ cp "$PLUGIN_DIR/composer-lite.json" "$DEST/composer.json"
 # Install lite Composer dependencies.
 cd "$DEST"
 composer install --no-dev --optimize-autoloader --no-interaction --quiet 2>/dev/null || true
-rm -f composer.json composer.lock
+rm -f composer.lock
 
 # Create ZIP.
 cd "$BUILD_DIR"

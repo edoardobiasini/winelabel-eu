@@ -123,8 +123,9 @@ add_action( 'admin_init', function () {
 		check_admin_referer( 'wleu_translations_nonce', 'wleu_translations_nonce_field' );
 
 		$strings = [];
-		if ( ! empty( $_POST['wleu_strings'] ) && is_array( $_POST['wleu_strings'] ) ) {
-			foreach ( $_POST['wleu_strings'] as $key => $value ) {
+		$raw_strings = isset( $_POST['wleu_strings'] ) ? wp_unslash( $_POST['wleu_strings'] ) : []; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized below.
+		if ( ! empty( $raw_strings ) && is_array( $raw_strings ) ) {
+			foreach ( $raw_strings as $key => $value ) {
 				$key = sanitize_key( $key );
 				$value = wp_kses( $value, [ 'strong' => [], 'em' => [], 'a' => [ 'href' => [] ] ] );
 				if ( $value !== '' ) {
@@ -136,7 +137,7 @@ add_action( 'admin_init', function () {
 		add_settings_error( 'wleu_translations', 'saved', __( 'Translations saved.', 'winelabel-eu' ), 'success' );
 
 		set_transient( 'settings_errors', get_settings_errors(), 30 );
-		wp_redirect( admin_url( 'admin.php?page=winelabel-eu&tab=translations&settings-updated=true' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=winelabel-eu&tab=translations&settings-updated=true' ) );
 		exit;
 	}
 
@@ -147,7 +148,7 @@ add_action( 'admin_init', function () {
 		add_settings_error( 'wleu_translations', 'reset', __( 'Translations reset to defaults.', 'winelabel-eu' ), 'success' );
 
 		set_transient( 'settings_errors', get_settings_errors(), 30 );
-		wp_redirect( admin_url( 'admin.php?page=winelabel-eu&tab=translations&settings-updated=true' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=winelabel-eu&tab=translations&settings-updated=true' ) );
 		exit;
 	}
 } );
@@ -165,10 +166,10 @@ add_action( 'admin_init', function () {
 
 	check_admin_referer( 'wleu_license_nonce', 'wleu_license_nonce_field' );
 
-	$action = sanitize_text_field( $_POST['wleu_license_action'] );
+	$action = sanitize_text_field( wp_unslash( $_POST['wleu_license_action'] ) );
 
 	if ( $action === 'activate' ) {
-		$key = sanitize_text_field( $_POST['wleu_license_key'] ?? '' );
+		$key = sanitize_text_field( wp_unslash( $_POST['wleu_license_key'] ?? '' ) );
 		if ( ! empty( $key ) ) {
 			update_option( 'wleu_license_key', $key );
 			$valid = wleu_validate_license( $key );
@@ -184,7 +185,7 @@ add_action( 'admin_init', function () {
 	}
 
 	set_transient( 'settings_errors', get_settings_errors(), 30 );
-	wp_redirect( admin_url( 'admin.php?page=winelabel-eu&tab=license&settings-updated=true' ) );
+	wp_safe_redirect( admin_url( 'admin.php?page=winelabel-eu&tab=license&settings-updated=true' ) );
 	exit;
 } );
 
@@ -194,7 +195,7 @@ add_action( 'admin_init', function () {
 function wleu_render_settings_page() {
 	$is_full = wleu_is_full_version();
 	$default_tab = $is_full ? 'license' : 'settings';
-	$active_tab  = sanitize_text_field( $_GET['tab'] ?? $default_tab );
+	$active_tab  = sanitize_text_field( wp_unslash( $_GET['tab'] ?? $default_tab ) );
 
 	$tabs = [];
 	if ( $is_full ) {
@@ -453,9 +454,11 @@ function wleu_render_usage_tab() {
 	// Progress bar values.
 	if ( $is_pro ) {
 		$progress_pct   = 0;
+		/* translators: %d: current count of published vintages */
 		$progress_label = sprintf( __( '%d published vintages (unlimited)', 'winelabel-eu' ), $count );
 	} else {
 		$progress_pct   = $limit > 0 ? min( 100, round( ( $count / $limit ) * 100 ) ) : 0;
+		/* translators: %1$d: current count, %2$d: limit */
 		$progress_label = sprintf( __( '%1$d / %2$d published vintages', 'winelabel-eu' ), $count, $limit );
 	}
 
@@ -647,7 +650,9 @@ function wleu_render_translations_tab() {
 	?>
 	<div style="max-width: 700px;">
 		<p>
-			<?php printf(
+			<?php
+			/* translators: %s: language code */
+			printf(
 				esc_html__( 'Customize the %s label strings. Leave blank to use the default.', 'winelabel-eu' ),
 				'<strong>' . esc_html( $alt_code ) . '</strong>'
 			); ?>
