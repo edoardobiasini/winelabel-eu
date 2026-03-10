@@ -25,12 +25,15 @@ add_action( 'carbon_fields_register_fields', function () {
 	$alt_sfx = $is_pro ? ' (' . __( '2nd lang', 'winelabel-eu' ) . ')' : ' — ' . __( 'Translation', 'winelabel-eu' );
 
 	// ── Product/Wine Container (shared across vintages) ──────
-	Container::make( 'post_meta', __( 'Etichetta Digitale', 'winelabel-eu' ) )
+	Container::make( 'post_meta', __( 'WineLabel EU', 'winelabel-eu' ) )
 		->where( 'post_type', '=', wleu_product_post_type() )
 		->add_fields( [
 			Field::make( 'checkbox', 'elabel_enabled', __( 'Enable digital label', 'winelabel-eu' ) )
 				->set_option_value( 'yes' )
-				->set_help_text( __( 'Activate to make the digital label page visible for this product.', 'winelabel-eu' ) ),
+				->set_help_text( wleu_uses_woocommerce()
+					? __( 'Activate to make the digital label page visible for this product.', 'winelabel-eu' )
+					: __( 'Activate to make the digital label page visible for this wine.', 'winelabel-eu' )
+				),
 		] );
 
 	// ── Helper: build an IT field (read-only on Free) ────────

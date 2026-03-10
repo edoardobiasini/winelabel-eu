@@ -91,13 +91,14 @@ add_action( 'admin_init', function () {
 		'type'              => 'string',
 		'sanitize_callback' => function ( $val ) {
 			$val = sanitize_text_field( $val );
+			$val = in_array( $val, [ 'yes', 'no' ], true ) ? $val : 'no';
 			// Flush rewrite rules when WC integration changes (CPT registration differs).
-			if ( $val !== get_option( 'wleu_use_woocommerce', 'yes' ) ) {
+			if ( $val !== get_option( 'wleu_use_woocommerce', 'no' ) ) {
 				add_action( 'shutdown', 'flush_rewrite_rules' );
 			}
 			return $val;
 		},
-		'default'           => 'yes',
+		'default'           => 'no',
 	] );
 
 	register_setting( 'wleu_settings', 'wleu_delete_data_on_uninstall', [
@@ -292,14 +293,21 @@ function wleu_render_settings_tab() {
 				</th>
 				<td>
 					<?php if ( wleu_is_woocommerce_active() ) : ?>
-						<label>
-							<input type="hidden" name="wleu_use_woocommerce" value="no">
-							<input type="checkbox" name="wleu_use_woocommerce" value="yes"
-								   <?php checked( get_option( 'wleu_use_woocommerce', 'yes' ), 'yes' ); ?>>
-							<?php esc_html_e( 'Attach digital labels to WooCommerce products', 'winelabel-eu' ); ?>
-						</label>
+						<fieldset>
+							<label>
+								<input type="radio" name="wleu_use_woocommerce" value="no"
+									   <?php checked( get_option( 'wleu_use_woocommerce', 'no' ), 'no' ); ?>>
+								<?php esc_html_e( 'Use built-in Wines manager (separate from WooCommerce)', 'winelabel-eu' ); ?>
+							</label>
+							<br>
+							<label>
+								<input type="radio" name="wleu_use_woocommerce" value="yes"
+									   <?php checked( get_option( 'wleu_use_woocommerce', 'no' ), 'yes' ); ?>>
+								<?php esc_html_e( 'Attach digital labels to WooCommerce products', 'winelabel-eu' ); ?>
+							</label>
+						</fieldset>
 						<p class="description">
-							<?php esc_html_e( 'When enabled, the label fields appear on your WooCommerce product editor. When disabled, a separate "Wines" menu is used instead.', 'winelabel-eu' ); ?>
+							<?php esc_html_e( 'Choose where to manage your wines and digital labels.', 'winelabel-eu' ); ?>
 						</p>
 					<?php else : ?>
 						<p class="description" style="margin: 0;">

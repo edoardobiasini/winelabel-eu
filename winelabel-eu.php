@@ -77,7 +77,7 @@ function wleu_is_woocommerce_active() {
  * @return bool
  */
 function wleu_uses_woocommerce() {
-	return wleu_is_woocommerce_active() && get_option( 'wleu_use_woocommerce', 'yes' ) === 'yes';
+	return wleu_is_woocommerce_active() && get_option( 'wleu_use_woocommerce', 'no' ) === 'yes';
 }
 
 /**
@@ -215,7 +215,7 @@ add_action( 'admin_footer', function () {
 	?>
 	<script>
 	jQuery(function($) {
-		var $cf = $('#carbon_fields_container_etichetta_digitale .fields-container, #carbon_fields_container_etichetta_digitale .inside');
+		var $cf = $('#carbon_fields_container_winelabel_eu .fields-container, #carbon_fields_container_winelabel_eu .inside');
 		var $vintage = $('#wleu_vintages');
 		if ($cf.length && $vintage.length) {
 			var $content = $vintage.find('.inside').children();
