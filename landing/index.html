@@ -828,13 +828,18 @@
   .hero { padding-top: 156px; }
 
   @media (max-width: 480px) {
-    .top-nav { padding: 0 16px; height: 52px; }
-    .hero { padding-top: 124px; }
-    .top-nav-links a:not(.nav-cta) { padding: 6px 8px; font-size: 0.72rem; }
-    .top-nav-links .nav-hide-mobile { display: none; }
+    .top-nav { padding: 0 12px; height: 48px; }
+    .hero { padding-top: 120px; }
+    .top-nav-links { gap: 2px; }
+    .top-nav-links a:not(.nav-cta) { padding: 4px 6px; font-size: 0.65rem; }
     .top-nav-links .nav-sep { display: none; }
-    .top-nav-name { font-size: 0.85rem; }
+    .top-nav-links .nav-cta { padding: 4px 10px; font-size: 0.6rem; letter-spacing: 0.08em; }
+    .top-nav-name { font-size: 0.8rem; }
+    .nav-full { display: none; }
+    .nav-short { display: inline; }
   }
+
+  .nav-short { display: none; }
 
   /* ── Resources section ────────────────────── */
 
@@ -935,7 +940,7 @@
   </a>
   <div class="top-nav-links">
     <a href="docs.html">Docs</a>
-    <a href="blog/eu-wine-label-regulation-2025.html">EU Regulation</a>
+    <a href="blog/eu-wine-label-regulation-2025.html"><span class="nav-full">EU Regulation</span><span class="nav-short">Regulation</span></a>
     <span class="nav-sep"></span>
     <a href="#pricing" class="nav-cta">Download</a>
   </div>

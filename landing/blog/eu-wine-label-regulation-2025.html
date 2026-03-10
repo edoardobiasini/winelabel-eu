@@ -517,11 +517,17 @@
     .article-hero { padding: 56px 20px 64px; }
     .article-content { padding: 48px 20px 60px; }
     .article-cta { padding: 48px 20px; }
-    .top-nav { padding: 0 16px; height: 52px; }
-    .top-nav-links a:not(.nav-cta) { padding: 6px 8px; font-size: 0.72rem; }
+    .top-nav { padding: 0 12px; height: 48px; }
+    .top-nav-links { gap: 2px; }
+    .top-nav-links a:not(.nav-cta) { padding: 4px 6px; font-size: 0.65rem; }
     .top-nav-links .nav-sep { display: none; }
-    .top-nav-name { font-size: 0.85rem; }
+    .top-nav-links .nav-cta { padding: 4px 10px; font-size: 0.6rem; letter-spacing: 0.08em; }
+    .top-nav-name { font-size: 0.8rem; }
+    .nav-full { display: none; }
+    .nav-short { display: inline; }
   }
+
+  .nav-short { display: none; }
 </style>
 </head>
 <body>
@@ -533,7 +539,7 @@
   </a>
   <div class="top-nav-links">
     <a href="../docs.html">Docs</a>
-    <a href="eu-wine-label-regulation-2025.html">EU Regulation</a>
+    <a href="eu-wine-label-regulation-2025.html"><span class="nav-full">EU Regulation</span><span class="nav-short">Regulation</span></a>
     <span class="nav-sep"></span>
     <a href="../index.html#pricing" class="nav-cta">Download</a>
   </div>
