@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Documentation — WineLabel EU</title>
-<meta name="description" content="Getting started with WineLabel EU — installation, configuration, and usage guide for the EU-compliant digital wine label WordPress plugin.">
+<title>Documentazione — WineLabel EU</title>
+<meta name="description" content="Guida introduttiva a WineLabel EU — installazione, configurazione e utilizzo del plugin WordPress per etichette digitali del vino conformi alla normativa UE.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -125,6 +125,31 @@
   .top-nav-links .nav-cta:hover {
     background: var(--gold-light);
     color: var(--wine-deep);
+  }
+
+  .nav-lang {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid rgba(184, 149, 106, 0.25);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--cream-dark);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: all 0.2s;
+    margin-right: 6px;
+    flex-shrink: 0;
+  }
+  .nav-lang:hover {
+    opacity: 1;
+    border-color: var(--gold);
+    color: var(--cream);
+    background: rgba(184, 149, 106, 0.1);
   }
 
   /* ── Layout ───────────────────────────── */
@@ -477,31 +502,6 @@
   }
 
   .nav-short { display: none; }
-
-  .nav-lang {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 1px solid rgba(184, 149, 106, 0.25);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.58rem;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    color: var(--cream-dark);
-    text-decoration: none;
-    opacity: 0.6;
-    transition: all 0.2s;
-    margin-right: 6px;
-    flex-shrink: 0;
-  }
-  .nav-lang:hover {
-    opacity: 1;
-    border-color: var(--gold);
-    color: var(--cream);
-    background: rgba(184, 149, 106, 0.1);
-  }
 </style>
 </head>
 <body>
@@ -512,11 +512,11 @@
     <span class="top-nav-name">WineLabel <span>EU</span></span>
   </a>
   <div class="top-nav-links">
-    <a href="it/docs.html" class="nav-lang" title="Italiano">IT</a>
+    <a href="../docs.html" class="nav-lang" title="English">EN</a>
     <a href="index.html">Home</a>
-    <a href="blog/eu-wine-label-regulation-2025.html"><span class="nav-full">EU Regulation</span><span class="nav-short">Regulation</span></a>
+    <a href="blog/eu-wine-label-regulation-2025.html"><span class="nav-full">Normativa UE</span><span class="nav-short">Normativa</span></a>
     <span class="nav-sep"></span>
-    <a href="index.html#pricing" class="nav-cta">Download</a>
+    <a href="index.html#pricing" class="nav-cta">Scarica</a>
   </div>
 </nav>
 
@@ -525,140 +525,140 @@
 
   <!-- Sidebar -->
   <aside class="sidebar">
-    <span class="sidebar-label">On this page</span>
+    <span class="sidebar-label">In questa pagina</span>
     <nav>
-      <a href="#installation">Installation</a>
-      <a href="#quick-start">Quick Start</a>
-      <a href="#understanding-labels">Understanding Labels</a>
-      <a href="#url-structure">URL Structure</a>
+      <a href="#installation">Installazione</a>
+      <a href="#quick-start">Guida Rapida</a>
+      <a href="#understanding-labels">Le Etichette Digitali</a>
+      <a href="#url-structure">Struttura URL</a>
       <a href="#free-vs-pro">Free vs Pro</a>
-      <a href="#pro-features">Pro Features</a>
-      <a href="#settings">Settings</a>
+      <a href="#pro-features">Funzionalit&agrave; Pro</a>
+      <a href="#settings">Impostazioni</a>
       <a href="#faq">FAQ</a>
     </nav>
   </aside>
 
   <!-- Content -->
   <main class="docs-content">
-    <h1>Getting Started</h1>
-    <p class="subtitle">Everything you need to set up EU-compliant digital wine labels on your WordPress site.</p>
+    <h1>Per Iniziare</h1>
+    <p class="subtitle">Tutto ci&ograve; che serve per configurare etichette digitali conformi alla normativa UE sul tuo sito WordPress.</p>
 
-    <!-- ── Installation ────────────────────── -->
-    <h2 id="installation">Installation</h2>
-    <p>WineLabel EU is installed like any standard WordPress plugin.</p>
+    <!-- ── Installazione ──────────────────────── -->
+    <h2 id="installation">Installazione</h2>
+    <p>WineLabel EU si installa come qualsiasi plugin WordPress standard.</p>
     <ol class="step-list">
-      <li>Download the <code>winelabel-eu.zip</code> file from your purchase confirmation or the free download page.</li>
-      <li>In your WordPress admin, go to <strong>Plugins &rarr; Add New &rarr; Upload Plugin</strong>.</li>
-      <li>Choose the ZIP file and click <strong>Install Now</strong>.</li>
-      <li>After installation completes, click <strong>Activate Plugin</strong>.</li>
+      <li>Scarica il file <code>winelabel-eu.zip</code> dalla conferma d&rsquo;acquisto o dalla pagina di download gratuito.</li>
+      <li>Nel pannello di amministrazione WordPress, vai su <strong>Plugin &rarr; Aggiungi Nuovo &rarr; Carica Plugin</strong>.</li>
+      <li>Seleziona il file ZIP e clicca <strong>Installa Ora</strong>.</li>
+      <li>Al termine dell&rsquo;installazione, clicca <strong>Attiva Plugin</strong>.</li>
     </ol>
     <div class="callout">
-      <span class="callout-label">Note</span>
-      <p>No additional configuration is required to start using the free version. The plugin works out of the box.</p>
+      <span class="callout-label">Nota</span>
+      <p>Non &egrave; necessaria alcuna configurazione aggiuntiva per iniziare a usare la versione gratuita. Il plugin funziona subito, senza impostazioni.</p>
     </div>
 
-    <!-- ── Quick Start ─────────────────────── -->
-    <h2 id="quick-start">Quick Start</h2>
-    <p>Once the plugin is active, follow these steps to create your first digital wine label.</p>
+    <!-- ── Guida Rapida ───────────────────────── -->
+    <h2 id="quick-start">Guida Rapida</h2>
+    <p>Una volta attivato il plugin, segui questi passaggi per creare la tua prima etichetta digitale.</p>
 
-    <h3>1. Create a wine product</h3>
-    <p>By default, the plugin uses its own <strong>WineLabel EU &rarr; Wines</strong> section to manage wines. If WooCommerce is installed and you prefer to attach labels directly to WooCommerce products, enable the <strong>WooCommerce Integration</strong> toggle in WineLabel EU &rarr; Settings.</p>
-    <p>On the product edit screen, check the <strong>Enable Digital Label</strong> checkbox and fill in the wine name (this appears at the top of the label).</p>
+    <h3>1. Crea un prodotto vino</h3>
+    <p>Per impostazione predefinita, il plugin utilizza la propria sezione <strong>WineLabel EU &rarr; Wines</strong> per gestire i vini. Se WooCommerce &egrave; installato e preferisci associare le etichette direttamente ai prodotti WooCommerce, attiva l&rsquo;opzione <strong>WooCommerce Integration</strong> in WineLabel EU &rarr; Settings.</p>
+    <p>Nella schermata di modifica del prodotto, seleziona la casella <strong>Enable Digital Label</strong> e inserisci il nome del vino (verr&agrave; visualizzato in cima all&rsquo;etichetta).</p>
 
-    <h3>2. Add a vintage</h3>
-    <p>Below the wine product, you will see a <strong>Vintages</strong> panel. Click <strong>Add Vintage</strong> to create a vintage entry (e.g., 2024). Each vintage is its own post linked to the parent wine.</p>
-    <p>Fill in the vintage-specific data: ingredients, nutritional values, and waste sorting instructions. The fields follow the exact structure required by EU regulation.</p>
+    <h3>2. Aggiungi un&rsquo;annata</h3>
+    <p>Sotto il prodotto vino troverai il pannello <strong>Vintages</strong>. Clicca <strong>Add Vintage</strong> per creare una voce relativa all&rsquo;annata (es. 2024). Ogni annata &egrave; un post autonomo collegato al vino principale.</p>
+    <p>Compila i dati specifici dell&rsquo;annata: ingredienti, valori nutrizionali e istruzioni per la raccolta differenziata. I campi seguono esattamente la struttura richiesta dalla normativa UE.</p>
 
-    <h3>3. Publish and share</h3>
-    <p>Publish the vintage. The plugin automatically generates a standalone HTML label page at a clean URL. Copy the URL or use the QR code feature (Pro) to print it on your bottle labels.</p>
+    <h3>3. Pubblica e condividi</h3>
+    <p>Pubblica l&rsquo;annata. Il plugin genera automaticamente una pagina HTML autonoma con l&rsquo;etichetta, accessibile tramite un URL pulito. Copia l&rsquo;URL oppure utilizza la funzione QR code (Pro) per stamparlo sulle etichette fisiche delle bottiglie.</p>
 
-    <!-- ── Understanding Labels ────────────── -->
-    <h2 id="understanding-labels">Understanding Labels</h2>
-    <p>Each digital label contains the information required by Reg. (EU) 2021/2117 amending Art. 119 of Reg. (EU) 1308/2013. Here is what goes into a label:</p>
+    <!-- ── Le Etichette Digitali ──────────────── -->
+    <h2 id="understanding-labels">Le Etichette Digitali</h2>
+    <p>Ogni etichetta digitale contiene le informazioni richieste dal Reg. (UE) 2021/2117 che modifica l&rsquo;Art. 119 del Reg. (UE) 1308/2013. Ecco cosa contiene un&rsquo;etichetta:</p>
 
-    <h3>Ingredients</h3>
-    <p>The raw materials and additives used in winemaking. Fields include the base ingredient (grapes), any additives or processing aids, and allergen declarations. Allergens such as sulfites are highlighted automatically on the label output.</p>
+    <h3>Ingredienti</h3>
+    <p>Le materie prime e gli additivi utilizzati nella vinificazione. I campi includono l&rsquo;ingrediente base (uva), eventuali additivi o coadiuvanti tecnologici, e le dichiarazioni sugli allergeni. Gli allergeni come i solfiti vengono evidenziati automaticamente nell&rsquo;output dell&rsquo;etichetta.</p>
 
-    <h3>Nutritional values</h3>
-    <p>Energy (kJ and kcal), fat, saturated fat, carbohydrates, sugars, protein, and salt. Values are entered per 100 ml. The plugin also displays the alcohol percentage.</p>
+    <h3>Valori nutrizionali</h3>
+    <p>Energia (kJ e kcal), grassi, grassi saturi, carboidrati, zuccheri, proteine e sale. I valori sono inseriti per 100 ml. Il plugin mostra anche la percentuale di alcol.</p>
 
-    <h3>Waste sorting / recycling</h3>
-    <p>Packaging material details for proper disposal. The <strong>Raccolta</strong> repeater field lets you list each packaging component (e.g., glass bottle, cork, capsule) with its material code and disposal instructions.</p>
+    <h3>Raccolta differenziata</h3>
+    <p>Dettagli sui materiali di confezionamento per il corretto smaltimento. Il campo repeater <strong>Raccolta</strong> consente di elencare ogni componente dell&rsquo;imballaggio (es. bottiglia in vetro, tappo in sughero, capsula) con il relativo codice materiale e le istruzioni di smaltimento.</p>
 
     <div class="callout">
-      <span class="callout-label">Tip</span>
-      <p>The label output is bare HTML with no cookies, scripts, or WordPress theme dependency. This means it loads instantly and is fully compliant with privacy regulations.</p>
+      <span class="callout-label">Suggerimento</span>
+      <p>L&rsquo;output dell&rsquo;etichetta &egrave; HTML puro, senza cookie, script o dipendenze dal tema WordPress. Questo significa che si carica istantaneamente ed &egrave; pienamente conforme alle normative sulla privacy.</p>
     </div>
 
-    <!-- ── URL Structure ───────────────────── -->
-    <h2 id="url-structure">URL Structure</h2>
-    <p>WineLabel EU generates clean, predictable URLs for every label.</p>
+    <!-- ── Struttura URL ──────────────────────── -->
+    <h2 id="url-structure">Struttura URL</h2>
+    <p>WineLabel EU genera URL puliti e prevedibili per ogni etichetta.</p>
 
     <table class="docs-table">
       <thead>
         <tr>
-          <th>URL pattern</th>
-          <th>What it does</th>
+          <th>Pattern URL</th>
+          <th>Funzione</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><code>/{slug}-winelabel-{YY}/</code></td>
-          <td>The label for a specific vintage. <code>{slug}</code> is the wine product slug and <code>{YY}</code> is the two-digit vintage year.</td>
+          <td>L&rsquo;etichetta per un&rsquo;annata specifica. <code>{slug}</code> &egrave; lo slug del prodotto vino e <code>{YY}</code> &egrave; l&rsquo;anno dell&rsquo;annata a due cifre.</td>
         </tr>
         <tr>
           <td><code>/{slug}-winelabel/</code></td>
-          <td>Redirects (301) to the most recent published vintage for that wine.</td>
+          <td>Redirect (301) all&rsquo;annata pubblicata pi&ugrave; recente per quel vino.</td>
         </tr>
         <tr>
           <td><code>/winelabel/</code></td>
-          <td>Index page listing all published wine labels.</td>
+          <td>Pagina indice con l&rsquo;elenco di tutte le etichette pubblicate.</td>
         </tr>
       </tbody>
     </table>
 
     <div class="callout">
       <span class="callout-label">Pro</span>
-      <p>With Pro, you can change the base URL segment from <code>winelabel</code> to a custom string via <strong>WineLabel EU &rarr; Settings &rarr; Base URL</strong>. Useful for matching your brand or language (e.g., <code>/etichetta/</code>).</p>
+      <p>Con la versione Pro puoi modificare il segmento URL di base da <code>winelabel</code> a una stringa personalizzata tramite <strong>WineLabel EU &rarr; Settings &rarr; Base URL</strong>. Utile per adattarlo alla tua lingua o al tuo brand (es. <code>/etichetta/</code>).</p>
     </div>
 
-    <!-- ── Free vs Pro ─────────────────────── -->
+    <!-- ── Free vs Pro ────────────────────────── -->
     <h2 id="free-vs-pro">Free vs Pro</h2>
-    <p>The free version is fully functional for small producers. Here is what is included in each plan:</p>
+    <p>La versione gratuita &egrave; completamente funzionale per piccoli produttori. Ecco cosa include ciascun piano:</p>
 
     <table class="docs-table">
       <thead>
         <tr>
-          <th>Feature</th>
+          <th>Funzionalit&agrave;</th>
           <th>Free</th>
           <th>Pro</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Published vintages</td>
+          <td>Annate pubblicate</td>
           <td>5 max</td>
-          <td>Unlimited</td>
+          <td>Illimitate</td>
         </tr>
         <tr>
-          <td>Ingredients, nutrition, recycling</td>
-          <td><span class="check">&check;</span></td>
-          <td><span class="check">&check;</span></td>
-        </tr>
-        <tr>
-          <td>Bare HTML output</td>
+          <td>Ingredienti, nutrizione, raccolta differenziata</td>
           <td><span class="check">&check;</span></td>
           <td><span class="check">&check;</span></td>
         </tr>
         <tr>
-          <td>Label index page</td>
+          <td>Output HTML puro</td>
           <td><span class="check">&check;</span></td>
           <td><span class="check">&check;</span></td>
         </tr>
         <tr>
-          <td>Bilingual labels</td>
-          <td>EN only</td>
-          <td>EN + configurable</td>
+          <td>Pagina indice etichette</td>
+          <td><span class="check">&check;</span></td>
+          <td><span class="check">&check;</span></td>
+        </tr>
+        <tr>
+          <td>Etichette bilingue</td>
+          <td>Solo EN</td>
+          <td>EN + configurabile</td>
         </tr>
         <tr>
           <td>QR code PDF</td>
@@ -666,12 +666,12 @@
           <td><span class="check">&check;</span></td>
         </tr>
         <tr>
-          <td>Duplicate vintage</td>
+          <td>Duplica annata</td>
           <td><span class="dash">&mdash;</span></td>
           <td><span class="check">&check;</span></td>
         </tr>
         <tr>
-          <td>Custom base URL</td>
+          <td>URL di base personalizzato</td>
           <td><span class="dash">&mdash;</span></td>
           <td><span class="check">&check;</span></td>
         </tr>
@@ -683,77 +683,77 @@
       </tbody>
     </table>
 
-    <!-- ── Pro Features ────────────────────── -->
-    <h2 id="pro-features">Pro Features</h2>
+    <!-- ── Funzionalità Pro ───────────────────── -->
+    <h2 id="pro-features">Funzionalit&agrave; Pro</h2>
 
-    <h3>Bilingual labels</h3>
-    <p>Pro supports a second language alongside English. All text fields (ingredients, nutritional info, recycling instructions) have both an English and a second-language version. The label renders both languages side by side, letting you comply in multiple markets from a single label.</p>
-    <p>The second language is configured in <strong>WineLabel EU &rarr; Settings</strong> via a language code (e.g., <code>it</code> for Italian, <code>de</code> for German).</p>
+    <h3>Etichette bilingue</h3>
+    <p>La versione Pro supporta una seconda lingua accanto all&rsquo;inglese. Tutti i campi di testo (ingredienti, informazioni nutrizionali, istruzioni per la raccolta differenziata) dispongono sia di una versione in inglese sia di una nella seconda lingua. L&rsquo;etichetta mostra entrambe le lingue affiancate, permettendoti di essere conforme in pi&ugrave; mercati con un&rsquo;unica etichetta.</p>
+    <p>La seconda lingua si configura in <strong>WineLabel EU &rarr; Settings</strong> tramite un codice lingua (es. <code>it</code> per italiano, <code>de</code> per tedesco).</p>
 
     <h3>QR code PDF</h3>
-    <p>Generate a print-ready PDF containing a vector SVG QR code pointing to the label URL. The QR code is resolution-independent and can be placed directly into your bottle label design files. Download it from the vintage edit screen in the admin.</p>
+    <p>Genera un PDF pronto per la stampa contenente un QR code in formato SVG vettoriale che punta all&rsquo;URL dell&rsquo;etichetta. Il QR code &egrave; indipendente dalla risoluzione e pu&ograve; essere inserito direttamente nei file di progettazione delle etichette delle bottiglie. Scaricalo dalla schermata di modifica dell&rsquo;annata nel pannello di amministrazione.</p>
 
-    <h3>Duplicate vintage</h3>
-    <p>Clone an existing vintage with all its data to quickly create a new year. All ingredient, nutritional, and recycling fields are copied to the new vintage post. Available as a row action in the vintages list.</p>
+    <h3>Duplica annata</h3>
+    <p>Clona un&rsquo;annata esistente con tutti i suoi dati per creare rapidamente un nuovo anno. Tutti i campi relativi a ingredienti, valori nutrizionali e raccolta differenziata vengono copiati nel nuovo post dell&rsquo;annata. Disponibile come azione rapida nell&rsquo;elenco delle annate.</p>
 
-    <h3>Custom base URL</h3>
-    <p>Replace the default <code>/winelabel/</code> URL segment with a string of your choice. This changes all label URLs and the index page URL. Useful for non-English sites (e.g., <code>/etichetta/</code>, <code>/etikett/</code>).</p>
+    <h3>URL di base personalizzato</h3>
+    <p>Sostituisci il segmento URL predefinito <code>/winelabel/</code> con una stringa a tua scelta. Questo modifica tutti gli URL delle etichette e l&rsquo;URL della pagina indice. Utile per siti in lingua diversa dall&rsquo;inglese (es. <code>/etichetta/</code>, <code>/etikett/</code>).</p>
 
     <h3>White-label</h3>
-    <p>Remove the "Powered by WineLabel EU" footer credit from the label output. The label appears completely unbranded, showing only your wine data.</p>
+    <p>Rimuovi il credito &ldquo;Powered by WineLabel EU&rdquo; dal footer dell&rsquo;etichetta. L&rsquo;etichetta appare completamente priva di brand, mostrando solo i dati del tuo vino.</p>
 
-    <!-- ── Settings ────────────────────────── -->
-    <h2 id="settings">Settings</h2>
-    <p>All plugin settings are found under <strong>WineLabel EU</strong> in the WordPress admin menu. The settings page has three tabs:</p>
+    <!-- ── Impostazioni ───────────────────────── -->
+    <h2 id="settings">Impostazioni</h2>
+    <p>Tutte le impostazioni del plugin si trovano nella voce <strong>WineLabel EU</strong> del menu di amministrazione WordPress. La pagina delle impostazioni ha tre schede:</p>
 
-    <h3>License</h3>
-    <p>Enter your Pro license key here to activate Pro features. The license status is cached for 7 days. If you see a validation error, check that your key is correct and that your site can reach the license server.</p>
+    <h3>Licenza</h3>
+    <p>Inserisci qui la tua chiave di licenza Pro per attivare le funzionalit&agrave; Pro. Lo stato della licenza viene memorizzato in cache per 7 giorni. Se ricevi un errore di validazione, verifica che la chiave sia corretta e che il tuo sito possa raggiungere il server di licenza.</p>
 
-    <h3>Settings</h3>
+    <h3>Impostazioni</h3>
     <ul>
-      <li><strong>Second language code</strong> &mdash; The ISO language code for your second label language (Pro only). English is always the primary language.</li>
-      <li><strong>Base URL override</strong> &mdash; Change the <code>/winelabel/</code> segment in all label URLs (Pro only). After changing this, visit <strong>Settings &rarr; Permalinks</strong> in WordPress and click Save to flush rewrite rules.</li>
+      <li><strong>Codice seconda lingua</strong> &mdash; Il codice lingua ISO per la seconda lingua dell&rsquo;etichetta (solo Pro). L&rsquo;inglese &egrave; sempre la lingua principale.</li>
+      <li><strong>Override URL di base</strong> &mdash; Modifica il segmento <code>/winelabel/</code> in tutti gli URL delle etichette (solo Pro). Dopo la modifica, vai su <strong>Impostazioni &rarr; Permalink</strong> in WordPress e clicca Salva per aggiornare le regole di rewrite.</li>
     </ul>
 
-    <h3>Usage</h3>
-    <p>Shows your current vintage count against the free-tier limit (5 published vintages). Pro users see "Unlimited" here.</p>
+    <h3>Utilizzo</h3>
+    <p>Mostra il conteggio attuale delle annate rispetto al limite della versione gratuita (5 annate pubblicate). Gli utenti Pro vedono qui &ldquo;Illimitate&rdquo;.</p>
 
-    <!-- ── FAQ ──────────────────────────────── -->
+    <!-- ── FAQ ─────────────────────────────────── -->
     <h2 id="faq">FAQ</h2>
 
     <div class="faq-item">
-      <h3>Is WooCommerce required?</h3>
-      <p>No. The plugin includes its own Wines manager by default. If WooCommerce is installed, you can optionally enable integration in Settings to attach label fields directly to WooCommerce products. Both modes offer the same label functionality.</p>
+      <h3>WooCommerce &egrave; necessario?</h3>
+      <p>No. Il plugin include un proprio gestore Wines per impostazione predefinita. Se WooCommerce &egrave; installato, puoi opzionalmente attivare l&rsquo;integrazione nelle Impostazioni per associare i campi etichetta direttamente ai prodotti WooCommerce. Entrambe le modalit&agrave; offrono le stesse funzionalit&agrave; per le etichette.</p>
     </div>
 
     <div class="faq-item">
-      <h3>What PHP version do I need?</h3>
-      <p>PHP 7.4 or higher. PHP 8.0+ is recommended for best performance.</p>
+      <h3>Quale versione di PHP &egrave; necessaria?</h3>
+      <p>PHP 7.4 o superiore. PHP 8.0+ &egrave; consigliato per le migliori prestazioni.</p>
     </div>
 
     <div class="faq-item">
-      <h3>How do I update the plugin?</h3>
-      <p>Free version: download the latest ZIP and re-upload via <strong>Plugins &rarr; Add New &rarr; Upload Plugin</strong>, then click "Replace current with uploaded". Pro version: with a valid license key, updates appear automatically in your WordPress dashboard alongside other plugin updates.</p>
+      <h3>Come aggiorno il plugin?</h3>
+      <p>Versione gratuita: scarica l&rsquo;ultimo ZIP e ricaricalo tramite <strong>Plugin &rarr; Aggiungi Nuovo &rarr; Carica Plugin</strong>, poi clicca &ldquo;Sostituisci attuale con caricato&rdquo;. Versione Pro: con una chiave di licenza valida, gli aggiornamenti appaiono automaticamente nella dashboard WordPress insieme a quelli degli altri plugin.</p>
     </div>
 
     <div class="faq-item">
-      <h3>Can I use the plugin on multiple sites?</h3>
-      <p>The free version can be installed on unlimited sites. Pro licenses are per-site. You need one license key per WordPress installation.</p>
+      <h3>Posso usare il plugin su pi&ugrave; siti?</h3>
+      <p>La versione gratuita pu&ograve; essere installata su siti illimitati. Le licenze Pro sono per singolo sito. Hai bisogno di una chiave di licenza per ogni installazione WordPress.</p>
     </div>
 
     <div class="faq-item">
-      <h3>What happens if my Pro license expires?</h3>
-      <p>Your existing labels continue to work. Pro features (bilingual output, QR PDF, duplicate, custom URL, white-label) are disabled until you renew. You keep the free-tier functionality with a 5-vintage limit.</p>
+      <h3>Cosa succede se la licenza Pro scade?</h3>
+      <p>Le etichette esistenti continuano a funzionare. Le funzionalit&agrave; Pro (output bilingue, QR PDF, duplicazione, URL personalizzato, white-label) vengono disattivate fino al rinnovo. Mantieni le funzionalit&agrave; della versione gratuita con il limite di 5 annate.</p>
     </div>
 
     <div class="faq-item">
-      <h3>Do the labels use cookies or tracking scripts?</h3>
-      <p>No. Label pages are bare HTML with zero JavaScript, zero cookies, and zero external requests. They are fully GDPR-compliant by design.</p>
+      <h3>Le etichette usano cookie o script di tracciamento?</h3>
+      <p>No. Le pagine delle etichette sono HTML puro, senza JavaScript, senza cookie e senza richieste esterne. Sono conformi al GDPR per design.</p>
     </div>
 
     <div class="faq-item">
-      <h3>Can I customize the label design?</h3>
-      <p>The label output uses semantic HTML with clearly named CSS classes. You can override styles by adding custom CSS in your theme or via a CSS plugin. The HTML structure is intentionally simple to make this straightforward.</p>
+      <h3>Posso personalizzare il design dell&rsquo;etichetta?</h3>
+      <p>L&rsquo;output dell&rsquo;etichetta utilizza HTML semantico con classi CSS chiaramente nominate. Puoi sovrascrivere gli stili aggiungendo CSS personalizzato nel tuo tema o tramite un plugin CSS. La struttura HTML &egrave; volutamente semplice per rendere tutto ci&ograve; immediato.</p>
     </div>
 
   </main>
@@ -762,7 +762,7 @@
 <!-- ── Footer ───────────────────────────── -->
 <footer>
   <div class="footer-name">WineLabel EU</div>
-  <p>&copy; 2025 WineLabel EU. All rights reserved. &mdash; <a href="index.html">Back to home</a></p>
+  <p>&copy; 2025 WineLabel EU. Tutti i diritti riservati. &mdash; <a href="index.html">Torna alla home</a></p>
 </footer>
 
 <!-- ── Sidebar active state ─────────────── -->

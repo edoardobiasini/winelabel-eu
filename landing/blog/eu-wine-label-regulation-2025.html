@@ -528,6 +528,31 @@
   }
 
   .nav-short { display: none; }
+
+  .nav-lang {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid rgba(184, 149, 106, 0.25);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--cream-dark);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: all 0.2s;
+    margin-right: 6px;
+    flex-shrink: 0;
+  }
+  .nav-lang:hover {
+    opacity: 1;
+    border-color: var(--gold);
+    color: var(--cream);
+    background: rgba(184, 149, 106, 0.1);
+  }
 </style>
 </head>
 <body>
@@ -538,6 +563,7 @@
     <span class="top-nav-name">WineLabel <span>EU</span></span>
   </a>
   <div class="top-nav-links">
+    <a href="../it/blog/eu-wine-label-regulation-2025.html" class="nav-lang" title="Italiano">IT</a>
     <a href="../docs.html">Docs</a>
     <a href="eu-wine-label-regulation-2025.html"><span class="nav-full">EU Regulation</span><span class="nav-short">Regulation</span></a>
     <span class="nav-sep"></span>

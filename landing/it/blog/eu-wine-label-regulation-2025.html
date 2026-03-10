@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regolamento UE 2021/2117 sull'Etichettatura Digitale del Vino &mdash; Cosa Devono Sapere le Cantine | WineLabel EU</title>
+<meta name="description" content="Guida completa al regolamento UE 2021/2117 sull'etichettatura digitale del vino. Scopri quali informazioni sono obbligatorie, le scadenze, come funzionano i codici QR e come creare etichette digitali conformi con WordPress.">
+<link rel="canonical" href="https://winelabel.net/it/blog/eu-wine-label-regulation-2025">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Regolamento UE 2021/2117 sull'Etichettatura Digitale del Vino &mdash; Cosa Devono Sapere le Cantine">
+<meta property="og:description" content="Guida completa alla conformit&agrave; al regolamento UE per le etichette digitali del vino. Ingredienti, valori nutrizionali, allergeni, raccolta differenziata &mdash; tutto ci&ograve; che serve sulla tua etichetta digitale.">
+<meta property="og:url" content="https://winelabel.net/it/blog/eu-wine-label-regulation-2025">
+<meta property="og:site_name" content="WineLabel EU">
+<meta property="og:locale" content="it_IT">
+<meta property="article:published_time" content="2025-06-01T00:00:00+00:00">
+<meta property="article:modified_time" content="2025-06-01T00:00:00+00:00">
+<meta property="article:section" content="Normativa Vino">
+<meta property="article:tag" content="regolamento UE etichettatura vino">
+<meta property="article:tag" content="etichetta digitale vino QR code">
+<meta property="article:tag" content="conformità etichetta vino">
+
+<!-- Schema.org Article structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Regolamento UE 2021/2117 sull'Etichettatura Digitale del Vino — Cosa Devono Sapere le Cantine",
+  "description": "Guida completa alla conformità al regolamento UE per le etichette digitali del vino. Ingredienti, valori nutrizionali, allergeni, raccolta differenziata — tutto ciò che serve sulla tua etichetta digitale.",
+  "url": "https://winelabel.net/it/blog/eu-wine-label-regulation-2025",
+  "datePublished": "2025-06-01T00:00:00+00:00",
+  "dateModified": "2025-06-01T00:00:00+00:00",
+  "author": {
+    "@type": "Organization",
+    "name": "WineLabel EU",
+    "url": "https://winelabel.net"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WineLabel EU",
+    "url": "https://winelabel.net"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://winelabel.net/it/blog/eu-wine-label-regulation-2025"
+  },
+  "keywords": ["regolamento UE etichettatura digitale vino 2021/2117", "etichetta digitale vino QR code", "conformità regolamento UE etichetta vino", "etichetta digitale vino wordpress"],
+  "inLanguage": "it",
+  "articleSection": "Normativa Vino"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wine: #4A1526;
+    --wine-deep: #2D0A15;
+    --wine-light: #6B2140;
+    --cream: #F5F0E8;
+    --cream-mid: #E8E0D2;
+    --cream-dark: #D4C9B8;
+    --gold: #B8956A;
+    --gold-light: #D4B896;
+    --gold-dim: rgba(184, 149, 106, 0.3);
+    --text: #2A1F1A;
+    --text-light: #7A6E64;
+    --white: #FDFBF7;
+    --serif: 'Lora', 'Georgia', serif;
+    --sans: 'DM Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── Nav ──────────────────────────────── */
+
+  .top-nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(45, 10, 21, 0.92);
+    border-bottom: 1px solid rgba(184, 149, 106, 0.12);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  }
+
+  .top-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .top-nav-name {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--cream);
+    letter-spacing: 0.06em;
+  }
+
+  .top-nav-name span {
+    font-weight: 400;
+    color: var(--gold);
+    margin-left: 2px;
+  }
+
+  .top-nav-links {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .top-nav-links a {
+    color: var(--cream-dark);
+    text-decoration: none;
+    transition: all 0.2s;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-size: 0.78rem;
+    font-weight: 400;
+  }
+
+  .top-nav-links a:hover {
+    color: var(--cream);
+    background: rgba(245, 240, 232, 0.06);
+  }
+
+  .top-nav-links .nav-sep {
+    width: 1px;
+    height: 20px;
+    background: rgba(184, 149, 106, 0.15);
+    margin: 0 6px;
+  }
+
+  .top-nav-links .nav-cta {
+    color: var(--wine-deep);
+    background: var(--gold);
+    padding: 6px 16px;
+    border-radius: 3px;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    margin-left: 4px;
+  }
+
+  .top-nav-links .nav-cta:hover {
+    background: var(--gold-light);
+    color: var(--wine-deep);
+  }
+
+  .nav-lang {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid rgba(184, 149, 106, 0.25);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--cream-dark);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: all 0.2s;
+    margin-right: 6px;
+    flex-shrink: 0;
+  }
+  .nav-lang:hover {
+    opacity: 1;
+    border-color: var(--gold);
+    color: var(--cream);
+    background: rgba(184, 149, 106, 0.1);
+  }
+
+  /* ── Article Hero ────────────────────── */
+
+  .article-hero {
+    background: var(--wine-deep);
+    color: var(--cream);
+    text-align: center;
+    padding: 72px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .article-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(107, 33, 64, 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(74, 21, 38, 0.6) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .article-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--white));
+    pointer-events: none;
+  }
+
+  .article-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .article-meta {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .article-hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+
+  .article-hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .article-hero-desc {
+    font-size: 1.02rem;
+    font-weight: 300;
+    color: var(--cream-dark);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── Article Body ────────────────────── */
+
+  .article-body {
+    background: var(--white);
+    border-bottom: 1px solid var(--cream-mid);
+  }
+
+  .article-content {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+  }
+
+  .article-content h2 {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 48px 0 16px;
+    line-height: 1.3;
+  }
+
+  .article-content h2:first-child {
+    margin-top: 0;
+  }
+
+  .article-content h3 {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 32px 0 12px;
+    line-height: 1.35;
+  }
+
+  .article-content p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #3A302A;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .article-content strong {
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .article-content ul,
+  .article-content ol {
+    margin: 0 0 20px 24px;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #3A302A;
+    font-weight: 300;
+  }
+
+  .article-content li {
+    margin-bottom: 8px;
+  }
+
+  .article-content a {
+    color: var(--wine);
+    text-decoration: underline;
+    text-decoration-color: var(--gold-dim);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s;
+  }
+
+  .article-content a:hover {
+    text-decoration-color: var(--gold);
+  }
+
+  .article-content blockquote {
+    border-left: 3px solid var(--gold);
+    margin: 32px 0;
+    padding: 16px 24px;
+    background: var(--cream);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .article-content blockquote p {
+    font-style: italic;
+    font-family: var(--serif);
+    color: var(--text);
+    margin-bottom: 0;
+    font-weight: 400;
+    font-size: 0.98rem;
+  }
+
+  .info-box {
+    background: var(--cream);
+    border: 1px solid var(--cream-mid);
+    border-radius: 4px;
+    padding: 24px 28px;
+    margin: 32px 0;
+  }
+
+  .info-box h4 {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .info-box ul {
+    margin: 0 0 0 20px;
+  }
+
+  .info-box li {
+    margin-bottom: 6px;
+  }
+
+  /* ── CTA banner ──────────────────────── */
+
+  .article-cta {
+    background: var(--wine-deep);
+    color: var(--cream);
+    text-align: center;
+    padding: 64px 24px;
+  }
+
+  .article-cta-inner {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .article-cta h2 {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+    color: var(--cream);
+  }
+
+  .article-cta p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--cream-dark);
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+
+  .article-cta .btn {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 36px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--wine-deep);
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid var(--cream-dark);
+  }
+
+  .btn-outline:hover {
+    background: rgba(245, 240, 232, 0.08);
+    border-color: var(--cream);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── Footer ──────────────────────────── */
+
+  footer {
+    background: var(--wine-deep);
+    color: var(--cream-dark);
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
+
+  footer .footer-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  footer a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  footer a:hover { text-decoration: underline; }
+
+  /* ── Animations ──────────────────────── */
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ──────────────────────── */
+
+  @media (max-width: 480px) {
+    .article-hero { padding: 56px 20px 64px; }
+    .article-content { padding: 48px 20px 60px; }
+    .article-cta { padding: 48px 20px; }
+    .top-nav { padding: 0 12px; height: 48px; }
+    .top-nav-links { gap: 2px; }
+    .top-nav-links a:not(.nav-cta) { padding: 4px 6px; font-size: 0.65rem; }
+    .top-nav-links .nav-sep { display: none; }
+    .top-nav-links .nav-cta { padding: 4px 10px; font-size: 0.6rem; letter-spacing: 0.08em; }
+    .top-nav-name { font-size: 0.8rem; }
+    .nav-full { display: none; }
+    .nav-short { display: inline; }
+  }
+
+  .nav-short { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ──────────────────────── -->
+<nav class="top-nav">
+  <a href="../index.html" class="top-nav-brand">
+    <span class="top-nav-name">WineLabel <span>EU</span></span>
+  </a>
+  <div class="top-nav-links">
+    <a href="../../blog/eu-wine-label-regulation-2025.html" class="nav-lang" title="English">EN</a>
+    <a href="../docs.html">Docs</a>
+    <a href="eu-wine-label-regulation-2025.html"><span class="nav-full">Normativa UE</span><span class="nav-short">Normativa</span></a>
+    <span class="nav-sep"></span>
+    <a href="../index.html#pricing" class="nav-cta">Scarica</a>
+  </div>
+</nav>
+
+<!-- ── Article Hero ────────────────────── -->
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <div class="article-meta">Normativa Vino &middot; Giugno 2025</div>
+    <h1>Regolamento UE 2021/2117 sull'Etichettatura Digitale del Vino: <em>Cosa Devono Sapere le Cantine</em></h1>
+    <p class="article-hero-desc">Una guida pratica ai requisiti obbligatori dell'UE per l'etichettatura digitale del vino &mdash; cosa &egrave; richiesto, quando si applica e come mettersi in regola.</p>
+  </div>
+</header>
+
+<!-- ── Article Body ────────────────────── -->
+<main class="article-body">
+  <article class="article-content">
+
+    <h2>Cos'&egrave; il Regolamento (UE) 2021/2117?</h2>
+
+    <p>Il Regolamento (UE) 2021/2117 &egrave; una modifica alla Politica Agricola Comune (PAC) che, tra le altre riforme, ha introdotto <strong>requisiti obbligatori di etichettatura per i prodotti vitivinicoli</strong> in tutti gli Stati membri dell'UE. Il regolamento &egrave; stato adottato il 2 dicembre 2021 e modifica il Regolamento (UE) 1308/2013 (il "Regolamento OCM"), in particolare l'Articolo 119 relativo all'etichettatura dei prodotti della vite.</p>
+
+    <p>Prima di questo regolamento, il vino era una delle ultime grandi categorie alimentari esentate dall'obbligo di indicare ingredienti e informazioni nutrizionali. Un consumatore che acquistava una bottiglia di Chianti o di Riesling non aveva modo semplice di sapere cosa contenesse la bottiglia oltre all'uva e all'alcol. Tutto questo &egrave; cambiato con il 2021/2117.</p>
+
+    <p>Il regolamento stabilisce che tutti i vini prodotti ed etichettati <strong>dopo l'8 dicembre 2023</strong> devono fornire ai consumatori una lista completa degli ingredienti, una dichiarazione nutrizionale completa e &mdash; aspetto fondamentale &mdash; consente che queste informazioni vengano fornite tramite <strong>mezzi elettronici</strong>, inclusi codici QR stampati sull'etichetta fisica.</p>
+
+    <blockquote><p>Il regolamento non si limita a incoraggiare l'etichettatura digitale &mdash; riconosce il codice QR come mezzo legittimo per fornire le informazioni obbligatorie ai consumatori, a condizione che l'etichetta digitale soddisfi determinati requisiti.</p></blockquote>
+
+    <p>Si tratta di un cambiamento significativo. Significa che ogni cantina che vende vino nell'UE &mdash; sia essa situata in Italia, Francia, Spagna o che importi dal Nuovo Mondo &mdash; deve ora assicurarsi che queste informazioni siano accessibili ai consumatori. E per la maggior parte dei produttori, un'etichetta digitale accessibile tramite codice QR &egrave; il modo pi&ugrave; pratico per conformarsi.</p>
+
+    <h2>Quali informazioni devono contenere le etichette digitali del vino?</h2>
+
+    <p>Il regolamento &egrave; specifico riguardo alle informazioni che l'etichetta digitale deve contenere. Ci sono quattro aree principali:</p>
+
+    <h3>1. Lista degli ingredienti</h3>
+
+    <p>L'etichetta deve elencare tutti gli ingredienti utilizzati nella produzione del vino, in ordine decrescente di peso. Per la maggior parte dei vini, questo include:</p>
+
+    <ul>
+      <li><strong>Uve</strong> (la materia prima principale)</li>
+      <li><strong>Additivi</strong> come anidride solforosa (E220), acido ascorbico (E300), sorbato di potassio (E202)</li>
+      <li><strong>Coadiuvanti tecnologici</strong> che permangono nel prodotto finale</li>
+      <li><strong>Zuccheri</strong> aggiunti durante processi come il dosaggio (per gli spumanti) o lo zuccheraggio</li>
+      <li><strong>Agenti acidificanti o disacidificanti</strong> come l'acido tartarico</li>
+    </ul>
+
+    <p>La lista degli ingredienti deve seguire il formato stabilito dal Regolamento (UE) 1169/2011 (il regolamento sulle informazioni ai consumatori), utilizzando le stesse convenzioni di denominazione e i riferimenti ai numeri E impiegati per gli altri prodotti alimentari.</p>
+
+    <h3>2. Dichiarazione nutrizionale</h3>
+
+    <p>L'etichetta digitale deve includere una dichiarazione nutrizionale completa per 100 ml, comprendente:</p>
+
+    <div class="info-box">
+      <h4>Valori nutrizionali obbligatori</h4>
+      <ul>
+        <li><strong>Valore energetico</strong> in kJ e kcal</li>
+        <li><strong>Grassi</strong> (di cui acidi grassi saturi)</li>
+        <li><strong>Carboidrati</strong> (di cui zuccheri)</li>
+        <li><strong>Proteine</strong></li>
+        <li><strong>Sale</strong></li>
+      </ul>
+    </div>
+
+    <p>Inoltre, il <strong>titolo alcolometrico volumico</strong> deve essere chiaramente indicato. Sebbene la maggior parte di questi valori sia pari a zero o prossima allo zero per i vini secchi, il regolamento richiede che vengano comunque dichiarati.</p>
+
+    <h3>3. Allergeni</h3>
+
+    <p>Gli allergeni devono essere chiaramente evidenziati sull'etichetta digitale. Per il vino, i principali allergeni sono:</p>
+
+    <ul>
+      <li><strong>Solfiti</strong> (presenti in praticamente tutti i vini)</li>
+      <li><strong>Derivati del latte</strong> (se utilizzati come coadiuvanti di chiarifica, ad es. caseina)</li>
+      <li><strong>Derivati dell'uovo</strong> (se utilizzati come coadiuvanti di chiarifica, ad es. albumina, lisozima)</li>
+    </ul>
+
+    <p>Questi devono essere evidenziati nella lista degli ingredienti (tipicamente in grassetto) e, in molte implementazioni, ripetuti in una dichiarazione dedicata degli allergeni &mdash; una pratica richiesta dalle normative sulla sicurezza alimentare e attesa dagli ispettori.</p>
+
+    <h3>4. Raccolta differenziata e informazioni sugli imballaggi</h3>
+
+    <p>Sebbene non faccia parte del regolamento originale sull'etichettatura del vino, le <strong>informazioni sulla raccolta differenziata</strong> sono sempre pi&ugrave; richieste dalla legislazione nazionale di diversi Paesi dell'UE, in particolare l'Italia (D.Lgs. 116/2020). I produttori devono indicare la composizione materiale di ogni componente dell'imballaggio (bottiglia, tappo, etichetta, cartone) e fornire le istruzioni per lo smaltimento.</p>
+
+    <p>Molte soluzioni per l'etichettatura digitale del vino &mdash; tra cui WineLabel EU &mdash; integrano questa sezione direttamente nell'etichetta digitale, rendendo conveniente per i produttori soddisfare sia i requisiti europei che quelli nazionali in un unico punto.</p>
+
+    <h2>La scadenza per la conformit&agrave;: cosa succede se non ci si adegua</h2>
+
+    <p>La data chiave &egrave; l'<strong>8 dicembre 2023</strong>. Tutti i vini prodotti ed etichettati a partire da questa data devono essere conformi. I vini gi&agrave; etichettati prima di questa data possono continuare a essere venduti con le etichette esistenti fino a esaurimento delle scorte.</p>
+
+    <p>L'applicazione varia da Stato membro a Stato membro, ma le conseguenze della non conformit&agrave; possono essere significative:</p>
+
+    <ul>
+      <li><strong>Sanzioni</strong> &mdash; Le autorit&agrave; nazionali possono comminare sanzioni amministrative. In Italia, ad esempio, l'ICQRF (l'autorit&agrave; per il controllo della qualit&agrave;) ispeziona attivamente le etichette dei vini e pu&ograve; irrogare multe per informazioni mancanti o errate.</li>
+      <li><strong>Restrizioni all'accesso al mercato</strong> &mdash; Il vino che non soddisfa i requisiti di etichettatura pu&ograve; essere bloccato dalla vendita all'interno dell'UE. Questo &egrave; particolarmente rilevante per importatori e distributori.</li>
+      <li><strong>Requisiti dei rivenditori</strong> &mdash; Le grandi catene di distribuzione e i supermercati richiedono sempre pi&ugrave; spesso ai fornitori di dimostrare la conformit&agrave; prima di inserire i loro prodotti a catalogo.</li>
+      <li><strong>Rischio reputazionale</strong> &mdash; In un settore costruito sulla fiducia e la tradizione, essere pubblicamente segnalati per una violazione dell'etichettatura &egrave; un rischio che nessun produttore serio vuole correre.</li>
+    </ul>
+
+    <p>Se siete una cantina che produce ancora vino senza etichette digitali conformi, <strong>&egrave; il momento di agire</strong>. I controlli si stanno intensificando in tutta l'UE e il periodo di tolleranza per l'adeguamento &egrave; di fatto terminato.</p>
+
+    <h2>Come funzionano i codici QR per le etichette del vino</h2>
+
+    <p>Il regolamento consente esplicitamente ai produttori di fornire le informazioni sugli ingredienti e i valori nutrizionali attraverso <strong>mezzi elettronici</strong>. In pratica, ci&ograve; significa un codice QR stampato sull'etichetta fisica che rimanda a una pagina web contenente le informazioni obbligatorie.</p>
+
+    <p>Ecco come funziona nella pratica:</p>
+
+    <ol>
+      <li>La cantina crea una <strong>pagina di etichetta digitale</strong> per ciascun vino (o per ciascuna annata di ciascun vino) contenente tutte le informazioni obbligatorie.</li>
+      <li>Quella pagina &egrave; ospitata a un <strong>URL stabile e pubblicamente accessibile</strong> &mdash; ad esempio, <code>tuacantina.com/barolo-2022-elabel/</code>.</li>
+      <li>Viene generato un <strong>codice QR</strong> che codifica quell'URL e viene stampato sull'etichetta fisica o sulla controetichetta.</li>
+      <li>Il consumatore scansiona il codice QR con la fotocamera del proprio smartphone, che apre l'etichetta digitale nel browser.</li>
+    </ol>
+
+    <p>Ci sono requisiti importanti per la pagina dell'etichetta digitale stessa:</p>
+
+    <ul>
+      <li>Non deve <strong>raccogliere dati degli utenti</strong>. Niente cookie, niente pixel di tracciamento, niente script di analisi. Il regolamento &egrave; chiaro: l'accesso alle informazioni obbligatorie sul prodotto non deve essere condizionato ad alcuna forma di raccolta dati.</li>
+      <li>Deve essere <strong>accessibile</strong> &mdash; la pagina deve caricarsi velocemente, funzionare su tutti i dispositivi e non richiedere l'installazione di app o la creazione di account.</li>
+      <li>Deve contenere <strong>solo informazioni regolamentari</strong>. Contenuti di marketing, offerte promozionali o link ad altri prodotti non devono apparire sulla pagina dell'etichetta obbligatoria (anche se i produttori possono ospitare tali contenuti altrove sul proprio sito).</li>
+    </ul>
+
+    <p>Ecco perch&eacute; una soluzione dedicata &egrave; importante. Utilizzare una pagina web generica o un PDF per ospitare la propria etichetta digitale crea rischi di conformit&agrave; relativi alla raccolta dati, all'accessibilit&agrave; e ai requisiti sui contenuti.</p>
+
+    <h2>Un approccio pratico: configurare etichette conformi con WordPress</h2>
+
+    <p>Per le cantine che gestiscono gi&agrave; il proprio sito web con WordPress &mdash; e una larga parte delle cantine lo fa &mdash; un plugin dedicato &egrave; il percorso pi&ugrave; efficiente verso la conformit&agrave;. Invece di costruire pagine personalizzate, gestire la generazione di codici QR e preoccuparsi di eventuali cookie o script di tracciamento iniettati dal tema, un plugin dedicato gestisce tutto automaticamente.</p>
+
+    <p><a href="../index.html">WineLabel EU</a> &egrave; un plugin WordPress progettato specificamente per questo scopo. Genera <strong>pagine di etichette digitali in HTML puro</strong>, completamente indipendenti dal tema WordPress. Niente cookie. Niente JavaScript. Niente tracciamento. Solo le informazioni regolamentari, formattate in modo chiaro e immediatamente accessibili.</p>
+
+    <p>Ecco come si presenta il flusso di lavoro:</p>
+
+    <ol>
+      <li><strong>Installa il plugin</strong> sul tuo sito WordPress. Funziona con i prodotti WooCommerce o come strumento autonomo di gestione dei vini &mdash; a tua scelta.</li>
+      <li><strong>Inserisci i dati del vino</strong> &mdash; ingredienti, valori nutrizionali, allergeni e dettagli sugli imballaggi. I campi sono strutturati per seguire esattamente il regolamento, cos&igrave; non devi indovinare cosa va dove.</li>
+      <li><strong>Pubblica l'annata</strong>. Il plugin genera la pagina dell'etichetta digitale e un URL univoco. Ogni vino pu&ograve; avere pi&ugrave; annate, ciascuna con i propri dati e il proprio URL.</li>
+      <li><strong>Stampa il codice QR</strong>. La versione Pro genera PDF con codici QR vettoriali ad alta risoluzione, pronti per la tua stampante di etichette. La versione gratuita ti fornisce l'URL per generare i codici QR con qualsiasi strumento tu preferisca.</li>
+    </ol>
+
+    <p>Il plugin supporta <strong>etichette bilingui</strong> (inglese pi&ugrave; una seconda lingua configurabile), aspetto importante per i produttori che vendono su pi&ugrave; mercati. Tutte le pagine delle etichette vengono servite come HTML autonomo &mdash; non caricano il tuo tema, i tuoi font, le tue analisi o risorse di terze parti.</p>
+
+    <p>Esiste una <strong>versione gratuita</strong> che copre fino a 5 annate pubblicate con piena conformit&agrave; normativa, e una <strong>versione Pro</strong> per i produttori pi&ugrave; grandi che necessitano di annate illimitate, supporto bilingue, PDF QR vettoriali e opzioni di white-labelling.</p>
+
+    <h2>Domande frequenti</h2>
+
+    <h3>Questo regolamento si applica ai vini venduti fuori dall'UE?</h3>
+    <p>Il regolamento si applica ai vini <strong>commercializzati all'interno dell'UE</strong>. Se esportate esclusivamente al di fuori dell'UE, si applicano le regole del Paese di destinazione. Tuttavia, se una parte del vostro vino viene venduta nei mercati dell'UE, quelle bottiglie devono essere conformi.</p>
+
+    <h3>Posso usare un'unica etichetta digitale per tutte le annate?</h3>
+    <p>Tecnicamente, se gli ingredienti e i valori nutrizionali sono identici tra le annate, una singola pagina potrebbe essere sufficiente. In pratica, la maggior parte dei produttori crea <strong>etichette per annata</strong> perch&eacute; la lista degli ingredienti e i valori possono cambiare di anno in anno (ad es. diversi agenti di chiarifica, diversi livelli di zucchero residuo).</p>
+
+    <h3>E per gli spumanti e i vini liquorosi?</h3>
+    <p>Il regolamento copre tutti i prodotti della vite, inclusi spumanti, prosecco, champagne, vini liquorosi e prodotti vitivinicoli aromatizzati. Si applicano gli stessi requisiti.</p>
+
+    <h3>Il codice QR &egrave; obbligatorio oppure posso stampare tutte le informazioni sull'etichetta?</h3>
+    <p>&Egrave; possibile stampare tutte le informazioni richieste direttamente sull'etichetta fisica. Il codice QR / etichetta digitale &egrave; un'<strong>alternativa</strong> alla stampa di tutto sulla bottiglia &mdash; e per la maggior parte dei produttori &egrave; la scelta pi&ugrave; pratica, data la mole di informazioni richieste.</p>
+
+  </article>
+</main>
+
+<!-- ── CTA Banner ──────────────────────── -->
+<section class="article-cta">
+  <div class="article-cta-inner">
+    <h2>Pronto a rendere le tue etichette conformi?</h2>
+    <p>WineLabel EU &egrave; gratuito per un massimo di 5 annate. Installalo sul tuo sito WordPress e genera la tua prima etichetta digitale in pochi minuti.</p>
+    <div class="cta-buttons">
+      <a href="../index.html#pricing" class="btn btn-primary">Scarica Gratis</a>
+      <a href="../docs.html" class="btn btn-outline">Leggi la Documentazione</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────── -->
+<footer>
+  <div class="footer-name">WineLabel EU</div>
+  <p>&copy; 2025 WineLabel EU. Tutti i diritti riservati.</p>
+</footer>
+
+</body>
+</html>
