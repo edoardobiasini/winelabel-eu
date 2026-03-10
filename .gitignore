@@ -13,3 +13,4 @@ wp-config.php
 
 # Build artifacts
 *.zip
+landing/.wrangler/
