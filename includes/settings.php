@@ -651,10 +651,13 @@ function wleu_render_translations_tab() {
 	<div style="max-width: 700px;">
 		<p>
 			<?php
-			/* translators: %s: language code */
-			printf(
-				esc_html__( 'Customize the %s label strings. Leave blank to use the default.', 'winelabel-eu' ),
-				'<strong>' . esc_html( $alt_code ) . '</strong>'
+			/* translators: %s: language code wrapped in <strong> tags */
+			echo wp_kses(
+				sprintf(
+					esc_html__( 'Customize the %s label strings. Leave blank to use the default.', 'winelabel-eu' ),
+					'<strong>' . esc_html( $alt_code ) . '</strong>'
+				),
+				[ 'strong' => [] ]
 			); ?>
 		</p>
 

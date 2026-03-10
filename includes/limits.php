@@ -93,12 +93,12 @@ add_action( 'admin_notices', function () {
 			<p>
 				<strong>WineLabel EU:</strong>
 				<?php
-				printf(
+				echo esc_html( sprintf(
 					/* translators: %1$d: current count, %2$d: limit */
-					esc_html__( 'You have reached the limit of %1$d/%2$d published vintages on the Free plan. Upgrade to Pro for unlimited vintages.', 'winelabel-eu' ),
+					__( 'You have reached the limit of %1$d/%2$d published vintages on the Free plan. Upgrade to Pro for unlimited vintages.', 'winelabel-eu' ),
 					$count,
 					$limit
-				);
+				) );
 				?>
 				<a href="<?php echo esc_url( admin_url( 'admin.php?page=winelabel-eu&tab=license' ) ); ?>"><?php esc_html_e( 'Upgrade to Pro', 'winelabel-eu' ); ?></a>
 			</p>
@@ -110,12 +110,12 @@ add_action( 'admin_notices', function () {
 			<p>
 				<strong>WineLabel EU:</strong>
 				<?php
-				printf(
+				echo esc_html( sprintf(
 					/* translators: %1$d: current count, %2$d: limit */
-					esc_html__( 'You have %1$d/%2$d published vintages on the Free plan. Upgrade to Pro for unlimited vintages.', 'winelabel-eu' ),
+					__( 'You have %1$d/%2$d published vintages on the Free plan. Upgrade to Pro for unlimited vintages.', 'winelabel-eu' ),
 					$count,
 					$limit
-				);
+				) );
 				?>
 				<a href="<?php echo esc_url( admin_url( 'admin.php?page=winelabel-eu&tab=license' ) ); ?>"><?php esc_html_e( 'Upgrade to Pro', 'winelabel-eu' ); ?></a>
 			</p>
