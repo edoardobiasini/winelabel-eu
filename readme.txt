@@ -4,7 +4,7 @@ Tags: wine, eu regulation, digital label, qr code, woocommerce
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,13 @@ For bug reports and feature requests, visit [our GitHub repository](https://gith
 5. Usage dashboard showing vintage count
 
 == Changelog ==
+
+= 1.0.2 =
+* Fixed fatal error on lite version (PHP function hoisting)
+* GPL-2.0-or-later license for WordPress.org compatibility
+* Added readme.txt for WordPress.org plugin directory
+* Improved security: proper escaping, wp_unslash, wp_safe_redirect throughout
+* Tested up to WordPress 6.9
 
 = 1.0.1 =
 * Added WooCommerce integration as opt-in toggle (standalone Wines manager by default)
