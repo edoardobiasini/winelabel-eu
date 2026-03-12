@@ -18,6 +18,14 @@ define( 'WLEU_LS_API_URL', 'https://api.lemonsqueezy.com/v1/licenses' );
  * @return bool
  */
 function wleu_is_pro() {
+	// Allow a dev/test override via wp-config.php constant.
+	if ( defined( 'WLEU_PRO_KEY' ) && WLEU_PRO_KEY ) {
+		$key = get_option( 'wleu_license_key', '' );
+		if ( $key === WLEU_PRO_KEY ) {
+			return true;
+		}
+	}
+
 	$key = get_option( 'wleu_license_key', '' );
 	if ( empty( $key ) ) {
 		return false;
