@@ -277,7 +277,7 @@ function wleu_render_license_tab() {
 						<td>
 							<input type="text" id="wleu_license_key" name="wleu_license_key"
 								   value="<?php echo esc_attr( $key ); ?>"
-								   class="regular-text" placeholder="WLEU-XXXX-XXXX-XXXX">
+								   class="regular-text" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX">
 						</td>
 					</tr>
 				</table>

@@ -4,7 +4,7 @@ Tags: wine, eu regulation, digital label, qr code, woocommerce
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,12 @@ For bug reports and feature requests, visit [our GitHub repository](https://gith
 5. Usage dashboard showing vintage count
 
 == Changelog ==
+
+= 1.0.3 =
+* Fix license activation failing due to LemonSqueezy API response mismatch
+* Add required Accept/Content-Type headers to license API requests
+* Add debug logging for license validation when WP_DEBUG is enabled
+* Fix license key placeholder to match LemonSqueezy key format
 
 = 1.0.2 =
 * Fixed fatal error on lite version (PHP function hoisting)

@@ -61,6 +61,10 @@ function wleu_validate_license( $key ) {
 	// Call LemonSqueezy /licenses/validate endpoint.
 	$response = wp_remote_post( WLEU_LS_API_URL . '/validate', [
 		'timeout' => 15,
+		'headers' => [
+			'Accept'       => 'application/json',
+			'Content-Type' => 'application/x-www-form-urlencoded',
+		],
 		'body'    => [
 			'license_key' => $key,
 			'instance_id' => $instance_id,
@@ -69,6 +73,7 @@ function wleu_validate_license( $key ) {
 
 	// Network error — assume valid if previously validated (grace period).
 	if ( is_wp_error( $response ) ) {
+		wleu_license_debug( 'validate', [ 'error' => $response->get_error_message() ] );
 		$previous = get_transient( 'wleu_license_status' );
 		if ( $previous === false ) {
 			// Never validated before, can't assume valid.
@@ -81,6 +86,7 @@ function wleu_validate_license( $key ) {
 	}
 
 	$body = json_decode( wp_remote_retrieve_body( $response ), true );
+	wleu_license_debug( 'validate', $body );
 
 	if ( ! empty( $body['valid'] ) ) {
 		set_transient( 'wleu_license_status', 'valid', 7 * DAY_IN_SECONDS );
@@ -89,7 +95,7 @@ function wleu_validate_license( $key ) {
 	}
 
 	// Key exists but not yet activated for this instance — try activation.
-	if ( isset( $body['error'] ) && $body['error'] === 'instance not found' ) {
+	if ( isset( $body['error'] ) && stripos( $body['error'], 'instance' ) !== false ) {
 		return wleu_activate_license_instance( $key, $instance_id );
 	}
 
@@ -107,6 +113,10 @@ function wleu_validate_license( $key ) {
 function wleu_activate_license_instance( $key, $instance_id ) {
 	$response = wp_remote_post( WLEU_LS_API_URL . '/activate', [
 		'timeout' => 15,
+		'headers' => [
+			'Accept'       => 'application/json',
+			'Content-Type' => 'application/x-www-form-urlencoded',
+		],
 		'body'    => [
 			'license_key'   => $key,
 			'instance_name' => wleu_instance_name(),
@@ -114,11 +124,13 @@ function wleu_activate_license_instance( $key, $instance_id ) {
 	] );
 
 	if ( is_wp_error( $response ) ) {
+		wleu_license_debug( 'activate', [ 'error' => $response->get_error_message() ] );
 		set_transient( 'wleu_license_status', 'invalid', DAY_IN_SECONDS );
 		return false;
 	}
 
 	$body = json_decode( wp_remote_retrieve_body( $response ), true );
+	wleu_license_debug( 'activate', $body );
 
 	if ( ! empty( $body['activated'] ) ) {
 		$new_instance = $body['instance']['id'] ?? $instance_id;
@@ -184,6 +196,22 @@ function wleu_instance_id() {
 function wleu_instance_name() {
 	$url = wp_parse_url( home_url() );
 	return $url['host'] ?? home_url();
+}
+
+/**
+ * Log license API responses when WP_DEBUG is enabled.
+ *
+ * @param string $action  The API action (validate, activate).
+ * @param mixed  $data    Response body or error data.
+ */
+function wleu_license_debug( $action, $data ) {
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		error_log( sprintf(
+			'[WineLabel EU] License %s: %s',
+			$action,
+			wp_json_encode( $data )
+		) );
+	}
 }
 
 /**
