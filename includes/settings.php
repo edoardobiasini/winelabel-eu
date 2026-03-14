@@ -356,7 +356,7 @@ function wleu_render_settings_tab() {
 					<label for="wleu_index_slug"><?php esc_html_e( 'Index Page URL', 'winelabel-eu' ); ?></label>
 				</th>
 				<td>
-					<?php if ( $is_pro ) : ?>
+					<?php if ( $is_pro && get_option( 'permalink_structure' ) ) : ?>
 						<code><?php echo esc_html( home_url( '/' ) ); ?></code>
 						<input type="text" id="wleu_index_slug" name="wleu_index_slug"
 							   value="<?php echo esc_attr( get_option( 'wleu_index_slug', 'winelabel' ) ); ?>"
@@ -366,8 +366,10 @@ function wleu_render_settings_tab() {
 							<?php esc_html_e( 'URL slug for the label index page.', 'winelabel-eu' ); ?>
 						</p>
 					<?php else : ?>
-						<code><?php echo esc_html( home_url( '/winelabel/' ) ); ?></code>
-						<p class="description"><?php esc_html_e( 'Upgrade to Pro to customize the index page URL.', 'winelabel-eu' ); ?></p>
+						<code><?php echo esc_html( wleu_index_url() ); ?></code>
+						<?php if ( ! $is_pro ) : ?>
+							<p class="description"><?php esc_html_e( 'Upgrade to Pro to customize the index page URL.', 'winelabel-eu' ); ?></p>
+						<?php endif; ?>
 					<?php endif; ?>
 				</td>
 			</tr>
