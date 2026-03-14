@@ -4,7 +4,7 @@ Tags: wine, eu regulation, digital label, qr code, woocommerce
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,12 @@ For bug reports and feature requests, visit [our GitHub repository](https://gith
 5. Usage dashboard showing vintage count
 
 == Changelog ==
+
+= 1.0.4 =
+* Support plain permalinks (query-param fallback for all label URLs)
+* Auto-flush rewrite rules on plugin activation
+* Clear license transient on activation and uninstall
+* Settings page reflects correct URL format for current permalink structure
 
 = 1.0.3 =
 * Fix license activation failing due to LemonSqueezy API response mismatch

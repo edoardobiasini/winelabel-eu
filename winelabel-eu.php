@@ -3,7 +3,7 @@
  * Plugin Name: WineLabel EU
  * Plugin URI: https://winelabel.net
  * Description: EU Digital Wine Label — regulation-compliant digital labels (Reg. EU 2021/2117) with ingredients, nutritional values, and waste sorting. Works with or without WooCommerce.
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Edoardo Biasini
  * Author URI: https://edoardobiasini.com
  * Text Domain: winelabel-eu
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'WLEU_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WLEU_URL', plugin_dir_url( __FILE__ ) );
-define( 'WLEU_VERSION', '1.0.3' );
+define( 'WLEU_VERSION', '1.0.4' );
 
 // On activation: flush rewrite rules and clear stale license cache.
 register_activation_hook( __FILE__, function () {
