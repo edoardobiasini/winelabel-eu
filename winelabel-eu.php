@@ -22,10 +22,20 @@ define( 'WLEU_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WLEU_URL', plugin_dir_url( __FILE__ ) );
 define( 'WLEU_VERSION', '1.0.3' );
 
-// Clear stale license cache on activation so re-installs start fresh.
+// On activation: flush rewrite rules and clear stale license cache.
 register_activation_hook( __FILE__, function () {
 	delete_transient( 'wleu_license_status' );
+	// Schedule a flush for after init (when our rewrite rules are registered).
+	add_option( 'wleu_flush_rewrite', 'yes' );
 } );
+
+// Flush rewrite rules once after activation (runs on next page load).
+add_action( 'init', function () {
+	if ( get_option( 'wleu_flush_rewrite' ) === 'yes' ) {
+		flush_rewrite_rules();
+		delete_option( 'wleu_flush_rewrite' );
+	}
+}, 99 );
 
 /**
  * Load Composer autoloader.
@@ -286,7 +296,7 @@ function wleu_vintages_metabox( $post ) {
 		}
 	}
 	if ( $elabel_enabled && $has_published ) {
-		$label_url = home_url( '/' . $post->post_name . '-winelabel/' );
+		$label_url = wleu_label_url( $post->post_name );
 		printf(
 			'<p style="margin-bottom: 12px;"><strong>%s:</strong> <a href="%s" target="_blank">%s</a></p>',
 			esc_html__( 'Label URL', 'winelabel-eu' ),
@@ -493,6 +503,40 @@ function wleu_index_slug() {
 	return get_option( 'wleu_index_slug', 'winelabel' );
 }
 
+/**
+ * Build a label URL that works with both pretty and plain permalinks.
+ *
+ * @param string      $product_slug Product slug.
+ * @param string|null $year         Two-digit vintage year, or null for bare label.
+ * @return string
+ */
+function wleu_label_url( $product_slug, $year = null ) {
+	if ( get_option( 'permalink_structure' ) ) {
+		$path = $product_slug . '-winelabel';
+		if ( $year ) {
+			$path .= '-' . $year;
+		}
+		return home_url( '/' . $path . '/' );
+	}
+	$args = [ 'elabel_product' => $product_slug ];
+	if ( $year ) {
+		$args['elabel_year'] = $year;
+	}
+	return add_query_arg( $args, home_url( '/' ) );
+}
+
+/**
+ * Build the label index URL that works with both pretty and plain permalinks.
+ *
+ * @return string
+ */
+function wleu_index_url() {
+	if ( get_option( 'permalink_structure' ) ) {
+		return home_url( '/' . wleu_index_slug() . '/' );
+	}
+	return add_query_arg( 'elabel_index', '1', home_url( '/' ) );
+}
+
 // ── Elabel Request Detection ─────────────────────────────────
 
 /**
@@ -501,9 +545,13 @@ function wleu_index_slug() {
  * @return bool
  */
 function wleu_is_elabel_request() {
+	// Query-param format (plain permalinks).
+	if ( isset( $_GET['elabel_product'] ) || isset( $_GET['elabel_index'] ) ) {
+		return true;
+	}
+	// Pretty URL format.
 	$uri = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) );
 	$uri = trim( $uri, '/' );
-	// Strip query string.
 	$uri = strtok( $uri, '?' );
 	$index_slug = wleu_index_slug();
 	return (bool) preg_match( '/^(.+)-winelabel(?:-\d{2})?\/?$/', $uri )
@@ -608,11 +656,11 @@ add_action( 'template_redirect', function () {
 		if ( empty( $year ) ) {
 			$latest_year = wleu_get_latest_year( $product_slug );
 			if ( $latest_year ) {
-				$lang_param = ( $lang !== 'en' ) ? '?lang=' . $lang : '';
-				wp_safe_redirect(
-					home_url( '/' . $product_slug . '-winelabel-' . $latest_year . '/' . $lang_param ),
-					301
-				);
+				$redirect_url = wleu_label_url( $product_slug, $latest_year );
+				if ( $lang !== 'en' ) {
+					$redirect_url = add_query_arg( 'lang', $lang, $redirect_url );
+				}
+				wp_safe_redirect( $redirect_url, 301 );
 				exit;
 			}
 		}

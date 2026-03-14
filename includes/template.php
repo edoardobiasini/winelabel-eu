@@ -384,7 +384,7 @@ function wleu_render_elabel_index( $lang = 'it' ) {
 
 			$entries[] = [
 				'name' => $wine_name . ' ' . $year,
-				'url'  => home_url( '/' . $product->post_name . '-winelabel-' . $year . '/' ),
+				'url'  => wleu_label_url( $product->post_name, $year ),
 				'year' => $year,
 			];
 		}

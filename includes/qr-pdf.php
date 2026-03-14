@@ -76,7 +76,12 @@ function wleu_render_elabel_qr_pdf( $product_slug, $year = '' ) {
 	if ( empty( $base_url ) ) {
 		$base_url = home_url();
 	}
-	$label_url = trailingslashit( $base_url ) . $product->post_name . '-winelabel-' . $year . '/';
+	if ( ! empty( $base_url ) ) {
+		// Custom base URL always uses pretty format (public-facing).
+		$label_url = trailingslashit( $base_url ) . $product->post_name . '-winelabel-' . $year . '/';
+	} else {
+		$label_url = wleu_label_url( $product->post_name, $year );
+	}
 
 	// ── Generate QR code as SVG ─────────────────────────────
 	$qr_options = new QROptions();
