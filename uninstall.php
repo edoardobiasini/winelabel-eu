@@ -9,6 +9,9 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
+// Always clear license transient on uninstall to avoid stale state.
+delete_transient( 'wleu_license_status' );
+
 // Only delete data if the user has opted in.
 if ( get_option( 'wleu_delete_data_on_uninstall' ) !== 'yes' ) {
 	return;

@@ -22,6 +22,11 @@ define( 'WLEU_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WLEU_URL', plugin_dir_url( __FILE__ ) );
 define( 'WLEU_VERSION', '1.0.3' );
 
+// Clear stale license cache on activation so re-installs start fresh.
+register_activation_hook( __FILE__, function () {
+	delete_transient( 'wleu_license_status' );
+} );
+
 /**
  * Load Composer autoloader.
  *
