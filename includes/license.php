@@ -206,7 +206,7 @@ function wleu_instance_name() {
  */
 function wleu_license_debug( $action, $data ) {
 	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-		error_log( sprintf(
+		error_log( sprintf( // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- debug-only logging gated behind WP_DEBUG.
 			'[WineLabel EU] License %s: %s',
 			$action,
 			wp_json_encode( $data )

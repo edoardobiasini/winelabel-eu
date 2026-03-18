@@ -43,7 +43,7 @@ foreach ( $wleu_wines as $wleu_wine_id ) {
 
 // Delete _elabel_enabled meta from all products/wines.
 global $wpdb;
-$wpdb->delete( $wpdb->postmeta, [ 'meta_key' => '_elabel_enabled' ] );
+$wpdb->delete( $wpdb->postmeta, [ 'meta_key' => '_elabel_enabled' ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- one-time uninstall cleanup, no caching needed.
 
 // Delete all plugin options.
 $wleu_options = [

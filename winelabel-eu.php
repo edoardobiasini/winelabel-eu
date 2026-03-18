@@ -3,7 +3,7 @@
  * Plugin Name: WineLabel EU
  * Plugin URI: https://winelabel.net
  * Description: EU Digital Wine Label — regulation-compliant digital labels (Reg. EU 2021/2117) with ingredients, nutritional values, and waste sorting. Works with or without WooCommerce.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Edoardo Biasini
  * Author URI: https://edoardobiasini.com
  * Text Domain: winelabel-eu
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'WLEU_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WLEU_URL', plugin_dir_url( __FILE__ ) );
-define( 'WLEU_VERSION', '1.0.4' );
+define( 'WLEU_VERSION', '1.0.5' );
 
 // On activation: flush rewrite rules and clear stale license cache.
 register_activation_hook( __FILE__, function () {
@@ -183,8 +183,8 @@ add_filter( 'wp_insert_post_data', function ( $data, $postarr ) {
 	}
 
 	// Set post_parent from URL parameter on new posts.
-	if ( empty( $postarr['ID'] ) && ! empty( $_GET['parent_product'] ) ) {
-		$data['post_parent'] = absint( $_GET['parent_product'] );
+	if ( empty( $postarr['ID'] ) && ! empty( $_GET['parent_product'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- nonce verified by WordPress core post-saving handler.
+		$data['post_parent'] = absint( $_GET['parent_product'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	return $data;
@@ -546,7 +546,7 @@ function wleu_index_url() {
  */
 function wleu_is_elabel_request() {
 	// Query-param format (plain permalinks).
-	if ( isset( $_GET['elabel_product'] ) || isset( $_GET['elabel_index'] ) ) {
+	if ( isset( $_GET['elabel_product'] ) || isset( $_GET['elabel_index'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- public frontend URL parameters.
 		return true;
 	}
 	// Pretty URL format.
@@ -629,9 +629,9 @@ add_action( 'template_redirect', function () {
 
 	// EN is the default language. Second language (via ?lang=xx) requires Pro.
 	$lang = 'en';
-	if ( wleu_is_pro() && isset( $_GET['lang'] ) ) {
+	if ( wleu_is_pro() && isset( $_GET['lang'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- public frontend URL parameter.
 		$alt_lang = get_option( 'wleu_second_language_code', 'it' );
-		$requested = sanitize_text_field( wp_unslash( $_GET['lang'] ) );
+		$requested = sanitize_text_field( wp_unslash( $_GET['lang'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( $requested === $alt_lang ) {
 			$lang = $alt_lang;
 		}
@@ -642,7 +642,7 @@ add_action( 'template_redirect', function () {
 		$product_slug = sanitize_title( $product_slug );
 
 		// QR code PDF download (Pro only).
-		if ( isset( $_GET['qr'] ) && sanitize_text_field( wp_unslash( $_GET['qr'] ) ) === 'pdf' ) {
+		if ( isset( $_GET['qr'] ) && sanitize_text_field( wp_unslash( $_GET['qr'] ) ) === 'pdf' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- public frontend URL parameter.
 			if ( ! wleu_is_pro() ) {
 				status_header( 403 );
 				echo 'QR PDF download requires WineLabel EU Pro.';

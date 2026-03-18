@@ -31,6 +31,8 @@ echo "Building lite version: $ZIP_NAME..."
 
 # Copy plugin files (exclude dev/build artifacts + landing).
 rsync -a \
+	--exclude='.claude' \
+	--exclude='.wrangler' \
 	--exclude='.git' \
 	--exclude='.gitignore' \
 	--exclude='build.sh' \

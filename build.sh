@@ -26,6 +26,8 @@ echo "Building $ZIP_NAME..."
 
 # Copy plugin files (exclude dev/build artifacts).
 rsync -a \
+	--exclude='.claude' \
+	--exclude='.wrangler' \
 	--exclude='.git' \
 	--exclude='.gitignore' \
 	--exclude='build.sh' \

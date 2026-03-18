@@ -119,7 +119,7 @@ add_action( 'admin_init', function () {
 	}
 
 	// Save custom strings.
-	if ( isset( $_POST['wleu_save_translations'] ) ) {
+	if ( isset( $_POST['wleu_save_translations'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified immediately below.
 		check_admin_referer( 'wleu_translations_nonce', 'wleu_translations_nonce_field' );
 
 		$strings = [];
@@ -142,7 +142,7 @@ add_action( 'admin_init', function () {
 	}
 
 	// Reset to defaults.
-	if ( isset( $_POST['wleu_reset_translations'] ) ) {
+	if ( isset( $_POST['wleu_reset_translations'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified immediately below.
 		check_admin_referer( 'wleu_translations_nonce', 'wleu_translations_nonce_field' );
 		delete_option( 'wleu_custom_strings' );
 		add_settings_error( 'wleu_translations', 'reset', __( 'Translations reset to defaults.', 'winelabel-eu' ), 'success' );
@@ -160,7 +160,7 @@ add_action( 'admin_init', function () {
 	if ( ! wleu_is_full_version() ) {
 		return;
 	}
-	if ( ! isset( $_POST['wleu_license_action'] ) || ! current_user_can( 'manage_options' ) ) {
+	if ( ! isset( $_POST['wleu_license_action'] ) || ! current_user_can( 'manage_options' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified below via check_admin_referer.
 		return;
 	}
 
@@ -195,7 +195,7 @@ add_action( 'admin_init', function () {
 function wleu_render_settings_page() {
 	$is_full = wleu_is_full_version();
 	$default_tab = $is_full ? 'license' : 'settings';
-	$active_tab  = sanitize_text_field( wp_unslash( $_GET['tab'] ?? $default_tab ) );
+	$active_tab  = sanitize_text_field( wp_unslash( $_GET['tab'] ?? $default_tab ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only tab navigation, no data is processed.
 
 	$tabs = [];
 	if ( $is_full ) {
