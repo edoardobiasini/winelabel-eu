@@ -23,7 +23,7 @@ if [ -z "$VERSION" ]; then
 	exit 1
 fi
 
-ZIP_NAME="${PLUGIN_SLUG}-lite-${VERSION}.zip"
+ZIP_NAME="${PLUGIN_SLUG}.zip"
 BUILD_DIR=$(mktemp -d)
 DEST="$BUILD_DIR/$PLUGIN_SLUG"
 
