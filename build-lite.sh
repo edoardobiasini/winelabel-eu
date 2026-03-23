@@ -8,7 +8,7 @@
 #   - Auto-updater skipped (WordPress.org handles updates)
 #
 # Usage: ./build-lite.sh
-# Output: winelabel-eu-lite-<version>.zip in the parent directory.
+# Output: winelabel-eu.zip in the parent directory.
 
 set -euo pipefail
 
@@ -27,13 +27,13 @@ ZIP_NAME="${PLUGIN_SLUG}.zip"
 BUILD_DIR=$(mktemp -d)
 DEST="$BUILD_DIR/$PLUGIN_SLUG"
 
-echo "Building lite version: $ZIP_NAME..."
+echo "Building lite version v${VERSION}: $ZIP_NAME..."
 
-# Copy plugin files (exclude dev/build artifacts + landing).
+# Copy plugin files (exclude dev/build artifacts, landing, vendor, dot-dirs).
 rsync -a \
-	--exclude='.claude' \
-	--exclude='.wrangler' \
-	--exclude='.git' \
+	--exclude='.claude/' \
+	--exclude='.wrangler/' \
+	--exclude='.git/' \
 	--exclude='.gitignore' \
 	--exclude='build.sh' \
 	--exclude='build-lite.sh' \
@@ -50,21 +50,31 @@ rsync -a \
 	--exclude='landing/' \
 	--exclude='.github/' \
 	--exclude='vendor/' \
+	--exclude='composer.json' \
 	--exclude='composer.lock' \
+	--exclude='composer-lite.json' \
 	"$PLUGIN_DIR/" "$DEST/"
 
 # Use lite composer.json (Carbon Fields only).
-rm -f "$DEST/composer-lite.json"
 cp "$PLUGIN_DIR/composer-lite.json" "$DEST/composer.json"
 
 # Strip auto-updater block (WordPress.org scanner rejects class name strings).
 sed -i.bak '/Auto-Updates (GitHub/,/^}/d' "$DEST/$PLUGIN_SLUG.php"
 rm -f "$DEST/$PLUGIN_SLUG.php.bak"
 
-# Install lite Composer dependencies.
+# Install lite Composer dependencies (fail loudly if composer is missing).
 cd "$DEST"
-composer install --no-dev --optimize-autoloader --no-interaction --quiet 2>/dev/null || true
+composer install --no-dev --optimize-autoloader --no-interaction
 rm -f composer.lock
+
+# Sanity check: ensure no Pro-only packages leaked in.
+for pkg in dompdf chillerlan yahnis-elsts; do
+	if [ -d "$DEST/vendor/$pkg" ]; then
+		echo "ERROR: Pro-only package '$pkg' found in vendor/. Aborting."
+		rm -rf "$BUILD_DIR"
+		exit 1
+	fi
+done
 
 # Create ZIP.
 cd "$BUILD_DIR"
@@ -76,4 +86,3 @@ rm -rf "$BUILD_DIR"
 echo "Done: ../$ZIP_NAME ($(du -h "$PLUGIN_DIR/../$ZIP_NAME" | cut -f1))"
 echo ""
 echo "This ZIP is suitable for WordPress.org submission."
-echo "QR PDF generation is disabled (requires full version from winelabel.net)."
