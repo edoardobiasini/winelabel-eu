@@ -1,0 +1,220 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+	scroll-behavior: smooth;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	color: #1a1a1a;
+	background: #f5f5f5;
+	padding: 16px;
+}
+
+.elabel-wrap {
+	max-width: 480px;
+	margin: 0 auto;
+}
+
+.elabel-page-title {
+	text-align: center;
+	font-size: 1.15rem;
+	font-weight: 700;
+	margin-bottom: 4px;
+}
+
+.elabel-wine-name {
+	text-align: center;
+	font-size: 1rem;
+	font-weight: 400;
+	color: #555;
+	margin-bottom: 16px;
+}
+
+/* Cards */
+.elabel-card {
+	background: #fff;
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	padding: 20px;
+	margin-bottom: 16px;
+}
+
+.elabel-card h2 {
+	font-size: 1.1rem;
+	font-weight: 700;
+	text-align: center;
+	margin-bottom: 12px;
+	border-bottom: 2px solid #e0e0e0;
+	padding-bottom: 8px;
+}
+
+/* Ingredients */
+.elabel-ingredients p {
+	margin-bottom: 6px;
+	text-align: center;
+	font-size: 0.95rem;
+}
+
+.elabel-allergen {
+	margin-top: 10px;
+	color: #b71c1c;
+}
+
+/* Nutritional table */
+.elabel-per {
+	text-align: center;
+	font-size: 0.85rem;
+	color: #666;
+	margin-bottom: 12px;
+}
+
+.elabel-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.95rem;
+}
+
+.elabel-table td,
+.elabel-table th {
+	padding: 8px 10px;
+	border-bottom: 1px solid #eee;
+}
+
+.elabel-table tr:last-child td {
+	border-bottom: none;
+}
+
+.elabel-val {
+	text-align: right;
+	white-space: nowrap;
+}
+
+.elabel-sub td:first-child {
+	padding-left: 24px;
+	font-size: 0.9rem;
+	color: #555;
+}
+
+.elabel-extra td {
+	border-top: 1px solid #ccc;
+}
+
+/* Raccolta table */
+.elabel-table-raccolta th {
+	text-align: left;
+	font-size: 0.8rem;
+	color: #888;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	border-bottom: 2px solid #e0e0e0;
+}
+
+.elabel-table-raccolta td {
+	font-size: 0.9rem;
+}
+
+@media (max-width: 480px) {
+	.elabel-table-raccolta thead { display: none; }
+
+	.elabel-table-raccolta tr {
+		display: block;
+		padding: 10px 0;
+		border-bottom: 1px solid #eee;
+		text-align: center;
+	}
+
+	.elabel-table-raccolta tr:last-child { border-bottom: none; }
+
+	.elabel-table-raccolta td {
+		display: block;
+		border-bottom: none;
+		padding: 2px 0;
+		text-align: center;
+	}
+
+	.elabel-table-raccolta td:first-child {
+		font-weight: 700;
+		font-size: 0.95rem;
+	}
+
+	.elabel-table-raccolta td:nth-child(2),
+	.elabel-table-raccolta td:nth-child(3) {
+		display: inline;
+		font-size: 0.85rem;
+		color: #555;
+	}
+
+	.elabel-table-raccolta td:nth-child(2)::after {
+		content: " — ";
+	}
+
+	.elabel-table-raccolta td:last-child {
+		font-size: 0.8rem;
+		color: #888;
+		font-style: italic;
+	}
+}
+
+.elabel-note {
+	text-align: center;
+	font-size: 0.8rem;
+	color: #888;
+	margin-top: 12px;
+	font-style: italic;
+}
+
+/* Index */
+.elabel-index {
+	list-style: none;
+	margin-top: 12px;
+}
+
+.elabel-index li {
+	padding: 10px 0;
+	border-bottom: 1px solid #eee;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.elabel-index li:last-child {
+	border-bottom: none;
+}
+
+.elabel-index a {
+	color: #2563eb;
+	text-decoration: underline;
+	font-weight: 500;
+}
+
+.elabel-index a:hover {
+	color: #1d4ed8;
+}
+
+/* Footer */
+.elabel-footer {
+	text-align: center;
+	font-size: 0.75rem;
+	color: #999;
+	margin-top: 24px;
+	padding-bottom: 24px;
+}
+
+.elabel-powered {
+	margin-top: 8px;
+	font-size: 0.7rem;
+}
+
+.elabel-powered a {
+	color: #999;
+	text-decoration: none;
+}
+
+.elabel-powered a:hover {
+	color: #666;
+}

@@ -15,7 +15,7 @@ EU Digital Wine Label plugin for WordPress. Generates regulation-compliant digit
 
 | Feature | Free | Pro |
 |---|---|---|
-| Published vintages | 5 max | Unlimited |
+| Published vintages | Unlimited | Unlimited |
 | Ingredients, nutrition, recycling | Yes | Yes |
 | Bare HTML regulatory output | Yes | Yes |
 | URL routing | Yes | Yes |

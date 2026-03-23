@@ -17,9 +17,9 @@ if ( get_option( 'wleu_delete_data_on_uninstall' ) !== 'yes' ) {
 	return;
 }
 
-// Delete all elabel_vintage posts and their meta.
+// Delete all wleu_vintage posts and their meta.
 $wleu_vintages = get_posts( [
-	'post_type'      => 'elabel_vintage',
+	'post_type'      => 'wleu_vintage',
 	'posts_per_page' => -1,
 	'post_status'    => 'any',
 	'fields'         => 'ids',

@@ -246,21 +246,14 @@ msgstr ""
 msgid "Free"
 msgstr ""
 
-#. translators: %1$d: current count, %2$d: limit
-#: includes/limits.php:98
+#. translators: %1$d: number of published vintages, %2$s: opening link tag, %3$s: closing link tag
+#: includes/limits.php:68
 #, php-format
-msgid "You have reached the limit of %1$d/%2$d published vintages on the Free plan. Upgrade to Pro for unlimited vintages."
+msgid "You have %1$d published vintages. Need bilingual labels, downloadable QR code PDFs, custom branding, and more? %2$sCheck out WineLabel EU Pro%3$s."
 msgstr ""
 
-#: includes/limits.php:103
-#: includes/limits.php:120
-msgid "Upgrade to Pro"
-msgstr ""
-
-#. translators: %1$d: current count, %2$d: limit
-#: includes/limits.php:115
-#, php-format
-msgid "You have %1$d/%2$d published vintages on the Free plan. Upgrade to Pro for unlimited vintages."
+#: includes/limits.php:76
+msgid "Don't show again"
 msgstr ""
 
 #: includes/settings.php:83
@@ -352,14 +345,9 @@ msgstr ""
 msgid "This will remove all vintage posts, product meta, and plugin options."
 msgstr ""
 
-#: includes/settings.php:282
+#: includes/settings.php:187
 #, php-format
-msgid "%d published vintages (unlimited)"
-msgstr ""
-
-#: includes/settings.php:285
-#, php-format
-msgid "%1$d / %2$d published vintages"
+msgid "%d published vintages"
 msgstr ""
 
 #: includes/settings.php:296
@@ -495,12 +483,7 @@ msgstr ""
 msgid "No vintages created. Click the button to add one."
 msgstr ""
 
-#: winelabel-eu.php:298
-msgid "Vintage limit reached. Upgrade to Pro for unlimited vintages."
-msgstr ""
-
 #: winelabel-eu.php:299
-#: winelabel-eu.php:303
 msgid "+ Add Vintage"
 msgstr ""
 

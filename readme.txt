@@ -1,10 +1,10 @@
 === WineLabel EU ===
-Contributors: edoardobiasini
+Contributors: edoardobiasini, milksamsa
 Tags: wine, eu regulation, digital label, qr code, woocommerce
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,24 +33,28 @@ Labels are served as clean, standalone HTML pages — no theme interference, no 
 
 WineLabel EU works standalone with its own Wines post type. If WooCommerce is installed, you can optionally attach digital labels directly to your existing products. Toggle this in Settings.
 
-= Free vs Pro =
+= Features =
 
-The free version includes everything you need to get started:
-
-* Up to 5 published vintages
+* Unlimited vintages
 * Full ingredient, nutritional, and waste sorting fields
 * Clean, regulation-compliant label pages
 * Works with or without WooCommerce
+* Label index page listing all your wines
+* No cookies, no JavaScript, no tracking on label pages
 
-[Upgrade to Pro](https://winelabel.net) for:
+= WineLabel EU Pro =
 
-* Unlimited vintages
-* Bilingual labels (English + a second language)
-* Downloadable QR code PDFs
-* Custom base URL for QR codes
-* Label index page
-* Remove footer branding
-* Priority support
+Need more? [WineLabel EU Pro](https://winelabel.net) adds:
+
+* **Bilingual labels** — English + a configurable second language (Italian, German, French, Spanish, etc.)
+* **Downloadable QR code PDFs** — vector QR codes ready for print
+* **Custom base URL** — use your own domain in QR codes
+* **Customizable translations** — full control over every label string
+* **Remove footer branding** — clean labels with your name only
+* **Duplicate vintages** — clone a vintage with one click to save time
+* **Priority support**
+
+[Learn more and upgrade at winelabel.net](https://winelabel.net)
 
 == Installation ==
 
@@ -76,15 +80,11 @@ Labels are served as clean HTML pages with no theme styles, no cookies, and no J
 
 = Can I use this in languages other than English? =
 
-The free version displays labels in English. The Pro version adds bilingual support with a configurable second language (Italian, German, French, Spanish, etc.) and fully customizable label strings.
-
-= Is there a limit on the free version? =
-
-Free users can publish up to 5 vintages across all wines. Upgrade to Pro for unlimited vintages.
+The free version displays labels in English. [WineLabel EU Pro](https://winelabel.net) adds bilingual support with a configurable second language and fully customizable label strings.
 
 = Where can I get support? =
 
-For bug reports and feature requests, visit [our GitHub repository](https://github.com/edoardobiasini/winelabel-eu). For Pro support, contact us at [winelabel.net](https://winelabel.net).
+For bug reports and feature requests, visit [our GitHub repository](https://github.com/edoardobiasini/winelabel-eu).
 
 == Screenshots ==
 
@@ -96,6 +96,13 @@ For bug reports and feature requests, visit [our GitHub repository](https://gith
 
 == Changelog ==
 
+= 1.0.6 =
+* Remove pro-only code for WordPress.org compliance
+* Extract inline CSS to external stylesheet (assets/label.css)
+* Replace inline admin scripts/styles with wp_enqueue equivalents
+* Simplify settings page (WooCommerce toggle + data removal only)
+* English-only label output
+
 = 1.0.5 =
 * Add PHPCS nonce verification and direct DB query annotations
 * Exclude .claude and .wrangler directories from build artifacts
@@ -103,21 +110,17 @@ For bug reports and feature requests, visit [our GitHub repository](https://gith
 = 1.0.4 =
 * Support plain permalinks (query-param fallback for all label URLs)
 * Auto-flush rewrite rules on plugin activation
-* Clear license transient on activation and uninstall
 * Settings page reflects correct URL format for current permalink structure
 
 = 1.0.3 =
-* Fix license activation failing due to LemonSqueezy API response mismatch
-* Add required Accept/Content-Type headers to license API requests
-* Add debug logging for license validation when WP_DEBUG is enabled
-* Fix license key placeholder to match LemonSqueezy key format
+* Fix license activation issues
+* Add debug logging when WP_DEBUG is enabled
 
 = 1.0.2 =
 * Fixed fatal error on lite version (PHP function hoisting)
 * GPL-2.0-or-later license for WordPress.org compatibility
 * Added readme.txt for WordPress.org plugin directory
 * Improved security: proper escaping, wp_unslash, wp_safe_redirect throughout
-* Tested up to WordPress 6.9
 
 = 1.0.1 =
 * Added WooCommerce integration as opt-in toggle (standalone Wines manager by default)
@@ -130,9 +133,8 @@ For bug reports and feature requests, visit [our GitHub repository](https://gith
 * Multi-vintage support with per-vintage data
 * Clean standalone HTML label pages
 * WooCommerce integration (optional)
-* Free tier with 5-vintage limit
 
 == Upgrade Notice ==
 
-= 1.0.1 =
-WooCommerce integration is now opt-in. If you were using WooCommerce, go to WineLabel EU → Settings to re-enable it.
+= 1.0.6 =
+Streamlined for WordPress.org: removed pro-only code, improved compliance with plugin guidelines.

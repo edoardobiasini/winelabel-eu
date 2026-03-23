@@ -3,7 +3,7 @@
  * Plugin Name: WineLabel EU
  * Plugin URI: https://winelabel.net
  * Description: EU Digital Wine Label — regulation-compliant digital labels (Reg. EU 2021/2117) with ingredients, nutritional values, and waste sorting. Works with or without WooCommerce.
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: Edoardo Biasini
  * Author URI: https://edoardobiasini.com
  * Text Domain: winelabel-eu
@@ -20,12 +20,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'WLEU_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WLEU_URL', plugin_dir_url( __FILE__ ) );
-define( 'WLEU_VERSION', '1.0.5' );
+define( 'WLEU_VERSION', '1.0.6' );
 
-// On activation: flush rewrite rules and clear stale license cache.
+// On activation: schedule a flush for after init (when our rewrite rules are registered).
 register_activation_hook( __FILE__, function () {
-	delete_transient( 'wleu_license_status' );
-	// Schedule a flush for after init (when our rewrite rules are registered).
 	add_option( 'wleu_flush_rewrite', 'yes' );
 } );
 
@@ -40,7 +38,6 @@ add_action( 'init', function () {
 /**
  * Load Composer autoloader.
  *
- * Full version: Carbon Fields + QR code + DomPDF + update checker.
  * Lite version (WordPress.org): Carbon Fields only.
  */
 if ( file_exists( WLEU_PATH . 'vendor/autoload.php' ) ) {
@@ -74,18 +71,6 @@ require_once WLEU_PATH . 'includes/qr-pdf.php';
 
 require_once WLEU_PATH . 'includes/fields.php';
 
-// ── Auto-Updates (GitHub, full version only) ─────────────────
-// Not included in the WordPress.org lite build.
-
-if ( wleu_is_full_version() && class_exists( 'YahnisElsts\\PluginUpdateChecker\\v5\\PucFactory' ) ) {
-	$wleu_updater = YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
-		'https://github.com/edoardobiasini/winelabel-eu/',
-		__FILE__,
-		'winelabel-eu'
-	);
-	$wleu_updater->getVcsApi()->enableReleaseAssets();
-}
-
 // ── WooCommerce Soft Dependency ──────────────────────────────
 
 /**
@@ -100,8 +85,7 @@ function wleu_is_woocommerce_active() {
 /**
  * Check if the plugin should use WooCommerce products.
  *
- * Returns true only when WooCommerce is active AND the user has opted in
- * (or hasn't explicitly opted out — defaults to 'yes' for backward compat).
+ * Returns true only when WooCommerce is active AND the user has opted in.
  *
  * @return bool
  */
@@ -120,13 +104,13 @@ function wleu_product_post_type() {
 	return wleu_uses_woocommerce() ? 'product' : 'wleu_wine';
 }
 
-// ── Custom Post Type: elabel_vintage ─────────────────────────
+// ── Custom Post Type: wleu_vintage ─────────────────────────
 
 /**
- * Register the elabel_vintage CPT and, when WooCommerce is absent, the wleu_wine CPT.
+ * Register the wleu_vintage CPT and, when WooCommerce is absent, the wleu_wine CPT.
  */
 add_action( 'init', function () {
-	register_post_type( 'elabel_vintage', [
+	register_post_type( 'wleu_vintage', [
 		'labels' => [
 			'name'               => __( 'Vintages', 'winelabel-eu' ),
 			'singular_name'      => __( 'Vintage', 'winelabel-eu' ),
@@ -178,7 +162,7 @@ add_action( 'init', function () {
  * Auto-set post_parent from URL parameter when creating a new vintage.
  */
 add_filter( 'wp_insert_post_data', function ( $data, $postarr ) {
-	if ( $data['post_type'] !== 'elabel_vintage' ) {
+	if ( $data['post_type'] !== 'wleu_vintage' ) {
 		return $data;
 	}
 
@@ -195,7 +179,7 @@ add_filter( 'wp_insert_post_data', function ( $data, $postarr ) {
  */
 add_action( 'carbon_fields_post_meta_container_saved', function ( $post_id ) {
 	$post = get_post( $post_id );
-	if ( ! $post || $post->post_type !== 'elabel_vintage' ) {
+	if ( ! $post || $post->post_type !== 'wleu_vintage' ) {
 		return;
 	}
 
@@ -234,78 +218,35 @@ add_action( 'add_meta_boxes', function () {
 } );
 
 /**
- * Move the vintage list into the Carbon Fields container via inline JS.
+ * Enqueue inline admin script to move the vintage list into the Carbon Fields container.
  */
-add_action( 'admin_footer', function () {
+add_action( 'admin_enqueue_scripts', function ( $hook ) {
+	if ( ! in_array( $hook, [ 'post.php', 'post-new.php' ], true ) ) {
+		return;
+	}
 	$screen = get_current_screen();
 	if ( ! $screen || $screen->post_type !== wleu_product_post_type() ) {
 		return;
 	}
-	?>
-	<script>
-	jQuery(function($) {
-		var $cf = $('#carbon_fields_container_winelabel_eu .fields-container, #carbon_fields_container_winelabel_eu .inside');
-		var $vintage = $('#wleu_vintages');
-		if ($cf.length && $vintage.length) {
-			var $content = $vintage.find('.inside').children();
-			var $wrapper = $('<div class="elabel-vintages-inline"></div>').append($content);
-			$cf.first().append($wrapper);
-			$vintage.remove();
-		}
-	});
-	</script>
-	<?php
-} );
 
-/**
- * Render the vintages list (will be moved into Carbon Fields container via JS).
- *
- * @param WP_Post $post The product post object.
- */
-function wleu_vintages_metabox( $post ) {
-	// Wine must be saved (at least as draft) before vintages can be added.
-	if ( $post->post_status === 'auto-draft' ) {
-		?>
-		<p style="color: #666; padding: 8px 16px;">
-			<?php esc_html_e( 'Save this wine first (as Draft or Published) to start adding vintages.', 'winelabel-eu' ); ?>
-		</p>
-		<?php
-		return;
+	$js = <<<'JS'
+jQuery(function($) {
+	var $cf = $('#carbon_fields_container_winelabel_eu .fields-container, #carbon_fields_container_winelabel_eu .inside');
+	var $vintage = $('#wleu_vintages');
+	if ($cf.length && $vintage.length) {
+		var $content = $vintage.find('.inside').children();
+		var $wrapper = $('<div class="elabel-vintages-inline"></div>').append($content);
+		$cf.first().append($wrapper);
+		$vintage.remove();
 	}
+});
+JS;
+	wp_add_inline_script( 'jquery', $js );
 
-	$vintages = get_posts( [
-		'post_type'      => 'elabel_vintage',
-		'post_parent'    => $post->ID,
-		'posts_per_page' => -1,
-		'post_status'    => 'any',
-		'orderby'        => 'meta_value',
-		'meta_key'       => '_elabel_annata',
-		'order'          => 'ASC',
-	] );
-
-	$add_url  = admin_url( 'post-new.php?post_type=elabel_vintage&parent_product=' . $post->ID );
-	$at_limit = ! wleu_can_publish_vintage();
-
-	// Show the e-label URL if the label is enabled and there are published vintages.
-	$elabel_enabled  = carbon_get_post_meta( $post->ID, 'elabel_enabled' );
-	$has_published   = false;
-	foreach ( $vintages as $v ) {
-		if ( $v->post_status === 'publish' ) {
-			$has_published = true;
-			break;
-		}
-	}
-	if ( $elabel_enabled && $has_published ) {
-		$label_url = wleu_label_url( $post->post_name );
-		printf(
-			'<p style="margin-bottom: 12px;"><strong>%s:</strong> <a href="%s" target="_blank">%s</a></p>',
-			esc_html__( 'Label URL', 'winelabel-eu' ),
-			esc_url( $label_url ),
-			esc_html( $label_url )
-		);
-	}
-	?>
-	<style>
+	// Register inline admin styles for the vintage metabox.
+	wp_register_style( 'wleu-admin', false, [], WLEU_VERSION );
+	wp_enqueue_style( 'wleu-admin' );
+	wp_add_inline_style( 'wleu-admin', '
 		.elabel-vintages-inline {
 			border-top: 1px solid #e0e0e0;
 			padding: 16px 16px 4px;
@@ -326,7 +267,57 @@ function wleu_vintages_metabox( $post ) {
 		.elabel-vintage-table .elabel-actions .delete a { color: #b32d2e; }
 		.elabel-vintage-table .elabel-actions .delete a:hover { color: #a02020; }
 		.elabel-vintage-add { margin-top: 12px; }
-	</style>
+	' );
+} );
+
+/**
+ * Render the vintages list (will be moved into Carbon Fields container via JS).
+ *
+ * @param WP_Post $post The product post object.
+ */
+function wleu_vintages_metabox( $post ) {
+	// Wine must be saved (at least as draft) before vintages can be added.
+	if ( $post->post_status === 'auto-draft' ) {
+		?>
+		<p style="color: #666; padding: 8px 16px;">
+			<?php esc_html_e( 'Save this wine first (as Draft or Published) to start adding vintages.', 'winelabel-eu' ); ?>
+		</p>
+		<?php
+		return;
+	}
+
+	$vintages = get_posts( [
+		'post_type'      => 'wleu_vintage',
+		'post_parent'    => $post->ID,
+		'posts_per_page' => -1,
+		'post_status'    => 'any',
+		'orderby'        => 'meta_value',
+		'meta_key'       => '_elabel_annata',
+		'order'          => 'ASC',
+	] );
+
+	$add_url = admin_url( 'post-new.php?post_type=wleu_vintage&parent_product=' . $post->ID );
+
+	// Show the e-label URL if the label is enabled and there are published vintages.
+	$elabel_enabled  = carbon_get_post_meta( $post->ID, 'elabel_enabled' );
+	$has_published   = false;
+	foreach ( $vintages as $v ) {
+		if ( $v->post_status === 'publish' ) {
+			$has_published = true;
+			break;
+		}
+	}
+	if ( $elabel_enabled && $has_published ) {
+		$label_url = wleu_label_url( $post->post_name );
+		printf(
+			'<p style="margin-bottom: 12px;"><strong>%s:</strong> <a href="%s" target="_blank">%s</a></p>',
+			esc_html__( 'Label URL', 'winelabel-eu' ),
+			esc_url( $label_url ),
+			esc_html( $label_url )
+		);
+	}
+
+	?>
 
 	<h3><?php esc_html_e( 'Vintages', 'winelabel-eu' ); ?></h3>
 
@@ -352,16 +343,6 @@ function wleu_vintages_metabox( $post ) {
 					<td><?php echo esc_html( $status->label ?? $vintage->post_status ); ?></td>
 					<td class="elabel-actions">
 						<a href="<?php echo esc_url( $edit_url ); ?>"><?php esc_html_e( 'Edit', 'winelabel-eu' ); ?></a>
-						<?php if ( wleu_is_pro() ) : ?>
-							<?php
-							$dup_url = wp_nonce_url(
-								admin_url( 'admin.php?action=wleu_duplicate_vintage&post=' . $vintage->ID ),
-								'wleu_duplicate_vintage_' . $vintage->ID
-							);
-							?>
-							<span class="sep">|</span>
-							<a href="<?php echo esc_url( $dup_url ); ?>"><?php esc_html_e( 'Duplicate', 'winelabel-eu' ); ?></a>
-						<?php endif; ?>
 						<?php
 						$del_url = wp_nonce_url(
 							admin_url( 'admin.php?action=wleu_delete_vintage&post=' . $vintage->ID ),
@@ -380,71 +361,12 @@ function wleu_vintages_metabox( $post ) {
 	<?php endif; ?>
 
 	<p class="elabel-vintage-add">
-		<?php if ( $at_limit ) : ?>
-			<button class="button button-primary" disabled title="<?php esc_attr_e( 'Vintage limit reached. Upgrade to Pro for unlimited vintages.', 'winelabel-eu' ); ?>">
-				<?php esc_html_e( '+ Add Vintage', 'winelabel-eu' ); ?>
-			</button>
-		<?php else : ?>
-			<a href="<?php echo esc_url( $add_url ); ?>" class="button button-primary">
-				<?php esc_html_e( '+ Add Vintage', 'winelabel-eu' ); ?>
-			</a>
-		<?php endif; ?>
+		<a href="<?php echo esc_url( $add_url ); ?>" class="button button-primary">
+			<?php esc_html_e( '+ Add Vintage', 'winelabel-eu' ); ?>
+		</a>
 	</p>
 	<?php
 }
-
-// ── Duplicate Vintage Action (Pro only) ──────────────────────
-
-/**
- * Handle the "Duplicate Vintage" admin action.
- */
-add_action( 'admin_action_wleu_duplicate_vintage', function () {
-	if ( ! current_user_can( 'edit_posts' ) ) {
-		wp_die( esc_html__( 'You do not have permission to perform this action.', 'winelabel-eu' ) );
-	}
-
-	if ( ! wleu_is_pro() ) {
-		wp_die( esc_html__( 'This feature requires WineLabel EU Pro.', 'winelabel-eu' ) );
-	}
-
-	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- absint() handles sanitization.
-	$post_id = absint( wp_unslash( $_GET['post'] ?? 0 ) );
-
-	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitize_text_field handles sanitization.
-	if ( ! $post_id || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ?? '' ) ), 'wleu_duplicate_vintage_' . $post_id ) ) {
-		wp_die( esc_html__( 'Unauthorized action.', 'winelabel-eu' ) );
-	}
-
-	$source = get_post( $post_id );
-	if ( ! $source || $source->post_type !== 'elabel_vintage' ) {
-		wp_die( esc_html__( 'Vintage not found.', 'winelabel-eu' ) );
-	}
-
-	$new_id = wp_insert_post( [
-		'post_type'   => 'elabel_vintage',
-		'post_status' => 'draft',
-		'post_title'  => $source->post_title . ' (copy)',
-		'post_parent' => $source->post_parent,
-	] );
-
-	if ( is_wp_error( $new_id ) ) {
-		wp_die( esc_html( $new_id->get_error_message() ) );
-	}
-
-	// Copy all meta from source to new post.
-	$meta = get_post_meta( $source->ID );
-	foreach ( $meta as $key => $values ) {
-		if ( in_array( $key, [ '_edit_lock', '_edit_last' ], true ) ) {
-			continue;
-		}
-		foreach ( $values as $value ) {
-			add_post_meta( $new_id, $key, maybe_unserialize( $value ) );
-		}
-	}
-
-	wp_safe_redirect( get_edit_post_link( $new_id, 'raw' ) );
-	exit;
-} );
 
 // ── Delete Vintage Action ────────────────────────────────────
 
@@ -465,7 +387,7 @@ add_action( 'admin_action_wleu_delete_vintage', function () {
 	}
 
 	$post = get_post( $post_id );
-	if ( ! $post || $post->post_type !== 'elabel_vintage' ) {
+	if ( ! $post || $post->post_type !== 'wleu_vintage' ) {
 		wp_die( esc_html__( 'Vintage not found.', 'winelabel-eu' ) );
 	}
 
@@ -480,7 +402,7 @@ add_action( 'admin_action_wleu_delete_vintage', function () {
  * Add a "Back to product" link on the vintage edit screen.
  */
 add_action( 'edit_form_top', function ( $post ) {
-	if ( $post->post_type !== 'elabel_vintage' || ! $post->post_parent ) {
+	if ( $post->post_type !== 'wleu_vintage' || ! $post->post_parent ) {
 		return;
 	}
 
@@ -627,25 +549,18 @@ add_action( 'template_redirect', function () {
 	$year         = get_query_var( 'elabel_year' );
 	$is_index     = get_query_var( 'elabel_index' );
 
-	// EN is the default language. Second language (via ?lang=xx) requires Pro.
+	// Always EN in lite version.
 	$lang = 'en';
-	if ( wleu_is_pro() && isset( $_GET['lang'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- public frontend URL parameter.
-		$alt_lang = get_option( 'wleu_second_language_code', 'it' );
-		$requested = sanitize_text_field( wp_unslash( $_GET['lang'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( $requested === $alt_lang ) {
-			$lang = $alt_lang;
-		}
-	}
 
 	if ( $product_slug ) {
 		header_remove( 'Set-Cookie' );
 		$product_slug = sanitize_title( $product_slug );
 
-		// QR code PDF download (Pro only).
+		// QR code PDF download — requires DomPDF (not available in lite).
 		if ( isset( $_GET['qr'] ) && sanitize_text_field( wp_unslash( $_GET['qr'] ) ) === 'pdf' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- public frontend URL parameter.
-			if ( ! wleu_is_pro() ) {
-				status_header( 403 );
-				echo 'QR PDF download requires WineLabel EU Pro.';
+			if ( ! class_exists( 'Dompdf\\Dompdf' ) ) {
+				status_header( 501 );
+				echo 'QR PDF generation is not available in the lite version. Download the full plugin from winelabel.net.';
 				exit;
 			}
 			wleu_render_elabel_qr_pdf( $product_slug, $year );
@@ -657,9 +572,6 @@ add_action( 'template_redirect', function () {
 			$latest_year = wleu_get_latest_year( $product_slug );
 			if ( $latest_year ) {
 				$redirect_url = wleu_label_url( $product_slug, $latest_year );
-				if ( $lang !== 'en' ) {
-					$redirect_url = add_query_arg( 'lang', $lang, $redirect_url );
-				}
 				wp_safe_redirect( $redirect_url, 301 );
 				exit;
 			}
@@ -697,7 +609,7 @@ function wleu_get_latest_year( $product_slug ) {
 	}
 
 	$vintages = get_posts( [
-		'post_type'      => 'elabel_vintage',
+		'post_type'      => 'wleu_vintage',
 		'post_parent'    => $products[0]->ID,
 		'posts_per_page' => 1,
 		'post_status'    => 'publish',
@@ -722,7 +634,7 @@ function wleu_get_latest_year( $product_slug ) {
  */
 function wleu_find_vintage( $product_id, $year ) {
 	$vintages = get_posts( [
-		'post_type'      => 'elabel_vintage',
+		'post_type'      => 'wleu_vintage',
 		'post_parent'    => $product_id,
 		'posts_per_page' => 1,
 		'post_status'    => 'publish',
@@ -746,7 +658,7 @@ function wleu_find_vintage( $product_id, $year ) {
  */
 function wleu_get_vintages( $product_id, $order = 'ASC' ) {
 	return get_posts( [
-		'post_type'      => 'elabel_vintage',
+		'post_type'      => 'wleu_vintage',
 		'post_parent'    => $product_id,
 		'posts_per_page' => -1,
 		'post_status'    => 'publish',
@@ -763,7 +675,7 @@ function wleu_get_vintages( $product_id, $order = 'ASC' ) {
  */
 register_activation_hook( __FILE__, function () {
 	// Register CPT before flushing.
-	register_post_type( 'elabel_vintage', [
+	register_post_type( 'wleu_vintage', [
 		'public'       => false,
 		'show_ui'      => true,
 		'show_in_menu' => false,
@@ -792,11 +704,6 @@ register_activation_hook( __FILE__, function () {
 
 	// Store version.
 	update_option( 'wleu_version', WLEU_VERSION );
-
-	// Create temp dir for DomPDF.
-	$upload_dir = wp_upload_dir();
-	$tmp_dir    = $upload_dir['basedir'] . '/winelabel-eu-tmp';
-	wp_mkdir_p( $tmp_dir );
 } );
 
 /**
@@ -804,7 +711,4 @@ register_activation_hook( __FILE__, function () {
  */
 register_deactivation_hook( __FILE__, function () {
 	flush_rewrite_rules();
-
-	// Clean transients only (preserve data).
-	delete_transient( 'wleu_license_status' );
 } );

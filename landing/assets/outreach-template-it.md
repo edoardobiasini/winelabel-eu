@@ -18,7 +18,7 @@ Ho sviluppato **WineLabel EU**, un plugin WordPress gratuito che genera automati
 - **Pagine HTML autonome** — nessuna dipendenza dal tema, nessun cookie, nessuno script
 - **Multi-annata** — ogni vino supporta più annate con dati separati
 - **QR code** — URL univoco per ogni etichetta, pronto per la stampa
-- **Gratuito** — fino a 5 annate pubblicate, senza limiti di tempo
+- **Gratuito** — annate illimitate, senza limiti di tempo
 
 L'installazione richiede meno di 5 minuti e non serve alcuna configurazione tecnica.
 
@@ -45,7 +45,7 @@ I built **WineLabel EU**, a free WordPress plugin that automatically generates r
 - **Standalone HTML pages** — no theme dependency, no cookies, no scripts
 - **Multi-vintage** — each wine supports multiple vintages with separate data
 - **QR codes** — unique URL per label, ready to print
-- **Free** — up to 5 published vintages, no time limit
+- **Free** — unlimited vintages, no time limit
 
 Installation takes less than 5 minutes with zero configuration needed.
 

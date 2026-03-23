@@ -1,13 +1,13 @@
 <?php
 /**
- * Bare HTML template output for WineLabel EU.
+ * Bare HTML template output for WineLabel EU (Lite).
  *
  * These functions output complete HTML documents and exit —
  * no WordPress theme, no wp_head/wp_footer, no scripts, no cookies.
  * Fully compliant with EU Reg. 2021/2117, Art. 119(5).
  *
- * Supports IT (default) and EN via ?lang=en query parameter.
- * Supports multiple vintages per product via the elabel_vintage CPT.
+ * English-only — no bilingual support in the lite version.
+ * Supports multiple vintages per product via the wleu_vintage CPT.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,12 +18,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Return a translated UI string.
  *
  * Uses static arrays for bare HTML pages (must work outside WP theme context).
+ * Lite version: English only.
  *
  * @param string $key   Translation key.
- * @param string $lang  Language code ('it' or 'en').
+ * @param string $lang  Language code (always 'en' in lite).
  * @return string
  */
-function wleu_t( $key, $lang = 'it' ) {
+function wleu_t( $key, $lang = 'en' ) {
 	static $en = [
 		'ingredienti'        => 'Ingredients',
 		'materia_prima'      => 'Raw material:',
@@ -51,7 +52,6 @@ function wleu_t( $key, $lang = 'it' ) {
 		'verifica_comune'    => 'Check your local municipality regulations.',
 		'indice_vini'        => 'Wine Index',
 		'reg_disclaimer'     => 'Mandatory information pursuant to Reg. (EU) 2021/2117 &mdash; Art. 119 Reg. (EU) 1308/2013',
-		'scarica_qr'         => 'Download QR (PDF)',
 		'nessun_vino'        => 'No wines available at the moment.',
 		'etichetta_digitale' => 'Digital Label',
 		'non_trovato'        => 'Not found',
@@ -60,61 +60,9 @@ function wleu_t( $key, $lang = 'it' ) {
 		'annata_non_trovata'         => 'Vintage not found.',
 		'reg_footer'         => 'Reg. (EU) 2021/2117 &mdash; Art. 119 Reg. (EU) 1308/2013',
 		'powered_by'         => 'Powered by WineLabel EU',
-		'qr_upgrade'         => 'Upgrade to Pro for vector QR codes',
-		'upgrade_cta'        => 'Unlock QR codes, bilingual labels &amp; more &mdash; <a href="https://winelabel.net/pro">WineLabel EU Pro</a>',
 	];
 
-	static $it = [
-		'ingredienti'        => 'Ingredienti',
-		'materia_prima'      => 'Materia prima:',
-		'correttori_acidita' => 'Correttori di acidit&agrave;:',
-		'stabilizzanti'      => 'Stabilizzanti:',
-		'antiossidanti'      => 'Antiossidanti:',
-		'contiene_solfiti'   => 'Contiene solfiti',
-		'info_nutrizionali'  => 'Informazioni Nutrizionali',
-		'valori_per_100ml'   => 'valori nutrizionali per <strong>100 ml</strong> di prodotto',
-		'calorie'            => 'Calorie',
-		'grassi'             => 'Grassi',
-		'grassi_saturi'      => 'di cui Acidi Grassi Saturi',
-		'carboidrati'        => 'Carboidrati',
-		'zuccheri'           => 'di cui Zuccheri',
-		'proteine'           => 'Proteine',
-		'sale'               => 'Sale',
-		'acidita_totale'     => 'Acidit&agrave; totale',
-		'grado_alcolico'     => 'Grado alcolico',
-		'solforosa_totale'   => 'Anidride Solforosa Totale',
-		'raccolta_diff'      => 'Raccolta Differenziata',
-		'componente'         => 'Componente',
-		'codice'             => 'Codice',
-		'materiale'          => 'Materiale',
-		'raccolta'           => 'Raccolta',
-		'verifica_comune'    => 'Verifica il regolamento del tuo Comune.',
-		'indice_vini'        => 'Indice vini',
-		'reg_disclaimer'     => 'Informazioni obbligatorie ai sensi del Reg. (UE) 2021/2117 &mdash; Art. 119 Reg. (UE) 1308/2013',
-		'scarica_qr'         => 'Scarica QR (PDF)',
-		'nessun_vino'        => 'Nessun vino disponibile al momento.',
-		'etichetta_digitale' => 'Etichetta Digitale',
-		'non_trovato'        => 'Non trovato',
-		'etichetta_non_trovata'      => 'Etichetta non trovata.',
-		'etichetta_non_disponibile'  => 'Etichetta non disponibile.',
-		'annata_non_trovata'         => 'Annata non trovata.',
-		'reg_footer'         => 'Reg. (UE) 2021/2117 &mdash; Art. 119 Reg. (UE) 1308/2013',
-		'powered_by'         => 'Powered by WineLabel EU',
-		'qr_upgrade'         => 'Passa a Pro per i QR code vettoriali',
-		'upgrade_cta'        => 'QR code, etichette bilingue e altro &mdash; <a href="https://winelabel.net/pro">WineLabel EU Pro</a>',
-	];
-
-	if ( $lang === 'en' ) {
-		$strings = $en;
-	} elseif ( $lang === 'it' ) {
-		// IT ships built-in as default second language.
-		$custom  = get_option( 'wleu_custom_strings', [] );
-		$strings = is_array( $custom ) && ! empty( $custom ) ? array_merge( $it, $custom ) : $it;
-	} else {
-		// Any other language: custom strings with EN fallback.
-		$custom  = get_option( 'wleu_custom_strings', [] );
-		$strings = is_array( $custom ) ? array_merge( $en, $custom ) : $en;
-	}
+	$strings = $en;
 
 	/**
 	 * Filter the translation strings for extensibility.
@@ -130,11 +78,11 @@ function wleu_t( $key, $lang = 'it' ) {
 /**
  * Render a single product vintage's digital label.
  *
- * @param string $product_slug The WooCommerce product slug.
+ * @param string $product_slug The product slug.
  * @param string $year         Two-digit vintage year (e.g. '24').
- * @param string $lang         Language code ('it' or 'en').
+ * @param string $lang         Language code (always 'en' in lite).
  */
-function wleu_render_elabel_single( $product_slug, $year, $lang = 'it' ) {
+function wleu_render_elabel_single( $product_slug, $year, $lang = 'en' ) {
 
 	$products = get_posts( [
 		'post_type'      => wleu_product_post_type(),
@@ -180,25 +128,14 @@ function wleu_render_elabel_single( $product_slug, $year, $lang = 'it' ) {
 
 	$wine_name_display = $wine_name . ' ' . $year;
 
-	// ── Ingredients (from vintage) ──────────────────────────
-	// _en fields = EN (primary), base fields = second language (Pro).
+	// ── Ingredients (from vintage) — always use _en fields ──
 	$contiene_solfiti = ! empty( carbon_get_post_meta( $vintage_id, 'elabel_contiene_solfiti' ) );
 
-	if ( $lang === 'en' ) {
-		// EN: prefer _en field, fall back to base field.
-		$materia_prima      = carbon_get_post_meta( $vintage_id, 'elabel_materia_prima_en' ) ?: carbon_get_post_meta( $vintage_id, 'elabel_materia_prima' );
-		$correttori_acidita = carbon_get_post_meta( $vintage_id, 'elabel_correttori_acidita_en' ) ?: carbon_get_post_meta( $vintage_id, 'elabel_correttori_acidita' );
-		$stabilizzanti      = carbon_get_post_meta( $vintage_id, 'elabel_stabilizzanti_en' ) ?: carbon_get_post_meta( $vintage_id, 'elabel_stabilizzanti' );
-		$antiossidanti      = carbon_get_post_meta( $vintage_id, 'elabel_antiossidanti_en' ) ?: carbon_get_post_meta( $vintage_id, 'elabel_antiossidanti' );
-		$altri_ingredienti  = carbon_get_post_meta( $vintage_id, 'elabel_altri_ingredienti_en' ) ?: carbon_get_post_meta( $vintage_id, 'elabel_altri_ingredienti' );
-	} else {
-		// Second language (Pro): prefer base field, fall back to _en field.
-		$materia_prima      = carbon_get_post_meta( $vintage_id, 'elabel_materia_prima' ) ?: carbon_get_post_meta( $vintage_id, 'elabel_materia_prima_en' );
-		$correttori_acidita = carbon_get_post_meta( $vintage_id, 'elabel_correttori_acidita' ) ?: carbon_get_post_meta( $vintage_id, 'elabel_correttori_acidita_en' );
-		$stabilizzanti      = carbon_get_post_meta( $vintage_id, 'elabel_stabilizzanti' ) ?: carbon_get_post_meta( $vintage_id, 'elabel_stabilizzanti_en' );
-		$antiossidanti      = carbon_get_post_meta( $vintage_id, 'elabel_antiossidanti' ) ?: carbon_get_post_meta( $vintage_id, 'elabel_antiossidanti_en' );
-		$altri_ingredienti  = carbon_get_post_meta( $vintage_id, 'elabel_altri_ingredienti' ) ?: carbon_get_post_meta( $vintage_id, 'elabel_altri_ingredienti_en' );
-	}
+	$materia_prima      = carbon_get_post_meta( $vintage_id, 'elabel_materia_prima_en' );
+	$correttori_acidita = carbon_get_post_meta( $vintage_id, 'elabel_correttori_acidita_en' );
+	$stabilizzanti      = carbon_get_post_meta( $vintage_id, 'elabel_stabilizzanti_en' );
+	$antiossidanti      = carbon_get_post_meta( $vintage_id, 'elabel_antiossidanti_en' );
+	$altri_ingredienti  = carbon_get_post_meta( $vintage_id, 'elabel_altri_ingredienti_en' );
 
 	// ── Nutrition (from vintage) ────────────────────────────
 	$energia_kj       = carbon_get_post_meta( $vintage_id, 'elabel_energia_kj' );
@@ -316,15 +253,9 @@ function wleu_render_elabel_single( $product_slug, $year, $lang = 'it' ) {
 			</thead>
 			<tbody>
 				<?php foreach ( $raccolta as $item ) :
-					if ( $lang === 'en' ) {
-						$r_componente = ( $item['componente_en'] ?? '' ) ?: ( $item['componente'] ?? '' );
-						$r_materiale  = ( $item['materiale_en'] ?? '' )  ?: ( $item['materiale'] ?? '' );
-						$r_istruzioni = ( $item['istruzioni_en'] ?? '' ) ?: ( $item['istruzioni'] ?? '' );
-					} else {
-						$r_componente = ( $item['componente'] ?? '' ) ?: ( $item['componente_en'] ?? '' );
-						$r_materiale  = ( $item['materiale'] ?? '' )  ?: ( $item['materiale_en'] ?? '' );
-						$r_istruzioni = ( $item['istruzioni'] ?? '' ) ?: ( $item['istruzioni_en'] ?? '' );
-					}
+					$r_componente = $item['componente_en'] ?? '';
+					$r_materiale  = $item['materiale_en'] ?? '';
+					$r_istruzioni = $item['istruzioni_en'] ?? '';
 				?>
 				<tr>
 					<td><?php echo esc_html( $r_componente ); ?></td>
@@ -346,9 +277,9 @@ function wleu_render_elabel_single( $product_slug, $year, $lang = 'it' ) {
 /**
  * Render the index page listing all products with digital labels.
  *
- * @param string $lang Language code ('it' or 'en').
+ * @param string $lang Language code (always 'en' in lite).
  */
-function wleu_render_elabel_index( $lang = 'it' ) {
+function wleu_render_elabel_index( $lang = 'en' ) {
 
 	$products = get_posts( [
 		'post_type'      => wleu_product_post_type(),
@@ -408,26 +339,13 @@ function wleu_render_elabel_index( $lang = 'it' ) {
 		<?php else : ?>
 			<ul class="elabel-index">
 				<?php foreach ( $entries as $entry ) : ?>
-					<?php
-					$lang_param = ( $lang !== 'en' ) ? '?lang=' . $lang : '';
-					$qr_url     = $entry['url'] . '?qr=pdf';
-					?>
 					<li>
-						<a href="<?php echo esc_url( $entry['url'] . $lang_param ); ?>"><?php echo esc_html( $entry['name'] ); ?></a>
-						<?php if ( wleu_is_pro() ) : ?>
-							<a href="<?php echo esc_url( $qr_url ); ?>" class="elabel-qr-btn" download><?php echo esc_html( wleu_t( 'scarica_qr', $lang ) ); ?></a>
-						<?php else : ?>
-							<span class="elabel-qr-btn elabel-qr-disabled" title="<?php echo esc_attr( wleu_t( 'qr_upgrade', $lang ) ); ?>"><?php echo esc_html( wleu_t( 'scarica_qr', $lang ) ); ?></span>
-						<?php endif; ?>
+						<a href="<?php echo esc_url( $entry['url'] ); ?>"><?php echo esc_html( $entry['name'] ); ?></a>
 					</li>
 				<?php endforeach; ?>
 			</ul>
 		<?php endif; ?>
 	</div>
-
-	<?php if ( ! wleu_is_pro() ) : ?>
-		<p class="elabel-upgrade"><?php echo wp_kses_post( wleu_t( 'upgrade_cta', $lang ) ); ?></p>
-	<?php endif; ?>
 
 	<?php
 	wleu_html_footer( $lang );
@@ -436,348 +354,31 @@ function wleu_render_elabel_index( $lang = 'it' ) {
 /**
  * Output the opening HTML, <head>, and opening <body> tags.
  *
+ * CSS is loaded via wp_register_style + wp_enqueue_style + wp_print_styles
+ * to comply with WordPress.org requirements (no inline styles).
+ *
  * @param string $title Page <title>.
- * @param string $lang  Language code ('it' or 'en').
+ * @param string $lang  Language code.
  */
 function wleu_html_header( $title, $lang = 'en' ) {
 	$title    = esc_html( $title );
-	$lang_attr = esc_attr( $lang );
 	$t_label  = wleu_t( 'etichetta_digitale', $lang );
 
-	// Build language toggle URLs (Pro only).
-	$current_path = strtok( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) ), '?' );
-	$en_url  = $current_path;
-	$alt_lang = get_option( 'wleu_second_language_code', 'it' );
-	$alt_url  = $current_path . '?lang=' . $alt_lang;
-	$show_lang_toggle = wleu_is_pro() && get_option( 'wleu_second_language_enabled', '' ) === 'yes';
+	// Register and enqueue the label stylesheet.
+	wp_register_style( 'wleu-label', WLEU_URL . 'assets/label.css', [], WLEU_VERSION );
+	wp_enqueue_style( 'wleu-label' );
 	?>
 <!DOCTYPE html>
-<html lang="<?php echo esc_attr( $lang_attr ); ?>">
+<html lang="<?php echo esc_attr( $lang ); ?>">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="robots" content="noindex, nofollow">
 	<title><?php echo esc_html( $title ); ?> &mdash; <?php echo esc_html( $t_label ); ?></title>
-	<style>
-		*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-		html {
-			scroll-behavior: smooth;
-			-webkit-text-size-adjust: 100%;
-		}
-
-		body {
-			font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-			font-size: 16px;
-			line-height: 1.5;
-			color: #1a1a1a;
-			background: #f5f5f5;
-			padding: 16px;
-		}
-
-		.elabel-wrap {
-			max-width: 480px;
-			margin: 0 auto;
-		}
-
-		/* Language toggle */
-		.elabel-lang {
-			text-align: center;
-			margin-bottom: 12px;
-			font-size: 0.8rem;
-		}
-
-		.elabel-lang a {
-			color: #888;
-			text-decoration: none;
-			padding: 2px 6px;
-		}
-
-		.elabel-lang a:hover {
-			color: #1a1a1a;
-		}
-
-		.elabel-lang .active {
-			color: #1a1a1a;
-			font-weight: 700;
-		}
-
-		.elabel-lang .sep {
-			color: #ccc;
-		}
-
-		.elabel-page-title {
-			text-align: center;
-			font-size: 1.15rem;
-			font-weight: 700;
-			margin-bottom: 4px;
-		}
-
-		.elabel-wine-name {
-			text-align: center;
-			font-size: 1rem;
-			font-weight: 400;
-			color: #555;
-			margin-bottom: 16px;
-		}
-
-		/* Cards */
-		.elabel-card {
-			background: #fff;
-			border: 1px solid #e0e0e0;
-			border-radius: 8px;
-			padding: 20px;
-			margin-bottom: 16px;
-		}
-
-		.elabel-card h2 {
-			font-size: 1.1rem;
-			font-weight: 700;
-			text-align: center;
-			margin-bottom: 12px;
-			border-bottom: 2px solid #e0e0e0;
-			padding-bottom: 8px;
-		}
-
-		/* Ingredients section header with flag */
-		.elabel-section-header {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 10px;
-			margin-bottom: 12px;
-			border-bottom: 2px solid #e0e0e0;
-			padding-bottom: 8px;
-		}
-
-		.elabel-section-header h2 {
-			margin-bottom: 0;
-			border-bottom: none;
-			padding-bottom: 0;
-		}
-
-		.elabel-flag {
-			width: 28px;
-			height: 20px;
-			flex-shrink: 0;
-		}
-
-		/* Ingredients */
-		.elabel-ingredients p {
-			margin-bottom: 6px;
-			text-align: center;
-			font-size: 0.95rem;
-		}
-
-		.elabel-allergen {
-			margin-top: 10px;
-			color: #b71c1c;
-		}
-
-		/* Nutritional table */
-		.elabel-per {
-			text-align: center;
-			font-size: 0.85rem;
-			color: #666;
-			margin-bottom: 12px;
-		}
-
-		.elabel-table {
-			width: 100%;
-			border-collapse: collapse;
-			font-size: 0.95rem;
-		}
-
-		.elabel-table td,
-		.elabel-table th {
-			padding: 8px 10px;
-			border-bottom: 1px solid #eee;
-		}
-
-		.elabel-table tr:last-child td {
-			border-bottom: none;
-		}
-
-		.elabel-val {
-			text-align: right;
-			white-space: nowrap;
-		}
-
-		.elabel-sub td:first-child {
-			padding-left: 24px;
-			font-size: 0.9rem;
-			color: #555;
-		}
-
-		.elabel-extra td {
-			border-top: 1px solid #ccc;
-		}
-
-		/* Raccolta table */
-		.elabel-table-raccolta th {
-			text-align: left;
-			font-size: 0.8rem;
-			color: #888;
-			text-transform: uppercase;
-			letter-spacing: 0.03em;
-			border-bottom: 2px solid #e0e0e0;
-		}
-
-		.elabel-table-raccolta td {
-			font-size: 0.9rem;
-		}
-
-		@media (max-width: 480px) {
-			.elabel-table-raccolta thead { display: none; }
-
-			.elabel-table-raccolta tr {
-				display: block;
-				padding: 10px 0;
-				border-bottom: 1px solid #eee;
-				text-align: center;
-			}
-
-			.elabel-table-raccolta tr:last-child { border-bottom: none; }
-
-			.elabel-table-raccolta td {
-				display: block;
-				border-bottom: none;
-				padding: 2px 0;
-				text-align: center;
-			}
-
-			.elabel-table-raccolta td:first-child {
-				font-weight: 700;
-				font-size: 0.95rem;
-			}
-
-			.elabel-table-raccolta td:nth-child(2),
-			.elabel-table-raccolta td:nth-child(3) {
-				display: inline;
-				font-size: 0.85rem;
-				color: #555;
-			}
-
-			.elabel-table-raccolta td:nth-child(2)::after {
-				content: " — ";
-			}
-
-			.elabel-table-raccolta td:last-child {
-				font-size: 0.8rem;
-				color: #888;
-				font-style: italic;
-			}
-		}
-
-		.elabel-note {
-			text-align: center;
-			font-size: 0.8rem;
-			color: #888;
-			margin-top: 12px;
-			font-style: italic;
-		}
-
-		/* Index */
-		.elabel-index {
-			list-style: none;
-			margin-top: 12px;
-		}
-
-		.elabel-index li {
-			padding: 10px 0;
-			border-bottom: 1px solid #eee;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			gap: 12px;
-		}
-
-		.elabel-index li:last-child {
-			border-bottom: none;
-		}
-
-		.elabel-index a {
-			color: #2563eb;
-			text-decoration: underline;
-			font-weight: 500;
-		}
-
-		.elabel-index a:hover {
-			color: #1d4ed8;
-		}
-
-		.elabel-qr-btn {
-			font-size: 0.75rem;
-			color: #fff !important;
-			background: #555;
-			padding: 4px 10px;
-			border-radius: 4px;
-			text-decoration: none !important;
-			white-space: nowrap;
-			flex-shrink: 0;
-		}
-
-		.elabel-qr-btn:hover {
-			background: #333;
-		}
-
-		.elabel-qr-disabled {
-			opacity: 0.35;
-			cursor: not-allowed;
-			pointer-events: none;
-		}
-
-		/* Upgrade CTA */
-		.elabel-upgrade {
-			text-align: center;
-			font-size: 0.8rem;
-			color: #888;
-			margin-top: 16px;
-		}
-
-		.elabel-upgrade a {
-			color: #2563eb;
-			text-decoration: none;
-			font-weight: 500;
-		}
-
-		.elabel-upgrade a:hover {
-			text-decoration: underline;
-		}
-
-		/* Footer */
-		.elabel-footer {
-			text-align: center;
-			font-size: 0.75rem;
-			color: #999;
-			margin-top: 24px;
-			padding-bottom: 24px;
-		}
-
-		.elabel-powered {
-			margin-top: 8px;
-			font-size: 0.7rem;
-		}
-
-		.elabel-powered a {
-			color: #999;
-			text-decoration: none;
-		}
-
-		.elabel-powered a:hover {
-			color: #666;
-		}
-	</style>
+	<?php wp_print_styles( 'wleu-label' ); ?>
 </head>
 <body>
 <div class="elabel-wrap">
-	<?php if ( $show_lang_toggle ) : ?>
-	<div class="elabel-lang">
-		<a href="<?php echo esc_url( $en_url ); ?>"<?php echo $lang === 'en' ? ' class="active"' : ''; ?>>EN</a>
-		<span class="sep">|</span>
-		<a href="<?php echo esc_url( $alt_url ); ?>"<?php echo $lang !== 'en' ? ' class="active"' : ''; ?>><?php echo esc_html( strtoupper( $alt_lang ) ); ?></a>
-	</div>
-	<?php endif; ?>
 	<h1 class="elabel-page-title"><?php echo esc_html( $title ); ?></h1>
 	<?php
 }
@@ -785,33 +386,16 @@ function wleu_html_header( $title, $lang = 'en' ) {
 /**
  * Output the closing HTML tags and regulation footer.
  *
- * @param string $lang Language code ('it' or 'en').
+ * @param string $lang Language code.
  */
-function wleu_html_footer( $lang = 'it' ) {
-	$show_credit = true;
-
-	// In Pro, respect the setting. In Free, always show.
-	if ( wleu_is_pro() ) {
-		$show_credit = get_option( 'wleu_show_footer_credit', 'yes' ) === 'yes';
-	}
+function wleu_html_footer( $lang = 'en' ) {
 	?>
 	<div class="elabel-footer">
 		<?php echo wp_kses_post( wleu_t( 'reg_footer', $lang ) ); ?>
-		<?php if ( $show_credit ) : ?>
-			<div class="elabel-powered"><?php echo esc_html( wleu_t( 'powered_by', $lang ) ); ?></div>
-		<?php endif; ?>
+		<div class="elabel-powered"><?php echo esc_html( wleu_t( 'powered_by', $lang ) ); ?></div>
 	</div>
 </div>
 </body>
 </html>
 	<?php
-}
-
-/**
- * Return the inline SVG for the EU flag marker.
- *
- * @return string SVG markup.
- */
-function wleu_flag_svg() {
-	return '<svg class="elabel-flag" viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="2" fill="#009246"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#CE2B37"/></svg>';
 }

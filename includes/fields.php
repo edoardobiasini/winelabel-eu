@@ -1,13 +1,12 @@
 <?php
 /**
- * Carbon Fields definitions for WineLabel EU.
+ * Carbon Fields definitions for WineLabel EU (Lite).
  *
  * Two containers:
  * 1. Product/Wine-level: master toggle (shared across vintages)
- * 2. Vintage-level (elabel_vintage CPT): ingredients, nutrition, recycling
+ * 2. Vintage-level (wleu_vintage CPT): ingredients, nutrition, recycling
  *
- * Free: EN fields only (no language suffix in labels). IT fields visible but read-only with upgrade CTA.
- * Pro:  All fields active with (EN)/(IT) suffixes.
+ * English-only fields — no bilingual support in the lite version.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,15 +17,6 @@ use Carbon_Fields\Container;
 use Carbon_Fields\Field;
 
 add_action( 'carbon_fields_register_fields', function () {
-
-	$is_pro   = wleu_is_pro();
-	$pro_hint = $is_pro ? '' : ' — ' . __( 'Upgrade to Pro to unlock bilingual labels.', 'winelabel-eu' );
-
-	// Label suffix: only show (EN)/(IT) when Pro.
-	// Label suffixes: only visible when Pro bilingual is active.
-	// Base fields = second language (could be IT, DE, FR, etc.), _en fields = EN.
-	$en_sfx  = $is_pro ? ' (EN)' : '';
-	$alt_sfx = $is_pro ? ' (' . __( '2nd lang', 'winelabel-eu' ) . ')' : ' — ' . __( 'Translation', 'winelabel-eu' );
 
 	// ── Product/Wine Container (shared across vintages) ──────
 	Container::make( 'post_meta', __( 'WineLabel EU', 'winelabel-eu' ) )
@@ -40,102 +30,55 @@ add_action( 'carbon_fields_register_fields', function () {
 				),
 		] );
 
-	// ── Helper: build an IT field (read-only on Free) ────────
-	$it_field = function ( $key, $label ) use ( $is_pro, $pro_hint, $alt_sfx ) {
-		$f = Field::make( 'text', $key, $label . $alt_sfx )
-			->set_width( 50 );
-		if ( ! $is_pro ) {
-			$f->set_attribute( 'readOnly', true )->set_help_text( $pro_hint );
-		}
-		return $f;
-	};
-
-	// ── Ingredients fields (EN left, IT right) ───────────────
+	// ── Ingredients fields ────────────────────────────────────
 	$ingredients = [];
 
 	// Raw material
-	$ingredients[] = Field::make( 'text', 'elabel_materia_prima_en', __( 'Raw material', 'winelabel-eu' ) . $en_sfx )
+	$ingredients[] = Field::make( 'text', 'elabel_materia_prima_en', __( 'Raw material', 'winelabel-eu' ) )
 		->set_help_text( __( 'e.g. grapes', 'winelabel-eu' ) )
-		->set_default_value( 'grapes' )
-		->set_width( 50 );
-	$ingredients[] = $it_field( 'elabel_materia_prima', __( 'Raw material', 'winelabel-eu' ) );
+		->set_default_value( 'grapes' );
 
 	// Acidity regulators
-	$ingredients[] = Field::make( 'text', 'elabel_correttori_acidita_en', __( 'Acidity regulators', 'winelabel-eu' ) . $en_sfx )
-		->set_help_text( __( 'e.g. L-tartaric acid (E334), L-malic acid (E296)', 'winelabel-eu' ) )
-		->set_width( 50 );
-	$ingredients[] = $it_field( 'elabel_correttori_acidita', __( 'Acidity regulators', 'winelabel-eu' ) );
+	$ingredients[] = Field::make( 'text', 'elabel_correttori_acidita_en', __( 'Acidity regulators', 'winelabel-eu' ) )
+		->set_help_text( __( 'e.g. L-tartaric acid (E334), L-malic acid (E296)', 'winelabel-eu' ) );
 
 	// Stabilizers
-	$ingredients[] = Field::make( 'text', 'elabel_stabilizzanti_en', __( 'Stabilizers', 'winelabel-eu' ) . $en_sfx )
-		->set_help_text( __( 'e.g. citric acid (E330)', 'winelabel-eu' ) )
-		->set_width( 50 );
-	$ingredients[] = $it_field( 'elabel_stabilizzanti', __( 'Stabilizers', 'winelabel-eu' ) );
+	$ingredients[] = Field::make( 'text', 'elabel_stabilizzanti_en', __( 'Stabilizers', 'winelabel-eu' ) )
+		->set_help_text( __( 'e.g. citric acid (E330)', 'winelabel-eu' ) );
 
 	// Antioxidants
-	$ingredients[] = Field::make( 'text', 'elabel_antiossidanti_en', __( 'Antioxidants', 'winelabel-eu' ) . $en_sfx )
-		->set_help_text( __( 'e.g. sulfur dioxide (E220)', 'winelabel-eu' ) )
-		->set_width( 50 );
-	$ingredients[] = $it_field( 'elabel_antiossidanti', __( 'Antioxidants', 'winelabel-eu' ) );
+	$ingredients[] = Field::make( 'text', 'elabel_antiossidanti_en', __( 'Antioxidants', 'winelabel-eu' ) )
+		->set_help_text( __( 'e.g. sulfur dioxide (E220)', 'winelabel-eu' ) );
 
 	// Other ingredients
-	$ingredients[] = Field::make( 'text', 'elabel_altri_ingredienti_en', __( 'Other ingredients', 'winelabel-eu' ) . $en_sfx )
-		->set_width( 50 );
-	$ingredients[] = $it_field( 'elabel_altri_ingredienti', __( 'Other ingredients', 'winelabel-eu' ) );
+	$ingredients[] = Field::make( 'text', 'elabel_altri_ingredienti_en', __( 'Other ingredients', 'winelabel-eu' ) );
 
 	$ingredients[] = Field::make( 'checkbox', 'elabel_contiene_solfiti', __( 'Contains sulfites', 'winelabel-eu' ) )
 		->set_option_value( 'yes' )
 		->set_default_value( 'yes' );
 
-	// ── Waste Sorting fields (EN left, IT right) ─────────────
+	// ── Waste Sorting fields ──────────────────────────────────
 	$raccolta_fields = [];
 
-	$raccolta_fields[] = Field::make( 'text', 'componente_en', __( 'Component', 'winelabel-eu' ) . $en_sfx )
+	$raccolta_fields[] = Field::make( 'text', 'componente_en', __( 'Component', 'winelabel-eu' ) )
 		->set_help_text( __( 'e.g. Bottle, Cork, Capsule, Label', 'winelabel-eu' ) )
-		->set_width( 20 );
-
-	$f = Field::make( 'text', 'componente', __( 'Component', 'winelabel-eu' ) . $alt_sfx )
-		->set_width( 20 );
-	if ( ! $is_pro ) {
-		$f->set_attribute( 'readOnly', true )->set_help_text( $pro_hint );
-	} else {
-		$f->set_help_text( __( 'e.g. Bottle, Cork, Capsule, Label', 'winelabel-eu' ) );
-	}
-	$raccolta_fields[] = $f;
+		->set_width( 25 );
 
 	$raccolta_fields[] = Field::make( 'text', 'codice', __( 'Code', 'winelabel-eu' ) )
 		->set_help_text( __( 'e.g. GL 71, FOR 51, ALU 41, PAP 22', 'winelabel-eu' ) )
-		->set_width( 10 );
+		->set_width( 15 );
 
-	$raccolta_fields[] = Field::make( 'text', 'materiale_en', __( 'Material', 'winelabel-eu' ) . $en_sfx )
+	$raccolta_fields[] = Field::make( 'text', 'materiale_en', __( 'Material', 'winelabel-eu' ) )
 		->set_help_text( __( 'e.g. Glass, Cork, Aluminium, Paper', 'winelabel-eu' ) )
-		->set_width( 15 );
+		->set_width( 25 );
 
-	$f = Field::make( 'text', 'materiale', __( 'Material', 'winelabel-eu' ) . $alt_sfx )
-		->set_width( 15 );
-	if ( ! $is_pro ) {
-		$f->set_attribute( 'readOnly', true )->set_help_text( $pro_hint );
-	} else {
-		$f->set_help_text( __( 'e.g. Glass, Cork, Aluminium, Paper', 'winelabel-eu' ) );
-	}
-	$raccolta_fields[] = $f;
-
-	$raccolta_fields[] = Field::make( 'text', 'istruzioni_en', __( 'Collection', 'winelabel-eu' ) . $en_sfx )
+	$raccolta_fields[] = Field::make( 'text', 'istruzioni_en', __( 'Collection', 'winelabel-eu' ) )
 		->set_help_text( __( 'e.g. Glass recycling, General waste', 'winelabel-eu' ) )
-		->set_width( 10 );
-
-	$f = Field::make( 'text', 'istruzioni', __( 'Collection', 'winelabel-eu' ) . $alt_sfx )
-		->set_width( 10 );
-	if ( ! $is_pro ) {
-		$f->set_attribute( 'readOnly', true )->set_help_text( $pro_hint );
-	} else {
-		$f->set_help_text( __( 'e.g. Glass recycling, General waste', 'winelabel-eu' ) );
-	}
-	$raccolta_fields[] = $f;
+		->set_width( 25 );
 
 	// ── Vintage Container ────────────────────────────────────
 	Container::make( 'post_meta', __( 'Vintage Data', 'winelabel-eu' ) )
-		->where( 'post_type', '=', 'elabel_vintage' )
+		->where( 'post_type', '=', 'wleu_vintage' )
 
 		->add_tab( __( 'General', 'winelabel-eu' ), [
 			Field::make( 'text', 'elabel_annata', __( 'Year (YY)', 'winelabel-eu' ) )
